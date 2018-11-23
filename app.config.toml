@@ -1,0 +1,5 @@
+ENV = "development"
+DBURL = "root:@tcp(localhost:3306)/allofus?parseTime=true"
+PORT = "3500"
+LogDir = "./logs"
+JWTSecret = "secret"
