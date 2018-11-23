@@ -1,0 +1,46 @@
+version: '3.5'
+
+services:
+  api:
+    container_name: allofus-api
+    build:
+        context: ./
+        dockerfile: dockerfile
+    ports:
+        - 3500:3500
+        - 8082:8082
+    links:
+        - db
+    depends_on:
+        - db
+    restart: "no"
+    volumes:
+        - ./:/app
+
+  admin-portal:
+      container_name: allofus-admin-portal
+      image: node:10.9.0-alpine
+      depends_on:
+        - api
+      restart: "no"
+      tty: true
+      working_dir: /app/
+      environment:
+          - NODE_ENV=development
+      volumes:
+        - ./portals/admin:/app/
+
+  db:
+    image: mysql:5.7
+    container_name: allofus-db
+    ports:
+        - 3306:3306
+    volumes:
+        - mysql-data:/var/lib/mysql
+    restart: "no"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=secret
+
+volumes:
+    mysql-data:
