@@ -1,5 +1,6 @@
 ENV = "testing"
-DBURL = "root:@tcp(localhost:3306)/allofus_test?parseTime=true"
+DB = "allofus"
+DBURL = "mongodb://localhost:27017/allofus"
 PORT = "3500"
 LogDir = "./logs"
 JWTSecret = "secret"
