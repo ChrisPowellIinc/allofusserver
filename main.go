@@ -77,7 +77,7 @@ func main() {
 	flag.Parse()
 
 	config := config.GetConf(*isTest, *isDebug)
-	defer config.DB.Close()
+	defer config.DBSession.Close()
 
 	if *isMigrations {
 		migrations.MakeMigrations(config)
