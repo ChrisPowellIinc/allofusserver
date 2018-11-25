@@ -21,7 +21,14 @@ func New(config *config.Config) *Handler {
 func Routes(config *config.Config) *chi.Mux {
 	handler = New(config)
 	router := chi.NewRouter()
-	router.Get("/get", handler.Get)
+	// lists all users
+	router.Get("/", handler.Get)
+	// Create a new user
+	router.Post("/", handler.Get)
+	// Update a new user
+	router.Put("/", handler.Get)
+	// Delete a user
+	router.Delete("/", handler.Get)
 
 	return router
 }
