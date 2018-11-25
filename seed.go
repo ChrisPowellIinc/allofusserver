@@ -11,17 +11,17 @@ func Seed() {
 	con := config.GetConf(false, false)
 	db := con.DB
 	user := models.User{
-		FirstName: "Edem",
-		LastName:  "Akpan",
-		Username:  "edem",
-		Email:     "edem@gmail.com",
-		Password:  "password",
+		FirstName:      "Edem",
+		LastName:       "Akpan",
+		Username:       "edem",
+		Email:          "edem@gmail.com",
+		PasswordString: "password",
 	}
 	// Create
-	pwdHash, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	var err error
+	user.Password, err = bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
 	if err != nil {
 		logger.Fatal("Could not generate password")
 	}
-	user.Password = string(pwdHash)
-	db.Create(&user)
+	db.C("user").Insert(&user)
 }
