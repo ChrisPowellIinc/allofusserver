@@ -20,30 +20,38 @@ import (
 )
 
 func Seed() {
+	log.Println("Start test seeding")
 	db := tests.Con.DB
 	user := models.User{
-		FirstName: "Edem",
-		LastName:  "Akpan",
-		Username:  "edem",
-		Email:     "edem@gmail.com",
-		Password:  "password",
+		FirstName:      "Spankie",
+		LastName:       "Dee",
+		Phone:          "08103169310",
+		Email:          "edem@gmail.com",
+		Username:       "spankie",
+		PasswordString: "password",
+		Image:          "me.jpg",
 	}
 	// Create
-	pwdHash, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	var err error
+	user.Password, err = bcrypt.GenerateFromPassword([]byte(user.PasswordString), bcrypt.DefaultCost)
 	if err != nil {
 		log.Fatal("Could not generate password")
 	}
-	user.Password = string(pwdHash)
-	db.Create(&user)
+	db.C("user").Insert(&user)
+	log.Println("End test seeding")
 }
 
 func TestMain(m *testing.M) {
-	tests.Con.DB.DropTableIfExists(&models.User{})
+	// tests.Con.DB.DropTableIfExists(&models.User{})
 	migrations.MakeMigrations(tests.Con)
 	Seed()
 	jwt.Register([]byte(tests.Con.JWTSecret))
 	log.Println("Starting tests")
 	exitCode := m.Run()
+	err := tests.Con.DB.DropDatabase()
+	if err != nil {
+		log.Println("Error dropping the database; ", err)
+	}
 	os.Exit(exitCode)
 }
 
