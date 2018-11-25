@@ -2,47 +2,45 @@ package models
 
 import (
 	"strings"
+	"time"
 
 	"github.com/ChrisPowellIinc/allofusserver/internal/config"
-	"github.com/jinzhu/gorm"
+	"github.com/globalsign/mgo/bson"
 )
 
 // User : User model
 type User struct {
-	gorm.Model
-	FirstName string `json:"first_name" gorm:"type:varchar(100)"`
-	LastName  string `json:"last_name" gorm:"type:varchar(100)"`
-	Email     string `json:"email" gorm:"type:varchar(100);unique_index"`
-	Password  string `json:"password"`
-	Username  string `json:"username"`
+	FirstName      string    `json:"first_name" bson:"first_name,omitempty"`
+	LastName       string    `json:"last_name" bson:"last_name,omitempty"`
+	Phone          string    `json:"phone,omitempty" bson:"phone,omitempty"`
+	Email          string    `json:"email" bson:"email,omitempty"`
+	Username       string    `json:"username" bson:"username,omitempty"`
+	Password       []byte    `json:"-" bson:"password,omitempty"`
+	PasswordString string    `json:"password,omitempty" bson:"-"`
+	Reset          string    `json:"-" bson:"reset"`
+	Image          string    `json:"image,omitempty" bson:"image,omitempty"`
+	DateCreated    time.Time `json:"date_created,omitempty" bson:"date_created,omitempty"`
+	AccessToken    string    `json:"token,omitempty" bson:"token,omitempty"`
 }
 
-// FindByID : Returns user with the matching ID
-func (User) FindByID(c *config.Config, id uint) (User, error) {
-	db := c.DB
+// FindByPhone queries the DB for a user with the specified phone number
+func (u User) FindByPhone(c *config.Config) (User, error) {
 	user := User{}
-
-	if err := db.Where(map[string]interface{}{"ID": id}).
-		First(&user).Error; err != nil {
-		return user, err
-	}
-
-	return user, nil
+	err := c.DB.C("user").Find(bson.M{"phone": u.Phone}).One(&user)
+	return user, err
 }
 
 // FindByEmail queries the DB for a user with the specified email address
 func (u User) FindByEmail(c *config.Config) (User, error) {
-	db := c.DB
 	user := User{}
-	err := db.Where("email = ?", u.Email).First(&user).Error
+	err := c.DB.C("user").Find(bson.M{"email": u.Email}).One(&user)
 	return user, err
 }
 
 // FindByUsername queries the DB for a user with the specified username
 func (u User) FindByUsername(c *config.Config) (User, error) {
-	db := c.DB
 	user := User{}
-	err := db.Where("username = ?", u.Username).First(&user).Error
+	err := c.DB.C("user").Find(bson.M{"username": u.Username}).One(&user)
 	return user, err
 }
 
@@ -56,6 +54,16 @@ func (u User) Validate(c *config.Config) map[string]string {
 		data["last_name"] = "You must enter a valid last name"
 	}
 
+	if len(u.Phone) <= 10 {
+		data["phone"] = "You must enter a valid phone number"
+	} else {
+		// check if phone number exists...
+		_, err := u.FindByPhone(c)
+		if err == nil {
+			data["phone"] = "Phone number is taken"
+		}
+	}
+
 	if len(u.Username) <= 0 {
 		data["username"] = "You must enter a valid username"
 	} else {
@@ -66,7 +74,7 @@ func (u User) Validate(c *config.Config) map[string]string {
 		}
 	}
 
-	if len(u.Password) <= 6 {
+	if len(u.PasswordString) <= 6 {
 		data["password"] = "You must enter a valid password: minimum of 6 characters"
 	}
 
