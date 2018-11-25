@@ -7,25 +7,26 @@ import (
 	"runtime"
 
 	// Imports mysql driver for the effect
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/jinzhu/gorm"
+	"github.com/globalsign/mgo"
 	"github.com/pkg/errors"
 	"github.com/spf13/viper"
 )
 
-// Config : Config type
-type Config struct {
-	Constants
-	DB *gorm.DB
-}
-
 // Constants type holds data defined within the viper config file
 type Constants struct {
+	DB        string
 	DBURL     string
 	PORT      string
 	ENV       string
 	LogDir    string
 	JWTSecret string
+}
+
+// Config : Config type
+type Config struct {
+	Constants
+	DBSession *mgo.Session
+	DB        *mgo.Database
 }
 
 func parseConfigFile(isTesting, debug bool) Constants {
@@ -64,12 +65,12 @@ func GetConf(isTest, isDebug bool) *Config {
 	config.Constants = parseConfigFile(isTest, isDebug)
 
 	var err error
-	config.DB, err = gorm.Open("mysql", config.Constants.DBURL)
-
+	config.DBSession, err = mgo.Dial(config.Constants.DBURL)
 	if err != nil {
-		panic(errors.Wrap(err, "Unable to connect to database"))
+		panic(errors.Wrap(err, "Unable to connect to Mongo database"))
 	}
 
-	config.DB.SingularTable(true)
+	config.DB = config.DBSession.DB(config.Constants.DB)
+
 	return &config
 }
