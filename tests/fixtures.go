@@ -12,7 +12,7 @@ type AuthRequest struct {
 var LoginFixtures = []AuthRequest{
 	{
 		Name:   "Correct details",
-		Data:   `{"username": "edem", "password": "password"}`,
+		Data:   `{"username": "spankie", "password": "password"}`,
 		Status: http.StatusOK,
 		Message: map[string]interface{}{
 			"message": "Login Successful",
@@ -24,7 +24,7 @@ var LoginFixtures = []AuthRequest{
 	},
 	{
 		Name:   "Empty Password",
-		Data:   `{"username": "edem", "password": ""}`,
+		Data:   `{"username": "spankie", "password": ""}`,
 		Status: http.StatusUnauthorized,
 		Message: map[string]interface{}{
 			"message": "Username or password incorrect",
@@ -65,14 +65,14 @@ var LoginFixtures = []AuthRequest{
 }
 
 var (
-	newUsername = "orok1"
-	newEmail    = "orok1@gmail.com"
+	newUsername = "chris1"
+	newEmail    = "chris1@gmail.com"
 )
 
 var RegisterFixtures = []AuthRequest{
 	{
 		Name:   "Correct Details",
-		Data:   `{"username": "orok", "password": "password", "first_name": "Orok", "last_name": "Obong", "email": "orok@gmail.com"}`,
+		Data:   `{"username": "chris", "password": "password", "first_name": "Chris", "last_name": "Powell", "email": "chris@gmail.com", "phone": "08103169311"}`,
 		Status: http.StatusCreated,
 		Message: map[string]interface{}{
 			"message": "User created successfully",
@@ -82,7 +82,7 @@ var RegisterFixtures = []AuthRequest{
 	},
 	{
 		Name:   "Missing First Name",
-		Data:   `{"username": "` + newUsername + `", "password": "password", "last_name": "Obong", "email": "` + newEmail + `"}`,
+		Data:   `{"username": "` + newUsername + `", "password": "password", "last_name": "Powell", "email": "` + newEmail + `", "phone": "08103169310"}`,
 		Status: http.StatusBadRequest,
 		Message: map[string]interface{}{
 			"message": "There are some problems in your forms",
@@ -94,7 +94,7 @@ var RegisterFixtures = []AuthRequest{
 	},
 	{
 		Name:   "Missing Username",
-		Data:   `{"password": "password", "first_name": "Orok", "last_name": "Obong", "email": "` + newEmail + `"}`,
+		Data:   `{"password": "password", "first_name": "Chris", "last_name": "Powell", "email": "` + newEmail + `", "phone": "08103169310"}`,
 		Status: http.StatusBadRequest,
 		Message: map[string]interface{}{
 			"message": "There are some problems in your forms",
@@ -106,7 +106,7 @@ var RegisterFixtures = []AuthRequest{
 	},
 	{
 		Name:   "Duplicate Username",
-		Data:   `{"username": "edem", "password": "password", "first_name": "Orok", "last_name": "Obong", "email": "` + newEmail + `"}`,
+		Data:   `{"username": "spankie", "password": "password", "first_name": "Chris", "last_name": "Powell", "email": "` + newEmail + `", "phone": "08103169310"}`,
 		Status: http.StatusBadRequest,
 		Message: map[string]interface{}{
 			"message": "There are some problems in your forms",
@@ -118,7 +118,7 @@ var RegisterFixtures = []AuthRequest{
 	},
 	{
 		Name:   "Missing Password",
-		Data:   `{"username": "` + newUsername + `", "first_name": "Orok", "last_name": "Obong", "email": "` + newEmail + `"}`,
+		Data:   `{"username": "` + newUsername + `", "first_name": "Chris", "last_name": "Powell", "email": "` + newEmail + `", "phone": "08103169310"}`,
 		Status: http.StatusBadRequest,
 		Message: map[string]interface{}{
 			"message": "There are some problems in your forms",
@@ -130,7 +130,7 @@ var RegisterFixtures = []AuthRequest{
 	},
 	{
 		Name:   "Short password",
-		Data:   `{"username": "` + newUsername + `", "password": "pa", "first_name": "Orok", "last_name": "Obong", "email": "` + newEmail + `"}`,
+		Data:   `{"username": "` + newUsername + `", "password": "pa", "first_name": "Chris", "last_name": "Powell", "email": "` + newEmail + `", "phone": "08103169310"}`,
 		Status: http.StatusBadRequest,
 		Message: map[string]interface{}{
 			"message": "There are some problems in your forms",
@@ -142,7 +142,7 @@ var RegisterFixtures = []AuthRequest{
 	},
 	{
 		Name:   "Missing Email",
-		Data:   `{"username": "` + newUsername + `", "password": "password", "first_name": "Orok", "last_name": "Obong"}`,
+		Data:   `{"username": "` + newUsername + `", "password": "password", "first_name": "Chris", "last_name": "Powell", "phone": "08103169310"}`,
 		Status: http.StatusBadRequest,
 		Message: map[string]interface{}{
 			"message": "There are some problems in your forms",
@@ -154,7 +154,7 @@ var RegisterFixtures = []AuthRequest{
 	},
 	{
 		Name:   "Duplicate Email",
-		Data:   `{"username": "` + newUsername + `", "password": "password", "first_name": "Orok", "last_name": "Obong", "email": "edem@gmail.com"}`,
+		Data:   `{"username": "` + newUsername + `", "password": "password", "first_name": "Chris", "last_name": "Powell", "email": "edem@gmail.com", "phone": "08103169310"}`,
 		Status: http.StatusBadRequest,
 		Message: map[string]interface{}{
 			"message": "There are some problems in your forms",
@@ -166,13 +166,49 @@ var RegisterFixtures = []AuthRequest{
 	},
 	{
 		Name:   "Invalid Email",
-		Data:   `{"username": "` + newUsername + `", "password": "password", "first_name": "Orok", "last_name": "Obong", "email": "gmail.com"}`,
+		Data:   `{"username": "` + newUsername + `", "password": "password", "first_name": "Chris", "last_name": "Powell", "email": "gmail.com", "phone": "08103169310"}`,
 		Status: http.StatusBadRequest,
 		Message: map[string]interface{}{
 			"message": "There are some problems in your forms",
 			"status":  http.StatusBadRequest,
 			"data": map[string]interface{}{
 				"email": "You must enter a valid email address",
+			},
+		},
+	},
+	{
+		Name:   "Invalid Phone Number",
+		Data:   `{"username": "` + newUsername + `", "password": "password", "first_name": "Chris", "last_name": "Powell", "email": "gmail.com", "phone": "0810"}`,
+		Status: http.StatusBadRequest,
+		Message: map[string]interface{}{
+			"message": "There are some problems in your forms",
+			"status":  http.StatusBadRequest,
+			"data": map[string]interface{}{
+				"phone": "You must enter a valid phone number",
+			},
+		},
+	},
+	{
+		Name:   "No Phone Number",
+		Data:   `{"username": "` + newUsername + `", "password": "password", "first_name": "Chris", "last_name": "Powell", "email": "gmail.com"}`,
+		Status: http.StatusBadRequest,
+		Message: map[string]interface{}{
+			"message": "There are some problems in your forms",
+			"status":  http.StatusBadRequest,
+			"data": map[string]interface{}{
+				"phone": "You must enter a valid phone number",
+			},
+		},
+	},
+	{
+		Name:   "Used Phone Number",
+		Data:   `{"username": "` + newUsername + `", "password": "password", "first_name": "Chris", "last_name": "Powell", "email": "gmail.com", "phone": "08103169311"}`,
+		Status: http.StatusBadRequest,
+		Message: map[string]interface{}{
+			"message": "There are some problems in your forms",
+			"status":  http.StatusBadRequest,
+			"data": map[string]interface{}{
+				"phone": "Phone number is taken",
 			},
 		},
 	},
