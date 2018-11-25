@@ -5,6 +5,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/globalsign/mgo/bson"
+
 	jwt "github.com/ChrisPowellIinc/allofusserver/internal/jwt"
 	"github.com/ChrisPowellIinc/allofusserver/models"
 	"golang.org/x/crypto/bcrypt"
@@ -29,11 +31,11 @@ func (handler *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	}
 	// Check if the user with that username exists
 	db := handler.config.DB
-	userPassword := user.Password
+	userPassword := user.PasswordString
 	// Get first matched record
-	dd := db.Where("username = ?", user.Username).First(&user)
-	if dd.Error != nil {
-		log.Println(dd.Error)
+	err = db.C("user").Find(bson.M{"username": user.Username}).One(&user)
+	if err != nil {
+		log.Println(err)
 		res.Message = "Username or password incorrect"
 		res.Status = http.StatusUnauthorized
 		render.Status(r, http.StatusUnauthorized)
@@ -50,7 +52,7 @@ func (handler *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, token, err := jwt.TokenAuth.Encode(jwtauth.Claims{"user_id": user.ID})
+	_, token, err := jwt.TokenAuth.Encode(jwtauth.Claims{"user_email": user.Email})
 
 	if err != nil {
 		log.Println(err)
@@ -94,11 +96,19 @@ func (handler *Handler) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	user.Password, err = bcrypt.GenerateFromPassword([]byte(user.PasswordString), bcrypt.DefaultCost)
+	if err != nil {
+		res.Message = "Sorry a problem occured, please try again"
+		res.Status = http.StatusInternalServerError
+		render.Status(r, http.StatusInternalServerError)
+		render.JSON(w, r, res)
+		return
+	}
+
 	db := handler.config.DB
-	db.Create(&user)
-	isNew := db.NewRecord(user) // return `false` after `user` created
-	if isNew {
-		res.Message = "There are some problems creating this user, please try again"
+	err = db.C("user").Insert(&user)
+	if err != nil {
+		res.Message = "Sorry a problem occured, please try again"
 		res.Status = http.StatusInternalServerError
 		render.Status(r, http.StatusInternalServerError)
 		render.JSON(w, r, res)
