@@ -1,0 +1,6 @@
+ENV = "development"
+DB = "allofus"
+DBURL = "mongodb://heroku_ldh3hrks:84P8wnwaiy8uAvJ@ds225624.mlab.com:25624/heroku_ldh3hrks"
+PORT = "3500"
+LogDir = "./logs"
+JWTSecret = "secret"

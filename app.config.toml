@@ -1,4 +1,4 @@
-ENV = "testing"
+ENV = "development"
 DB = "allofus"
 DBURL = "mongodb://localhost:27017/allofus"
 PORT = "3500"
