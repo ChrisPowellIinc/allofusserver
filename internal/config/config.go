@@ -51,11 +51,11 @@ func parseConfigFile(isTesting, debug bool) Constants {
 		log.Panicf("Unable to parse config file, %v", err)
 	}
 
-	if debug {
-		log.Println("In Debug Mode. Logging configuration data")
-		indentedConfig, _ := json.MarshalIndent(constants, "", "\t")
-		log.Printf("\n %s \n \n", indentedConfig)
-	}
+	// if debug {
+	log.Println("In Debug Mode. Logging configuration data")
+	indentedConfig, _ := json.MarshalIndent(constants, "", "\t")
+	log.Printf("\n %s \n \n", indentedConfig)
+	// }
 
 	return constants
 }
