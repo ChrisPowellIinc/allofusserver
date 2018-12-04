@@ -103,7 +103,7 @@ func main() {
 
 	// This block of code will allow graceful shutdown of our server,
 	// using the server Shurdown method which is a part lf the standard library
-	PORT := ":" + config.Constants.PORT
+	PORT := ":" + os.Getenv("PORT")
 	server := http.Server{
 		Addr:    PORT,
 		Handler: router,
