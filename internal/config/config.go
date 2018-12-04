@@ -34,8 +34,10 @@ func parseConfigFile(isTesting, debug bool) Constants {
 
 	if isTesting {
 		viper.SetConfigName("app.test.config")
-	} else {
+	} else if debug {
 		viper.SetConfigName("app.config")
+	} else {
+		viper.SetConfigName("app.prod.config")
 	}
 
 	err := viper.ReadInConfig()
