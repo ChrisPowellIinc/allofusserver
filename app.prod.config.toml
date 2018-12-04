@@ -1,6 +1,6 @@
 ENV = "development"
 DB = "allofus"
 DBURL = "mongodb://allofusapi:84P8wnwaiy8uAvJ@ds225624.mlab.com:25624/heroku_ldh3hrks"
-PORT = "80"
+PORT = "8080"
 LogDir = "./logs"
 JWTSecret = "secret"
