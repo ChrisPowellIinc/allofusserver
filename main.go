@@ -72,7 +72,7 @@ func Routes(config *config.Config) *chi.Mux {
 
 func main() {
 	var isTest = flag.Bool("test", false, "Set test mode to use mock io resources")
-	var isDebug = flag.Bool("debug", true, "Set Debug mode to print config data")
+	var isDebug = flag.Bool("debug", false, "Set Debug mode to print config data")
 	var isMigrations = flag.Bool("migrations", false, "Run migrations against the database")
 	flag.Parse()
 
