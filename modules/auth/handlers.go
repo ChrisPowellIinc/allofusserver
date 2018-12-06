@@ -65,7 +65,15 @@ func (handler *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	res = models.Response{
 		Message: "Login Successful",
 		Status:  http.StatusOK,
-		Data:    map[string]string{"token": token},
+		Data: map[string]interface{}{
+			"token":      token,
+			"first_name": user.FirstName,
+			"last_name":  user.LastName,
+			"phone":      user.Phone,
+			"email":      user.Email,
+			"username":   user.Username,
+			"image":      user.Image,
+		},
 	}
 	render.Status(r, http.StatusOK)
 	render.JSON(w, r, res)
@@ -117,8 +125,6 @@ func (handler *Handler) Register(w http.ResponseWriter, r *http.Request) {
 
 	res.Message = "User created successfully"
 	res.Status = http.StatusCreated
-	// Add data if you need the user to sign in immediately.
-	// res.Data =
 	render.Status(r, http.StatusCreated)
 	render.JSON(w, r, res)
 }
