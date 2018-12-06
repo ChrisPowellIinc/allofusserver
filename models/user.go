@@ -45,8 +45,8 @@ func (u User) FindByUsername(c *config.Config) (User, error) {
 }
 
 // Validate returns a map of errors if the values provided are not valid
-func (u User) Validate(c *config.Config) map[string]string {
-	var data = map[string]string{}
+func (u User) Validate(c *config.Config) map[string]interface{} {
+	var data = make(map[string]interface{})
 	if len(u.FirstName) <= 0 {
 		data["first_name"] = "You must enter a valid first name"
 	}
