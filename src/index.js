@@ -1,5 +1,8 @@
 import m from "mithril";
-
+// Bootstrap
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/";
 // Pages
 import Landing from "pages/landing";
 
