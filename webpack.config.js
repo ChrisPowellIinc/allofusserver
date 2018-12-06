@@ -1,11 +1,14 @@
+var webpack = require("webpack");
 var path = require("path");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+// const glob = require("glob");
 
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = {
   entry: {
     index: "./src/index.js"
+    // styles: glob.sync("./public/assets/css/partials/*.css")
   },
   output: {
     filename: "js/[name]-bundle.js",
@@ -13,7 +16,13 @@ module.exports = {
   },
   // devtool: 'eval-source-map',
   devtool: "source-map",
-  plugins: [new ExtractTextPlugin("css/main.min.css")],
+  plugins: [
+    new ExtractTextPlugin("css/main.min.css"),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery"
+    })
+  ],
   resolve: {
     modules: [
       path.resolve(__dirname, "./node_modules"),
