@@ -61,7 +61,7 @@ func Routes(config *config.Config) *chi.Mux {
 	})
 
 	v.Get("/*", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "./portals/admin/src/index.html")
+		http.ServeFile(w, r, "./public/index.html")
 	})
 
 	v.NotFound(func(w http.ResponseWriter, r *http.Request) {
@@ -103,7 +103,12 @@ func main() {
 
 	// This block of code will allow graceful shutdown of our server,
 	// using the server Shurdown method which is a part lf the standard library
-	PORT := ":" + os.Getenv("PORT")
+	PORT := ":"
+	if !*isDebug && !*isTest {
+		PORT += os.Getenv("PORT")
+	} else {
+		PORT += config.Constants.PORT
+	}
 	server := http.Server{
 		Addr:    PORT,
 		Handler: router,
