@@ -1,6 +1,5 @@
 import m from "mithril";
 
-// import "jquery";
 // Bootstrap
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
