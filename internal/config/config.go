@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"path/filepath"
+	"runtime"
 
 	// Imports mysql driver for the effect
 	"github.com/globalsign/mgo"
@@ -29,12 +30,15 @@ type Config struct {
 }
 
 func parseConfigFile(isTesting, debug bool) Constants {
-	// _, filename, _, _ := runtime.Caller(0)
 	viper.AddConfigPath(filepath.Join("./"))
 
 	if isTesting {
+		_, filename, _, _ := runtime.Caller(0)
+		viper.AddConfigPath(filepath.Join(filename, "/../../../"))
 		viper.SetConfigName("app.test.config")
 	} else if debug {
+		_, filename, _, _ := runtime.Caller(0)
+		viper.AddConfigPath(filepath.Join(filename, "/../../../"))
 		viper.SetConfigName("app.config")
 	} else {
 		viper.SetConfigName("app.prod.config")
