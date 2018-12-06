@@ -60,7 +60,6 @@ func TestLoginHandler(t *testing.T) {
 	handler := New(tests.Con)
 	data := tests.LoginFixtures
 	for _, d := range data {
-		// log.Println(d.Name)
 		// Create a request to pass to our handler. We don't have any query parameters for now, so we'll
 		// pass 'nil' as the third parameter.
 		req, err := http.NewRequest("POST", "/", bytes.NewBuffer([]byte(d.Data)))
@@ -101,12 +100,22 @@ func TestLoginHandler(t *testing.T) {
 		}
 
 		if data["data"] != nil {
-			token, ok := data["data"].(map[string]interface{})["token"].(string)
+			respData, ok := data["data"].(map[string]interface{})
 			if !ok {
-				t.Fatalf("token is not a string: %v; type: %T", data["data"].(map[string]interface{})["token"], data["data"].(map[string]interface{})["token"])
+				t.Fatalf("response data is not what was expected: got %T; want: %T", data["data"], d.Message["data"])
 			}
-			if len(token) <= 10 {
-				t.Fatalf("handler returned unexpected token: got %v want token string longer than %v", token, len(token))
+			log.Println(respData)
+			// Loop through the map to get the ones that match what is expected
+			for i, v := range d.Message["data"].(map[string]interface{}) {
+				if respData[i] != v {
+					if i == "token" {
+						if len(respData[i].(string)) < 10 {
+							t.Fatalf("Unexpected %v Error: got %v lenght of token want more than 10 lenght of token", i, len(respData[i].(string)))
+						}
+						continue
+					}
+					t.Fatalf("Unexpected %v Error: got %v want %v", i, respData[i], v)
+				}
 			}
 		}
 
