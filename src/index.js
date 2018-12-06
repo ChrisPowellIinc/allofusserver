@@ -1,15 +1,21 @@
 import m from "mithril";
 
-// Global stylesheet
-import "./styles/custom.scss";
-
 // Pages
-import Landing from "./pages/landing";
-import _404 from "./pages/404";
+import Landing from "pages/landing";
+
+const root = document.getElementById("app");
 
 m.route.prefix("");
 
-m.route(document.body, "/404", {
+m.route(root, "/", {
   "/": Landing,
-  "/*": _404
+
+  // Lazy load 404 page, use this method to lazy load other pages
+  "/:404": {
+    onmatch: () =>
+      new Promise(resolve => {
+        console.log("what was you thinking...");
+        return resolve;
+      })
+  }
 });
