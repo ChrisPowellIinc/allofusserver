@@ -1,67 +1,73 @@
-const path = require("path");
-const HtmlWebpack = require("html-webpack-plugin");
+var path = require("path");
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = {
-  mode: "development",
-  entry: "src/index.js",
-  output: {
-    path: path.resolve(__dirname, "./public"),
-    filename: "assets/js/app.js",
+  entry: {
+    index: "./src/index.js"
   },
+  output: {
+    filename: "js/[name]-bundle.js",
+    path: `${__dirname}/public/assets`
+  },
+  // devtool: 'eval-source-map',
+  devtool: "source-map",
+  plugins: [new ExtractTextPlugin("css/main.min.css")],
   resolve: {
-    modules: [path.resolve(__dirname, './src'), path.resolve(__dirname, './node_modules')],
-    extensions: ['.js', '.jsx', '.json'],
+    modules: [
+      path.resolve(__dirname, "./node_modules"),
+      path.resolve(__dirname, "./src")
+    ],
+    extensions: [".js", ".json"]
   },
   module: {
-    rules: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      use: [{
-        loader: "babel-loader",
-      },{
+    rules: [
+      {
+        enforce: "pre",
+        test: /\.jsx?$/,
+        exclude: /(node_modules)/,
         loader: "eslint-loader",
         options: {
-          failOnError: false,
+          failOnWarning: true,
           fix: true
         }
-      }],
-    }, {
-      test: /\.scss$/,
-      use: [{
-        loader: "style-loader"
-      }, {
-        loader: "css-loader",
+      },
+      {
+        test: /\.jsx?$/,
+        loader: "babel-loader",
         options: {
-          sourceMap: true
-        }
-      }, {
-        loader: "sass-loader",
-        options: {
-          sourceMap: true
-        }
-      }]
-    }, {
-      test: /\.css$/,
-      use: [{
-        loader: "style-loader"
-      }, {
-        loader: "css-loader",
-        options: {
-          sourceMap: true
-        }
-      }]
-    }]
-  },
-  plugins: [
-    new HtmlWebpack({
-      template: "./src/index.html",
-      filename: "./index.html"
-    })
-  ],
-  serve: {
-    content: "./public",
-    clipboard: false,
-    port: 3000,
-    host: "0.0.0.0"
+          presets: ["env"]
+        },
+        exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: ["css-loader"]
+        })
+      },
+      {
+        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+        use: "url-loader?limit=10000&mimetype=application/font-woff"
+      },
+      {
+        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+        use: "url-loader?limit=10000&mimetype=application/font-woff"
+      },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        use: "url-loader?limit=10000&mimetype=application/octet-stream"
+      },
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        use: "file-loader"
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        use: "url-loader?limit=10000&mimetype=image/svg+xml"
+      }
+    ]
   }
 };
