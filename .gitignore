@@ -1,4 +1,4 @@
-modd.conf
-node_modules
+/node_modules
+/public
+yarn-error.log
 .vscode
-.env
