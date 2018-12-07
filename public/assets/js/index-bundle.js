@@ -1372,6 +1372,14 @@ var _landing = __webpack_require__(10);
 
 var _landing2 = _interopRequireDefault(_landing);
 
+var _register = __webpack_require__(17);
+
+var _register2 = _interopRequireDefault(_register);
+
+var _login = __webpack_require__(20);
+
+var _login2 = _interopRequireDefault(_login);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var root = document.getElementById("app");
@@ -1386,7 +1394,8 @@ _mithril2.default.route.prefix("");
 
 _mithril2.default.route(root, "/", {
   "/": _landing2.default,
-
+  "/register": _register2.default,
+  "/login": _login2.default,
   // Lazy load 404 page, use this method to lazy load other pages
   "/:404": {
     onmatch: function onmatch() {
@@ -18774,7 +18783,7 @@ var _mithril = __webpack_require__(1);
 
 var _mithril2 = _interopRequireDefault(_mithril);
 
-__webpack_require__(17);
+__webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18836,12 +18845,20 @@ var Landing = {
             { "class": "lead" },
             (0, _mithril2.default)(
               "a",
-              { href: "#", "class": "btn btn-lg btn-secondary mr-1" },
+              {
+                href: "/login",
+                oncreate: _mithril2.default.route.link,
+                "class": "btn btn-lg btn-secondary mr-1"
+              },
               "Login"
             ),
             (0, _mithril2.default)(
               "a",
-              { href: "#", "class": "btn btn-lg btn-secondary ml-1" },
+              {
+                href: "/register",
+                oncreate: _mithril2.default.route.link,
+                "class": "btn btn-lg btn-secondary ml-1"
+              },
               "Signup"
             )
           )
@@ -18855,17 +18872,16 @@ var Landing = {
             (0, _mithril2.default)(
               "p",
               null,
-              "&copy 2018 ",
+              "\xA9 2018 ",
               (0, _mithril2.default)(
                 "a",
-                { href: "https://getbootstrap.com/" },
+                { href: "/" },
                 "allofus"
               ),
-              ", by",
-              " ",
+              ", by ",
               (0, _mithril2.default)(
                 "a",
-                { href: "https://twitter.com/mdo" },
+                { href: "/" },
                 "allofus"
               ),
               "."
@@ -18880,16 +18896,308 @@ var Landing = {
 exports.default = Landing;
 
 /***/ }),
-/* 11 */,
+/* 11 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
 /* 12 */,
 /* 13 */,
 /* 14 */,
 /* 15 */,
 /* 16 */,
 /* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _mithril = __webpack_require__(1);
+
+var _mithril2 = _interopRequireDefault(_mithril);
+
+__webpack_require__(18);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Register = {
+  view: function view(vnode) {
+    return (0, _mithril2.default)(
+      "section",
+      { "class": "register" },
+      (0, _mithril2.default)(
+        "form",
+        { "class": "form-signin" },
+        (0, _mithril2.default)(
+          "div",
+          { "class": "text-center mb-4" },
+          (0, _mithril2.default)("img", {
+            "class": "mb-4",
+            src: "assets/img/logo.png",
+            alt: "",
+            width: "72",
+            height: "72"
+          }),
+          (0, _mithril2.default)(
+            "h1",
+            { "class": "h3 mb-3 font-weight-normal" },
+            "Register"
+          ),
+          (0, _mithril2.default)(
+            "p",
+            null,
+            "You don't have an account with us? register here and have a great experience. Or you have an account already?",
+            " ",
+            (0, _mithril2.default)(
+              "a",
+              { href: "/login", oncreate: _mithril2.default.route.link, "class": "" },
+              "sign in here"
+            )
+          )
+        ),
+        (0, _mithril2.default)(
+          "div",
+          { "class": "form-label-group" },
+          (0, _mithril2.default)("input", {
+            type: "text",
+            id: "first_name",
+            "class": "form-control",
+            placeholder: "First name",
+            required: true,
+            autofocus: true
+          }),
+          (0, _mithril2.default)(
+            "label",
+            { "for": "name" },
+            "First name"
+          )
+        ),
+        (0, _mithril2.default)(
+          "div",
+          { "class": "form-label-group" },
+          (0, _mithril2.default)("input", {
+            type: "text",
+            id: "last_name",
+            "class": "form-control",
+            placeholder: "Last name",
+            required: true,
+            autofocus: true
+          }),
+          (0, _mithril2.default)(
+            "label",
+            { "for": "name" },
+            "Last name"
+          )
+        ),
+        (0, _mithril2.default)(
+          "div",
+          { "class": "form-label-group" },
+          (0, _mithril2.default)("input", {
+            type: "text",
+            id: "phone",
+            "class": "form-control",
+            placeholder: "Phone number",
+            required: true,
+            autofocus: true
+          }),
+          (0, _mithril2.default)(
+            "label",
+            { "for": "phone" },
+            "Phone number"
+          )
+        ),
+        (0, _mithril2.default)(
+          "div",
+          { "class": "form-label-group" },
+          (0, _mithril2.default)("input", {
+            type: "email",
+            id: "inputEmail",
+            "class": "form-control",
+            placeholder: "Email address",
+            required: true,
+            autofocus: true
+          }),
+          (0, _mithril2.default)(
+            "label",
+            { "for": "inputEmail" },
+            "Email address"
+          )
+        ),
+        (0, _mithril2.default)(
+          "div",
+          { "class": "form-label-group" },
+          (0, _mithril2.default)("input", {
+            type: "text",
+            id: "username",
+            "class": "form-control",
+            placeholder: "Username",
+            required: true,
+            autofocus: true
+          }),
+          (0, _mithril2.default)(
+            "label",
+            { "for": "username" },
+            "Username"
+          )
+        ),
+        (0, _mithril2.default)(
+          "div",
+          { "class": "form-label-group" },
+          (0, _mithril2.default)("input", {
+            type: "password",
+            id: "inputPassword",
+            "class": "form-control",
+            placeholder: "Password",
+            required: true
+          }),
+          (0, _mithril2.default)(
+            "label",
+            { "for": "inputPassword" },
+            "Password"
+          )
+        ),
+        (0, _mithril2.default)(
+          "button",
+          { "class": "btn btn-lg btn-primary btn-block", type: "submit" },
+          "Register"
+        ),
+        (0, _mithril2.default)(
+          "p",
+          { "class": "mt-5 mb-3 text-muted text-center" },
+          "\xA9 2017-2018"
+        )
+      )
+    );
+  }
+};
+
+exports.default = Register;
+
+/***/ }),
+/* 18 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 19 */,
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _mithril = __webpack_require__(1);
+
+var _mithril2 = _interopRequireDefault(_mithril);
+
+__webpack_require__(18);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Login = {
+  view: function view(vnode) {
+    return (0, _mithril2.default)(
+      "section",
+      { "class": "register" },
+      (0, _mithril2.default)(
+        "form",
+        { "class": "form-signin" },
+        (0, _mithril2.default)(
+          "div",
+          { "class": "text-center mb-4" },
+          (0, _mithril2.default)("img", {
+            "class": "mb-4",
+            src: "assets/img/logo.png",
+            alt: "",
+            width: "72",
+            height: "72"
+          }),
+          (0, _mithril2.default)(
+            "h1",
+            { "class": "h3 mb-3 font-weight-normal" },
+            "Login"
+          ),
+          (0, _mithril2.default)(
+            "p",
+            null,
+            "Login here and have a great experience. Or you don't have an account?",
+            " ",
+            (0, _mithril2.default)(
+              "a",
+              { href: "/register", oncreate: _mithril2.default.route.link, "class": "" },
+              "register here"
+            )
+          )
+        ),
+        (0, _mithril2.default)(
+          "div",
+          { "class": "form-label-group" },
+          (0, _mithril2.default)("input", {
+            type: "email",
+            id: "inputEmail",
+            "class": "form-control",
+            placeholder: "Email address",
+            required: true,
+            autofocus: true
+          }),
+          (0, _mithril2.default)(
+            "label",
+            { "for": "inputEmail" },
+            "Email address"
+          )
+        ),
+        (0, _mithril2.default)(
+          "div",
+          { "class": "form-label-group" },
+          (0, _mithril2.default)("input", {
+            type: "password",
+            id: "inputPassword",
+            "class": "form-control",
+            placeholder: "Password",
+            required: true
+          }),
+          (0, _mithril2.default)(
+            "label",
+            { "for": "inputPassword" },
+            "Password"
+          )
+        ),
+        (0, _mithril2.default)(
+          "div",
+          { "class": "checkbox mb-3" },
+          (0, _mithril2.default)(
+            "label",
+            null,
+            (0, _mithril2.default)("input", { type: "checkbox", value: "remember-me" }),
+            " Remember me"
+          )
+        ),
+        (0, _mithril2.default)(
+          "button",
+          { "class": "btn btn-lg btn-primary btn-block", type: "submit" },
+          "Sign in"
+        ),
+        (0, _mithril2.default)(
+          "p",
+          { "class": "mt-5 mb-3 text-muted text-center" },
+          "\xA9 2017-2018"
+        )
+      )
+    );
+  }
+};
+
+exports.default = Login;
 
 /***/ })
 /******/ ]);
