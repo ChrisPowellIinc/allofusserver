@@ -1,11 +1,11 @@
 {
-  "name": "payroll",
-  "description": "The Cross River State Government payroll software",
+  "name": "allofusserver",
+  "description": "All of us server",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "repository": {
-    "url": "https://github.com/Investliftng/crsg-payroll/",
+    "url": "https://github.com/ChrisPowellIinc/allofusserver",
     "type": "git"
   },
   "scripts": {
