@@ -25,6 +25,42 @@ const Register = {
 
         <div class="form-label-group">
           <input
+            type="text"
+            id="first_name"
+            class="form-control"
+            placeholder="First name"
+            required
+            autofocus
+          />
+          <label for="name">First name</label>
+        </div>
+
+        <div class="form-label-group">
+          <input
+            type="text"
+            id="last_name"
+            class="form-control"
+            placeholder="Last name"
+            required
+            autofocus
+          />
+          <label for="name">Last name</label>
+        </div>
+
+        <div class="form-label-group">
+          <input
+            type="text"
+            id="phone"
+            class="form-control"
+            placeholder="Phone number"
+            required
+            autofocus
+          />
+          <label for="phone">Phone number</label>
+        </div>
+
+        <div class="form-label-group">
+          <input
             type="email"
             id="inputEmail"
             class="form-control"
@@ -33,6 +69,18 @@ const Register = {
             autofocus
           />
           <label for="inputEmail">Email address</label>
+        </div>
+
+        <div class="form-label-group">
+          <input
+            type="text"
+            id="username"
+            class="form-control"
+            placeholder="Username"
+            required
+            autofocus
+          />
+          <label for="username">Username</label>
         </div>
 
         <div class="form-label-group">
@@ -46,11 +94,6 @@ const Register = {
           <label for="inputPassword">Password</label>
         </div>
 
-        <div class="checkbox mb-3">
-          <label>
-            <input type="checkbox" value="remember-me" /> Remember me
-          </label>
-        </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">
           Register
         </button>
