@@ -26,10 +26,18 @@ const Landing = {
           <h1 class="cover-heading">All of Us.</h1>
           <p class="lead">All of us is a social media network for ...</p>
           <p class="lead">
-            <a href="#" class="btn btn-lg btn-secondary mr-1">
+            <a
+              href="/login"
+              oncreate={m.route.link}
+              class="btn btn-lg btn-secondary mr-1"
+            >
               Login
             </a>
-            <a href="#" class="btn btn-lg btn-secondary ml-1">
+            <a
+              href="/register"
+              oncreate={m.route.link}
+              class="btn btn-lg btn-secondary ml-1"
+            >
               Signup
             </a>
           </p>
@@ -38,8 +46,7 @@ const Landing = {
         <footer class="mastfoot mt-auto">
           <div class="inner">
             <p>
-              &copy 2018 <a href="https://getbootstrap.com/">allofus</a>, by{" "}
-              <a href="https://twitter.com/mdo">allofus</a>.
+              &copy; 2018 <a href="/">allofus</a>, by <a href="/">allofus</a>.
             </p>
           </div>
         </footer>
