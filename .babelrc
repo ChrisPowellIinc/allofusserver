@@ -3,6 +3,10 @@
     "plugins": [
         ["transform-react-jsx", {
             "pragma": "m"
-        }]
+        }],
+        "transform-es2015-destructuring",
+        "transform-runtime",
+		"syntax-dynamic-import",
+		"syntax-jsx"
     ]
 }
