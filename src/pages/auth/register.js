@@ -1,10 +1,25 @@
 import m from "mithril";
 import "css/auth.css";
+import Auth from "services/auth";
 
 const Register = {
+  User: {},
+  register: e => {
+    e.preventDefault();
+    console.log("hello login");
+    Auth.register(Register.User).catch(err => {});
+  },
+  oncreate: vnode => {
+    vnode.state.errors = [];
+  },
   view: vnode => (
     <section class="register">
-      <form class="form-signin">
+      <form
+        class="form-signin"
+        onsubmit={Register.register}
+        autocomplete="off"
+        novalidate
+      >
         <div class="text-center mb-4">
           <img
             class="mb-4"
@@ -31,8 +46,16 @@ const Register = {
             placeholder="First name"
             required
             autofocus
+            oninput={m.withAttr("value", value => {
+              Register.User.first_name = value;
+            })}
           />
           <label for="name">First name</label>
+          {Auth.errors.first_name || (
+            <small class="form-text text-danger">
+              {Auth.errors.first_name}
+            </small>
+          )}
         </div>
 
         <div class="form-label-group">
@@ -43,6 +66,9 @@ const Register = {
             placeholder="Last name"
             required
             autofocus
+            oninput={m.withAttr("value", value => {
+              Register.User.last_name = value;
+            })}
           />
           <label for="name">Last name</label>
         </div>
@@ -55,6 +81,9 @@ const Register = {
             placeholder="Phone number"
             required
             autofocus
+            oninput={m.withAttr("value", value => {
+              Register.User.phone = value;
+            })}
           />
           <label for="phone">Phone number</label>
         </div>
@@ -67,6 +96,9 @@ const Register = {
             placeholder="Email address"
             required
             autofocus
+            oninput={m.withAttr("value", value => {
+              Register.User.email = value;
+            })}
           />
           <label for="inputEmail">Email address</label>
         </div>
@@ -79,6 +111,9 @@ const Register = {
             placeholder="Username"
             required
             autofocus
+            oninput={m.withAttr("value", value => {
+              Register.User.username = value;
+            })}
           />
           <label for="username">Username</label>
         </div>
@@ -90,6 +125,9 @@ const Register = {
             class="form-control"
             placeholder="Password"
             required
+            oninput={m.withAttr("value", value => {
+              Register.User.password = value;
+            })}
           />
           <label for="inputPassword">Password</label>
         </div>
