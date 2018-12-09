@@ -116,7 +116,7 @@ const Auth = {
         }
       })
       .catch(err => {
-        DisplayFormErrors();
+        DisplayFormErrors("Username or password is incorrect");
       })
       .finally(() => {
         Auth.loading = false;
