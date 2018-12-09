@@ -6,7 +6,6 @@ const Register = {
   User: {},
   register: e => {
     e.preventDefault();
-    console.log("hello login");
     Auth.register(Register.User).catch(err => {});
   },
   oncreate: vnode => {
@@ -41,17 +40,17 @@ const Register = {
         <div class="form-label-group">
           <input
             type="text"
+            name="first_name"
             id="first_name"
             class="form-control"
             placeholder="First name"
             required
-            autofocus
             oninput={m.withAttr("value", value => {
               Register.User.first_name = value;
             })}
           />
-          <label for="name">First name</label>
-          {Auth.errors.first_name || (
+          <label for="first_name">First name</label>
+          {Auth.errors.first_name && (
             <small class="form-text text-danger">
               {Auth.errors.first_name}
             </small>
@@ -61,67 +60,80 @@ const Register = {
         <div class="form-label-group">
           <input
             type="text"
+            name="last_name"
             id="last_name"
             class="form-control"
             placeholder="Last name"
             required
-            autofocus
             oninput={m.withAttr("value", value => {
               Register.User.last_name = value;
             })}
           />
-          <label for="name">Last name</label>
+          <label for="last_name">Last name</label>
+          {Auth.errors.last_name && (
+            <small class="form-text text-danger">{Auth.errors.last_name}</small>
+          )}
         </div>
 
         <div class="form-label-group">
           <input
             type="text"
+            name="phone"
             id="phone"
             class="form-control"
             placeholder="Phone number"
             required
-            autofocus
             oninput={m.withAttr("value", value => {
               Register.User.phone = value;
             })}
           />
           <label for="phone">Phone number</label>
+          {Auth.errors.phone && (
+            <small class="form-text text-danger">{Auth.errors.phone}</small>
+          )}
         </div>
 
         <div class="form-label-group">
           <input
             type="email"
-            id="inputEmail"
+            name="email"
+            id="email"
             class="form-control"
             placeholder="Email address"
             required
-            autofocus
             oninput={m.withAttr("value", value => {
               Register.User.email = value;
             })}
           />
-          <label for="inputEmail">Email address</label>
+          <label for="email">Email address</label>
+          {Auth.errors.email && (
+            <small class="form-text text-danger">{Auth.errors.email}</small>
+          )}
         </div>
 
         <div class="form-label-group">
           <input
             type="text"
+            name="username"
             id="username"
             class="form-control"
             placeholder="Username"
             required
-            autofocus
             oninput={m.withAttr("value", value => {
               Register.User.username = value;
             })}
           />
           <label for="username">Username</label>
+          {Auth.errors.username && (
+            <small class="form-text text-danger">{Auth.errors.username}</small>
+          )}
         </div>
 
         <div class="form-label-group">
           <input
             type="password"
-            id="inputPassword"
+            name="password"
+            id="password"
             class="form-control"
             placeholder="Password"
             required
@@ -129,7 +141,30 @@ const Register = {
               Register.User.password = value;
             })}
           />
-          <label for="inputPassword">Password</label>
+          <label for="password">Password</label>
+          {Auth.errors.password && (
+            <small class="form-text text-danger">{Auth.errors.password}</small>
+          )}
+        </div>
+
+        <div class="form-label-group">
+          <input
+            type="password"
+            name="confirm_password"
+            id="confirm_password"
+            class="form-control"
+            placeholder="Confirm Password"
+            required
+            oninput={m.withAttr("value", value => {
+              Register.User.confirm_password = value;
+            })}
+          />
+          <label for="confirm_password">Confirm Password</label>
+          {Auth.errors.confirm_password && (
+            <small class="form-text text-danger">
+              {Auth.errors.confirm_password}
+            </small>
+          )}
         </div>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">
