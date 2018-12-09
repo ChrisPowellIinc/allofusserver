@@ -1,3 +1,5 @@
+import izitoast from "izitoast";
+
 /**
  * Formats money value
  * @param {string|number} value
@@ -20,14 +22,20 @@ export const formatMoney = value => {
 export const formatDollar = value => `$${formatMoney(value)}`;
 
 /**
- * Handles response data by showing a toast on the UI
+ * Handles response data by showing a izitoast on the UI
  * @param {Promise} resp the API response
  */
 export const handleResponse = resp => {
   if (resp.status === 200 || resp.status === 201) {
-    toast.success(resp.message);
+    izitoast.success({
+      title: "Success",
+      message: resp.message
+    });
   } else {
-    toast.info(resp.message);
+    izitoast.info({
+      title: "Error",
+      message: resp.message
+    });
   }
 };
 
