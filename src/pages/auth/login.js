@@ -1,10 +1,24 @@
 import m from "mithril";
 import "css/auth.css";
+import Auth from "services/auth";
 
 const Login = {
+  User: {},
+  login: e => {
+    e.preventDefault();
+    Auth.login(Login.User).catch(err => {});
+  },
+  oncreate: vnode => {
+    vnode.state.errors = [];
+  },
   view: vnode => (
     <section class="register">
-      <form class="form-signin">
+      <form
+        class="form-signin"
+        onsubmit={Login.login}
+        autocomplete="off"
+        novalidate
+      >
         <div class="text-center mb-4">
           <img
             class="mb-4"
@@ -25,25 +39,38 @@ const Login = {
 
         <div class="form-label-group">
           <input
-            type="email"
-            id="inputEmail"
+            type="text"
+            id="username"
+            name="username"
             class="form-control"
-            placeholder="Email address"
+            placeholder="Username"
             required
-            autofocus
+            oninput={m.withAttr("value", value => {
+              Login.User.username = value;
+            })}
           />
-          <label for="inputEmail">Email address</label>
+          <label for="username">Username</label>
+          {Auth.errors.username && (
+            <small class="form-text text-danger">{Auth.errors.username}</small>
+          )}
         </div>
 
         <div class="form-label-group">
           <input
             type="password"
-            id="inputPassword"
+            id="password"
+            name="password"
             class="form-control"
             placeholder="Password"
             required
+            oninput={m.withAttr("value", value => {
+              Login.User.password = value;
+            })}
           />
-          <label for="inputPassword">Password</label>
+          <label for="password">Password</label>
+          {Auth.errors.password && (
+            <small class="form-text text-danger">{Auth.errors.password}</small>
+          )}
         </div>
 
         <div class="checkbox mb-3">
