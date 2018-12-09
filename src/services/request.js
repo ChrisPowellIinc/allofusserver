@@ -1,7 +1,7 @@
 import m from "mithril";
 import Auth from "services/auth";
 
-export var request = options =>
+var request = options =>
   Auth.GetUserFromStorage().then(() => {
     options.headers = {
       Authorization: `Bearer ${Auth.user.token}`
@@ -27,3 +27,5 @@ export var request = options =>
       .then(response => response)
       .catch(err => err);
   });
+
+export default request;
