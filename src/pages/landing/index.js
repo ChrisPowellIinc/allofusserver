@@ -46,7 +46,15 @@ const Landing = {
         <footer class="mastfoot mt-auto">
           <div class="inner">
             <p>
-              &copy; 2018 <a href="/">allofus</a>, by <a href="/">allofus</a>.
+              &copy; 2018{" "}
+              <a class="text-white" href="/">
+                allofus
+              </a>
+              , by{" "}
+              <a class="text-white" href="/">
+                allofus
+              </a>
+              .
             </p>
           </div>
         </footer>
