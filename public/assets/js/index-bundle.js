@@ -33460,16 +33460,18 @@ var Landing = {
             (0, _mithril2.default)(
               "p",
               null,
-              "\xA9 2018 ",
+              "\xA9 2018",
+              " ",
               (0, _mithril2.default)(
                 "a",
-                { href: "/" },
+                { "class": "text-white", href: "/" },
                 "allofus"
               ),
-              ", by ",
+              ", by",
+              " ",
               (0, _mithril2.default)(
                 "a",
-                { href: "/" },
+                { "class": "text-white", href: "/" },
                 "allofus"
               ),
               "."
