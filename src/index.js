@@ -3,6 +3,7 @@ import m from "mithril";
 // Bootstrap
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "izitoast/dist/css/iziToast.min.css";
 
 // Pages
 import Landing from "pages/landing";
