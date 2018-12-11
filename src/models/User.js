@@ -60,7 +60,7 @@ export const UserSchema = Joi.object().keys({
     }),
   username: Joi.string()
     .trim()
-    .alphanum()
+    .token()
     .min(3)
     .max(30)
     .required()
