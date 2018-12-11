@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 40);
+/******/ 	return __webpack_require__(__webpack_require__.s = 42);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1439,7 +1439,7 @@ m.vnode = Vnode
 if (true) module["exports"] = m
 else window.m = m
 }());
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(76).setImmediate, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(78).setImmediate, __webpack_require__(5)))
 
 /***/ }),
 /* 10 */
@@ -1550,8 +1550,8 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(3);
-var IE8_DOM_DEFINE = __webpack_require__(45);
-var toPrimitive = __webpack_require__(46);
+var IE8_DOM_DEFINE = __webpack_require__(47);
+var toPrimitive = __webpack_require__(48);
 var dP = Object.defineProperty;
 
 exports.f = __webpack_require__(7) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
@@ -1592,7 +1592,7 @@ module.exports = function (it) {
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(41), __esModule: true };
+module.exports = { "default": __webpack_require__(43), __esModule: true };
 
 /***/ }),
 /* 17 */
@@ -1642,7 +1642,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(53);
+var IObject = __webpack_require__(55);
 var defined = __webpack_require__(18);
 module.exports = function (it) {
   return IObject(defined(it));
@@ -1706,12 +1706,12 @@ module.exports.f = function (C) {
 
 var LIBRARY = __webpack_require__(19);
 var $export = __webpack_require__(10);
-var redefine = __webpack_require__(47);
+var redefine = __webpack_require__(49);
 var hide = __webpack_require__(4);
 var Iterators = __webpack_require__(8);
-var $iterCreate = __webpack_require__(48);
+var $iterCreate = __webpack_require__(50);
 var setToStringTag = __webpack_require__(23);
-var getPrototypeOf = __webpack_require__(56);
+var getPrototypeOf = __webpack_require__(58);
 var ITERATOR = __webpack_require__(1)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
@@ -1909,7 +1909,7 @@ module.exports = function (O, D) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var ctx = __webpack_require__(11);
-var invoke = __webpack_require__(68);
+var invoke = __webpack_require__(70);
 var html = __webpack_require__(32);
 var cel = __webpack_require__(20);
 var global = __webpack_require__(0);
@@ -2033,6 +2033,293 @@ module.exports = function (C, x) {
 
 /***/ }),
 /* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _regenerator = __webpack_require__(89);
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _promise = __webpack_require__(16);
+
+var _promise2 = _interopRequireDefault(_promise);
+
+var _asyncToGenerator2 = __webpack_require__(92);
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+var _mithril = __webpack_require__(9);
+
+var _mithril2 = _interopRequireDefault(_mithril);
+
+var _joiBrowser = __webpack_require__(40);
+
+var Joi = _interopRequireWildcard(_joiBrowser);
+
+var _localforage = __webpack_require__(93);
+
+var _localforage2 = _interopRequireDefault(_localforage);
+
+var _izitoast = __webpack_require__(41);
+
+var _izitoast2 = _interopRequireDefault(_izitoast);
+
+var _utils = __webpack_require__(94);
+
+var _user = __webpack_require__(95);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function DisplayFormErrors(message) {
+  _izitoast2.default.error({
+    title: "Error",
+    message: message || "Fill all required fields"
+  });
+}
+
+var Auth = {
+  errors: {},
+  user: _user.User,
+  loading: false,
+  /**
+   * Sets the value of username.
+   * @param {string} username
+   */
+  setUsername: function setUsername(username) {
+    Auth.user.username = username;
+  },
+
+  /**
+   * Sets the value of password.
+   * @param {string} password
+   */
+  setPassword: function setPassword(password) {
+    Auth.user.password = password;
+  },
+
+  /**
+   * Fetches the user from storage if the user exists
+   * @return {Promise<any>}
+   */
+  getUserFromStorage: function () {
+    var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
+      var user;
+      return _regenerator2.default.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return _localforage2.default.getItem("user");
+
+            case 3:
+              user = _context.sent;
+
+              Auth.user = user;
+              return _context.abrupt("return", _promise2.default.resolve(true));
+
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](0);
+
+              Auth.logout();
+
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, undefined, [[0, 8]]);
+    }));
+
+    function getUserFromStorage() {
+      return _ref.apply(this, arguments);
+    }
+
+    return getUserFromStorage;
+  }(),
+
+  /**
+   * Creates a user account.
+   */
+  register: function register(user) {
+    Auth.errors = {};
+    // destructure value as data
+
+    var _Joi$validate = Joi.validate(user, _user.UserSchema, {
+      allowUnknown: true
+    }),
+        error = _Joi$validate.error,
+        data = _Joi$validate.value;
+
+    if (error) {
+      (0, _utils.handleValidationError)(error, Auth.errors);
+      DisplayFormErrors();
+      return _promise2.default.reject(new Error("Fill all required fields"));
+    }
+    Auth.loading = true;
+    // API call
+    return _mithril2.default.request({
+      method: "POST",
+      url: "/v1/api/auth/register",
+      data: data
+    }).then(function (res) {
+      (0, _utils.handleResponse)(res);
+      if (res.status === 201) {
+        _mithril2.default.route.set("/login");
+      }
+    }).catch(function (err) {
+      DisplayFormErrors(err.message);
+      Auth.errors = err.data;
+    }).finally(function () {
+      Auth.loading = false;
+      _mithril2.default.redraw();
+    });
+  },
+
+  /**
+   * Login a user and starts a session.
+   */
+  login: function login(user) {
+    Auth.errors = {};
+    // destructure value as data
+
+    var _Joi$validate2 = Joi.validate(user, _user.LoginSchema, {
+      allowUnknown: true
+    }),
+        error = _Joi$validate2.error,
+        data = _Joi$validate2.value;
+
+    if (error) {
+      (0, _utils.handleValidationError)(error, Auth.errors);
+      DisplayFormErrors();
+      return _promise2.default.reject(new Error("Fill all required fields"));
+    }
+    Auth.loading = true;
+    // API call
+    return _mithril2.default.request({
+      method: "POST",
+      url: "/v1/api/auth/login",
+      data: data
+    }).then(function (res) {
+      (0, _utils.handleResponse)(res);
+      if (res.status === 200) {
+        _localforage2.default.setItem("user", res.data).then(function (user) {
+          Auth.user = user;
+          _mithril2.default.route.set("/");
+        });
+      }
+    }).catch(function (err) {
+      DisplayFormErrors("Username or password is incorrect");
+    }).finally(function () {
+      Auth.loading = false;
+      _mithril2.default.redraw();
+    });
+  },
+
+  /**
+   * Checks if a user exists in session
+   * @return {Promise<string | boolean>}
+   */
+  isLoggedIn: function () {
+    var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
+      var user;
+      return _regenerator2.default.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return _localforage2.default.getItem("user");
+
+            case 3:
+              user = _context2.sent;
+
+              if (!(user && user.token)) {
+                _context2.next = 7;
+                break;
+              }
+
+              Auth.user = user;
+              return _context2.abrupt("return", _promise2.default.resolve(user.token));
+
+            case 7:
+              return _context2.abrupt("return", _promise2.default.reject(new Error("Invalid access token")));
+
+            case 10:
+              _context2.prev = 10;
+              _context2.t0 = _context2["catch"](0);
+              return _context2.abrupt("return", _promise2.default.reject(new Error("Invalid access token")));
+
+            case 13:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, undefined, [[0, 10]]);
+    }));
+
+    function isLoggedIn() {
+      return _ref2.apply(this, arguments);
+    }
+
+    return isLoggedIn;
+  }(),
+
+  /**
+   * Clears the session and redirects to login page
+   */
+  logout: function () {
+    var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3() {
+      return _regenerator2.default.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              _context3.next = 3;
+              return _localforage2.default.removeItem("user");
+
+            case 3:
+              Auth.user = {};
+              _mithril2.default.route.set("/login");
+              _context3.next = 11;
+              break;
+
+            case 7:
+              _context3.prev = 7;
+              _context3.t0 = _context3["catch"](0);
+
+              Auth.user = {};
+              _mithril2.default.route.set("/login");
+
+            case 11:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, undefined, [[0, 7]]);
+    }));
+
+    function logout() {
+      return _ref3.apply(this, arguments);
+    }
+
+    return logout;
+  }()
+};
+
+exports.default = Auth;
+
+/***/ }),
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -14954,7 +15241,1308 @@ module.exports = function(module) {
 });
 
 /***/ }),
-/* 40 */
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
+* iziToast | v1.4.0
+* http://izitoast.marcelodolce.com
+* by Marcelo Dolce.
+*/
+(function (root, factory) {
+	if(true) {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory(root)),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else if(typeof exports === 'object') {
+		module.exports = factory(root);
+	} else {
+		root.iziToast = factory(root);
+	}
+})(typeof global !== 'undefined' ? global : window || this.window || this.global, function (root) {
+
+	'use strict';
+
+	//
+	// Variables
+	//
+	var $iziToast = {},
+		PLUGIN_NAME = 'iziToast',
+		BODY = document.querySelector('body'),
+		ISMOBILE = (/Mobi/.test(navigator.userAgent)) ? true : false,
+		ISCHROME = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor),
+		ISFIREFOX = typeof InstallTrigger !== 'undefined',
+		ACCEPTSTOUCH = 'ontouchstart' in document.documentElement,
+		POSITIONS = ['bottomRight','bottomLeft','bottomCenter','topRight','topLeft','topCenter','center'],
+		THEMES = {
+			info: {
+				color: 'blue',
+				icon: 'ico-info'
+			},
+			success: {
+				color: 'green',
+				icon: 'ico-success'
+			},
+			warning: {
+				color: 'orange',
+				icon: 'ico-warning'
+			},
+			error: {
+				color: 'red',
+				icon: 'ico-error'
+			},
+			question: {
+				color: 'yellow',
+				icon: 'ico-question'
+			}
+		},
+		MOBILEWIDTH = 568,
+		CONFIG = {};
+
+	$iziToast.children = {};
+
+	// Default settings
+	var defaults = {
+		id: null, 
+		class: '',
+		title: '',
+		titleColor: '',
+		titleSize: '',
+		titleLineHeight: '',
+		message: '',
+		messageColor: '',
+		messageSize: '',
+		messageLineHeight: '',
+		backgroundColor: '',
+		theme: 'light', // dark
+		color: '', // blue, red, green, yellow
+		icon: '',
+		iconText: '',
+		iconColor: '',
+		iconUrl: null,
+		image: '',
+		imageWidth: 50,
+		maxWidth: null,
+		zindex: null,
+		layout: 1,
+		balloon: false,
+		close: true,
+		closeOnEscape: false,
+		closeOnClick: false,
+		displayMode: 0,
+		position: 'bottomRight', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter, center
+		target: '',
+		targetFirst: true,
+		timeout: 5000,
+		rtl: false,
+		animateInside: true,
+		drag: true,
+		pauseOnHover: true,
+		resetOnHover: false,
+		progressBar: true,
+		progressBarColor: '',
+		progressBarEasing: 'linear',
+		overlay: false,
+		overlayClose: false,
+		overlayColor: 'rgba(0, 0, 0, 0.6)',
+		transitionIn: 'fadeInUp', // bounceInLeft, bounceInRight, bounceInUp, bounceInDown, fadeIn, fadeInDown, fadeInUp, fadeInLeft, fadeInRight, flipInX
+		transitionOut: 'fadeOut', // fadeOut, fadeOutUp, fadeOutDown, fadeOutLeft, fadeOutRight, flipOutX
+		transitionInMobile: 'fadeInUp',
+		transitionOutMobile: 'fadeOutDown',
+		buttons: {},
+		inputs: {},
+		onOpening: function () {},
+		onOpened: function () {},
+		onClosing: function () {},
+		onClosed: function () {}
+	};
+
+	//
+	// Methods
+	//
+
+
+	/**
+	 * Polyfill for remove() method
+	 */
+	if(!('remove' in Element.prototype)) {
+	    Element.prototype.remove = function() {
+	        if(this.parentNode) {
+	            this.parentNode.removeChild(this);
+	        }
+	    };
+	}
+
+	/*
+     * Polyfill for CustomEvent for IE >= 9
+     * https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill
+     */
+    if(typeof window.CustomEvent !== 'function') {
+        var CustomEventPolyfill = function (event, params) {
+            params = params || { bubbles: false, cancelable: false, detail: undefined };
+            var evt = document.createEvent('CustomEvent');
+            evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+            return evt;
+        };
+
+        CustomEventPolyfill.prototype = window.Event.prototype;
+
+        window.CustomEvent = CustomEventPolyfill;
+    }
+
+	/**
+	 * A simple forEach() implementation for Arrays, Objects and NodeLists
+	 * @private
+	 * @param {Array|Object|NodeList} collection Collection of items to iterate
+	 * @param {Function} callback Callback function for each iteration
+	 * @param {Array|Object|NodeList} scope Object/NodeList/Array that forEach is iterating over (aka `this`)
+	 */
+	var forEach = function (collection, callback, scope) {
+		if(Object.prototype.toString.call(collection) === '[object Object]') {
+			for (var prop in collection) {
+				if(Object.prototype.hasOwnProperty.call(collection, prop)) {
+					callback.call(scope, collection[prop], prop, collection);
+				}
+			}
+		} else {
+			if(collection){
+				for (var i = 0, len = collection.length; i < len; i++) {
+					callback.call(scope, collection[i], i, collection);
+				}
+			}
+		}
+	};
+
+	/**
+	 * Merge defaults with user options
+	 * @private
+	 * @param {Object} defaults Default settings
+	 * @param {Object} options User options
+	 * @returns {Object} Merged values of defaults and options
+	 */
+	var extend = function (defaults, options) {
+		var extended = {};
+		forEach(defaults, function (value, prop) {
+			extended[prop] = defaults[prop];
+		});
+		forEach(options, function (value, prop) {
+			extended[prop] = options[prop];
+		});
+		return extended;
+	};
+
+
+	/**
+	 * Create a fragment DOM elements
+	 * @private
+	 */
+	var createFragElem = function(htmlStr) {
+		var frag = document.createDocumentFragment(),
+			temp = document.createElement('div');
+		temp.innerHTML = htmlStr;
+		while (temp.firstChild) {
+			frag.appendChild(temp.firstChild);
+		}
+		return frag;
+	};
+
+
+	/**
+	 * Generate new ID
+	 * @private
+	 */
+	var generateId = function(params) {
+		var newId = btoa(encodeURIComponent(params));
+		return newId.replace(/=/g, "");
+	};
+
+
+	/**
+	 * Check if is a color
+	 * @private
+	 */
+	var isColor = function(color){
+		if( color.substring(0,1) == '#' || color.substring(0,3) == 'rgb' || color.substring(0,3) == 'hsl' ){
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+
+	/**
+	 * Check if is a Base64 string
+	 * @private
+	 */
+	var isBase64 = function(str) {
+	    try {
+	        return btoa(atob(str)) == str;
+	    } catch (err) {
+	        return false;
+	    }
+	};
+
+
+	/**
+	 * Drag method of toasts
+	 * @private
+	 */
+	var drag = function() {
+	    
+	    return {
+	        move: function(toast, instance, settings, xpos) {
+
+	        	var opacity,
+	        		opacityRange = 0.3,
+	        		distance = 180;
+	            
+	            if(xpos !== 0){
+	            	
+	            	toast.classList.add(PLUGIN_NAME+'-dragged');
+
+	            	toast.style.transform = 'translateX('+xpos + 'px)';
+
+		            if(xpos > 0){
+		            	opacity = (distance-xpos) / distance;
+		            	if(opacity < opacityRange){
+							instance.hide(extend(settings, { transitionOut: 'fadeOutRight', transitionOutMobile: 'fadeOutRight' }), toast, 'drag');
+						}
+		            } else {
+		            	opacity = (distance+xpos) / distance;
+		            	if(opacity < opacityRange){
+							instance.hide(extend(settings, { transitionOut: 'fadeOutLeft', transitionOutMobile: 'fadeOutLeft' }), toast, 'drag');
+						}
+		            }
+					toast.style.opacity = opacity;
+			
+					if(opacity < opacityRange){
+
+						if(ISCHROME || ISFIREFOX)
+							toast.style.left = xpos+'px';
+
+						toast.parentNode.style.opacity = opacityRange;
+
+		                this.stopMoving(toast, null);
+					}
+	            }
+
+				
+	        },
+	        startMoving: function(toast, instance, settings, e) {
+
+	            e = e || window.event;
+	            var posX = ((ACCEPTSTOUCH) ? e.touches[0].clientX : e.clientX),
+	                toastLeft = toast.style.transform.replace('px)', '');
+	                toastLeft = toastLeft.replace('translateX(', '');
+	            var offsetX = posX - toastLeft;
+
+				if(settings.transitionIn){
+					toast.classList.remove(settings.transitionIn);
+				}
+				if(settings.transitionInMobile){
+					toast.classList.remove(settings.transitionInMobile);
+				}
+				toast.style.transition = '';
+
+	            if(ACCEPTSTOUCH) {
+	                document.ontouchmove = function(e) {
+	                    e.preventDefault();
+	                    e = e || window.event;
+	                    var posX = e.touches[0].clientX,
+	                        finalX = posX - offsetX;
+                        drag.move(toast, instance, settings, finalX);
+	                };
+	            } else {
+	                document.onmousemove = function(e) {
+	                    e.preventDefault();
+	                    e = e || window.event;
+	                    var posX = e.clientX,
+	                        finalX = posX - offsetX;
+                        drag.move(toast, instance, settings, finalX);
+	                };
+	            }
+
+	        },
+	        stopMoving: function(toast, e) {
+
+	            if(ACCEPTSTOUCH) {
+	                document.ontouchmove = function() {};
+	            } else {
+	            	document.onmousemove = function() {};
+	            }
+
+				toast.style.opacity = '';
+				toast.style.transform = '';
+
+	            if(toast.classList.contains(PLUGIN_NAME+'-dragged')){
+	            	
+	            	toast.classList.remove(PLUGIN_NAME+'-dragged');
+
+					toast.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
+					setTimeout(function() {
+						toast.style.transition = '';
+					}, 400);
+	            }
+
+	        }
+	    };
+
+	}();
+
+
+
+
+
+	$iziToast.setSetting = function (ref, option, value) {
+
+		$iziToast.children[ref][option] = value;
+
+	};
+
+
+	$iziToast.getSetting = function (ref, option) {
+
+		return $iziToast.children[ref][option];
+
+	};
+
+
+	/**
+	 * Destroy the current initialization.
+	 * @public
+	 */
+	$iziToast.destroy = function () {
+
+		forEach(document.querySelectorAll('.'+PLUGIN_NAME+'-overlay'), function(element, index) {
+			element.remove();
+		});
+
+		forEach(document.querySelectorAll('.'+PLUGIN_NAME+'-wrapper'), function(element, index) {
+			element.remove();
+		});
+
+		forEach(document.querySelectorAll('.'+PLUGIN_NAME), function(element, index) {
+			element.remove();
+		});
+
+		this.children = {};
+
+		// Remove event listeners
+		document.removeEventListener(PLUGIN_NAME+'-opened', {}, false);
+		document.removeEventListener(PLUGIN_NAME+'-opening', {}, false);
+		document.removeEventListener(PLUGIN_NAME+'-closing', {}, false);
+		document.removeEventListener(PLUGIN_NAME+'-closed', {}, false);
+		document.removeEventListener('keyup', {}, false);
+
+		// Reset variables
+		CONFIG = {};
+	};
+
+	/**
+	 * Initialize Plugin
+	 * @public
+	 * @param {Object} options User settings
+	 */
+	$iziToast.settings = function (options) {
+
+		// Destroy any existing initializations
+		$iziToast.destroy();
+
+		CONFIG = options;
+		defaults = extend(defaults, options || {});
+	};
+
+
+	/**
+	 * Building themes functions.
+	 * @public
+	 * @param {Object} options User settings
+	 */
+	forEach(THEMES, function (theme, name) {
+
+		$iziToast[name] = function (options) {
+
+			var settings = extend(CONFIG, options || {});
+			settings = extend(theme, settings || {});
+
+			this.show(settings);
+		};
+
+	});
+
+
+	/**
+	 * Do the calculation to move the progress bar
+	 * @private
+	 */
+	$iziToast.progress = function (options, $toast, callback) {
+
+
+		var that = this,
+			ref = $toast.getAttribute('data-iziToast-ref'),
+			settings = extend(this.children[ref], options || {}),
+			$elem = $toast.querySelector('.'+PLUGIN_NAME+'-progressbar div');
+
+	    return {
+	        start: function() {
+
+	        	if(typeof settings.time.REMAINING == 'undefined'){
+
+	        		$toast.classList.remove(PLUGIN_NAME+'-reseted');
+
+		        	if($elem !== null){
+						$elem.style.transition = 'width '+ settings.timeout +'ms '+settings.progressBarEasing;
+						$elem.style.width = '0%';
+					}
+
+		        	settings.time.START = new Date().getTime();
+		        	settings.time.END = settings.time.START + settings.timeout;
+					settings.time.TIMER = setTimeout(function() {
+
+						clearTimeout(settings.time.TIMER);
+
+						if(!$toast.classList.contains(PLUGIN_NAME+'-closing')){
+
+							that.hide(settings, $toast, 'timeout');
+
+							if(typeof callback === 'function'){
+								callback.apply(that);
+							}
+						}
+
+					}, settings.timeout);			
+		        	that.setSetting(ref, 'time', settings.time);
+	        	}
+	        },
+	        pause: function() {
+
+	        	if(typeof settings.time.START !== 'undefined' && !$toast.classList.contains(PLUGIN_NAME+'-paused') && !$toast.classList.contains(PLUGIN_NAME+'-reseted')){
+
+        			$toast.classList.add(PLUGIN_NAME+'-paused');
+
+					settings.time.REMAINING = settings.time.END - new Date().getTime();
+
+					clearTimeout(settings.time.TIMER);
+
+					that.setSetting(ref, 'time', settings.time);
+
+					if($elem !== null){
+						var computedStyle = window.getComputedStyle($elem),
+							propertyWidth = computedStyle.getPropertyValue('width');
+
+						$elem.style.transition = 'none';
+						$elem.style.width = propertyWidth;					
+					}
+
+					if(typeof callback === 'function'){
+						setTimeout(function() {
+							callback.apply(that);						
+						}, 10);
+					}
+        		}
+	        },
+	        resume: function() {
+
+				if(typeof settings.time.REMAINING !== 'undefined'){
+
+					$toast.classList.remove(PLUGIN_NAME+'-paused');
+
+		        	if($elem !== null){
+						$elem.style.transition = 'width '+ settings.time.REMAINING +'ms '+settings.progressBarEasing;
+						$elem.style.width = '0%';
+					}
+
+		        	settings.time.END = new Date().getTime() + settings.time.REMAINING;
+					settings.time.TIMER = setTimeout(function() {
+
+						clearTimeout(settings.time.TIMER);
+
+						if(!$toast.classList.contains(PLUGIN_NAME+'-closing')){
+
+							that.hide(settings, $toast, 'timeout');
+
+							if(typeof callback === 'function'){
+								callback.apply(that);
+							}
+						}
+
+
+					}, settings.time.REMAINING);
+
+					that.setSetting(ref, 'time', settings.time);
+				} else {
+					this.start();
+				}
+	        },
+	        reset: function(){
+
+				clearTimeout(settings.time.TIMER);
+
+				delete settings.time.REMAINING;
+
+				that.setSetting(ref, 'time', settings.time);
+
+				$toast.classList.add(PLUGIN_NAME+'-reseted');
+
+				$toast.classList.remove(PLUGIN_NAME+'-paused');
+
+				if($elem !== null){
+					$elem.style.transition = 'none';
+					$elem.style.width = '100%';
+				}
+
+				if(typeof callback === 'function'){
+					setTimeout(function() {
+						callback.apply(that);						
+					}, 10);
+				}
+	        }
+	    };
+
+	};
+
+
+	/**
+	 * Close the specific Toast
+	 * @public
+	 * @param {Object} options User settings
+	 */
+	$iziToast.hide = function (options, $toast, closedBy) {
+
+		if(typeof $toast != 'object'){
+			$toast = document.querySelector($toast);
+		}		
+
+		var that = this,
+			settings = extend(this.children[$toast.getAttribute('data-iziToast-ref')], options || {});
+			settings.closedBy = closedBy || null;
+
+		delete settings.time.REMAINING;
+
+		$toast.classList.add(PLUGIN_NAME+'-closing');
+
+		// Overlay
+		(function(){
+
+			var $overlay = document.querySelector('.'+PLUGIN_NAME+'-overlay');
+			if($overlay !== null){
+				var refs = $overlay.getAttribute('data-iziToast-ref');		
+					refs = refs.split(',');
+				var index = refs.indexOf(String(settings.ref));
+
+				if(index !== -1){
+					refs.splice(index, 1);			
+				}
+				$overlay.setAttribute('data-iziToast-ref', refs.join());
+
+				if(refs.length === 0){
+					$overlay.classList.remove('fadeIn');
+					$overlay.classList.add('fadeOut');
+					setTimeout(function() {
+						$overlay.remove();
+					}, 700);
+				}
+			}
+
+		})();
+
+		if(settings.transitionIn){
+			$toast.classList.remove(settings.transitionIn);
+		} 
+
+		if(settings.transitionInMobile){
+			$toast.classList.remove(settings.transitionInMobile);
+		}
+
+		if(ISMOBILE || window.innerWidth <= MOBILEWIDTH){
+			if(settings.transitionOutMobile)
+				$toast.classList.add(settings.transitionOutMobile);
+		} else {
+			if(settings.transitionOut)
+				$toast.classList.add(settings.transitionOut);
+		}
+		var H = $toast.parentNode.offsetHeight;
+				$toast.parentNode.style.height = H+'px';
+				$toast.style.pointerEvents = 'none';
+		
+		if(!ISMOBILE || window.innerWidth > MOBILEWIDTH){
+			$toast.parentNode.style.transitionDelay = '0.2s';
+		}
+
+		try {
+			var event = new CustomEvent(PLUGIN_NAME+'-closing', {detail: settings, bubbles: true, cancelable: true});
+			document.dispatchEvent(event);
+		} catch(ex){
+			console.warn(ex);
+		}
+
+		setTimeout(function() {
+			
+			$toast.parentNode.style.height = '0px';
+			$toast.parentNode.style.overflow = '';
+
+			setTimeout(function(){
+				
+				delete that.children[settings.ref];
+
+				$toast.parentNode.remove();
+
+				try {
+					var event = new CustomEvent(PLUGIN_NAME+'-closed', {detail: settings, bubbles: true, cancelable: true});
+					document.dispatchEvent(event);
+				} catch(ex){
+					console.warn(ex);
+				}
+
+				if(typeof settings.onClosed !== 'undefined'){
+					settings.onClosed.apply(null, [settings, $toast, closedBy]);
+				}
+
+			}, 1000);
+		}, 200);
+
+
+		if(typeof settings.onClosing !== 'undefined'){
+			settings.onClosing.apply(null, [settings, $toast, closedBy]);
+		}
+	};
+
+	/**
+	 * Create and show the Toast
+	 * @public
+	 * @param {Object} options User settings
+	 */
+	$iziToast.show = function (options) {
+
+		var that = this;
+
+		// Merge user options with defaults
+		var settings = extend(CONFIG, options || {});
+			settings = extend(defaults, settings);
+			settings.time = {};
+
+		if(settings.id === null){
+			settings.id = generateId(settings.title+settings.message+settings.color);
+		}
+
+		if(settings.displayMode === 1 || settings.displayMode == 'once'){
+			try {
+				if(document.querySelectorAll('.'+PLUGIN_NAME+'#'+settings.id).length > 0){
+					return false;
+				}
+			} catch (exc) {
+				console.warn('['+PLUGIN_NAME+'] Could not find an element with this selector: '+'#'+settings.id+'. Try to set an valid id.');
+			}
+		}
+
+		if(settings.displayMode === 2 || settings.displayMode == 'replace'){
+			try {
+				forEach(document.querySelectorAll('.'+PLUGIN_NAME+'#'+settings.id), function(element, index) {
+					that.hide(settings, element, 'replaced');
+				});
+			} catch (exc) {
+				console.warn('['+PLUGIN_NAME+'] Could not find an element with this selector: '+'#'+settings.id+'. Try to set an valid id.');
+			}
+		}
+
+		settings.ref = new Date().getTime() + Math.floor((Math.random() * 10000000) + 1);
+
+		$iziToast.children[settings.ref] = settings;
+
+		var $DOM = {
+			body: document.querySelector('body'),
+			overlay: document.createElement('div'),
+			toast: document.createElement('div'),
+			toastBody: document.createElement('div'),
+			toastTexts: document.createElement('div'),
+			toastCapsule: document.createElement('div'),
+			cover: document.createElement('div'),
+			buttons: document.createElement('div'),
+			inputs: document.createElement('div'),
+			icon: !settings.iconUrl ? document.createElement('i') : document.createElement('img'),
+			wrapper: null
+		};
+
+		$DOM.toast.setAttribute('data-iziToast-ref', settings.ref);
+		$DOM.toast.appendChild($DOM.toastBody);
+		$DOM.toastCapsule.appendChild($DOM.toast);
+
+		// CSS Settings
+		(function(){
+
+			$DOM.toast.classList.add(PLUGIN_NAME);
+			$DOM.toast.classList.add(PLUGIN_NAME+'-opening');
+			$DOM.toastCapsule.classList.add(PLUGIN_NAME+'-capsule');
+			$DOM.toastBody.classList.add(PLUGIN_NAME + '-body');
+			$DOM.toastTexts.classList.add(PLUGIN_NAME + '-texts');
+
+			if(ISMOBILE || window.innerWidth <= MOBILEWIDTH){
+				if(settings.transitionInMobile)
+					$DOM.toast.classList.add(settings.transitionInMobile);
+			} else {
+				if(settings.transitionIn)
+					$DOM.toast.classList.add(settings.transitionIn);
+			}
+
+			if(settings.class){
+				var classes = settings.class.split(' ');
+				forEach(classes, function (value, index) {
+					$DOM.toast.classList.add(value);
+				});
+			}
+
+			if(settings.id){ $DOM.toast.id = settings.id; }
+
+			if(settings.rtl){
+				$DOM.toast.classList.add(PLUGIN_NAME + '-rtl');
+				$DOM.toast.setAttribute('dir', 'rtl');
+			}
+
+			if(settings.layout > 1){ $DOM.toast.classList.add(PLUGIN_NAME+'-layout'+settings.layout); }
+
+			if(settings.balloon){ $DOM.toast.classList.add(PLUGIN_NAME+'-balloon'); }
+
+			if(settings.maxWidth){
+				if( !isNaN(settings.maxWidth) ){
+					$DOM.toast.style.maxWidth = settings.maxWidth+'px';
+				} else {
+					$DOM.toast.style.maxWidth = settings.maxWidth;
+				}
+			}
+
+			if(settings.theme !== '' || settings.theme !== 'light') {
+
+				$DOM.toast.classList.add(PLUGIN_NAME+'-theme-'+settings.theme);
+			}
+
+			if(settings.color) { //#, rgb, rgba, hsl
+				
+				if( isColor(settings.color) ){
+					$DOM.toast.style.background = settings.color;
+				} else {
+					$DOM.toast.classList.add(PLUGIN_NAME+'-color-'+settings.color);
+				}
+			}
+
+			if(settings.backgroundColor) {
+				$DOM.toast.style.background = settings.backgroundColor;
+				if(settings.balloon){
+					$DOM.toast.style.borderColor = settings.backgroundColor;				
+				}
+			}
+		})();
+
+		// Cover image
+		(function(){
+			if(settings.image) {
+				$DOM.cover.classList.add(PLUGIN_NAME + '-cover');
+				$DOM.cover.style.width = settings.imageWidth + 'px';
+
+				if(isBase64(settings.image.replace(/ /g,''))){
+					$DOM.cover.style.backgroundImage = 'url(data:image/png;base64,' + settings.image.replace(/ /g,'') + ')';
+				} else {
+					$DOM.cover.style.backgroundImage = 'url(' + settings.image + ')';
+				}
+
+				if(settings.rtl){
+					$DOM.toastBody.style.marginRight = (settings.imageWidth + 10) + 'px';
+				} else {
+					$DOM.toastBody.style.marginLeft = (settings.imageWidth + 10) + 'px';				
+				}
+				$DOM.toast.appendChild($DOM.cover);
+			}
+		})();
+
+		// Button close
+		(function(){
+			if(settings.close){
+				
+				$DOM.buttonClose = document.createElement('button');
+				$DOM.buttonClose.type = 'button';
+				$DOM.buttonClose.classList.add(PLUGIN_NAME + '-close');
+				$DOM.buttonClose.addEventListener('click', function (e) {
+					var button = e.target;
+					that.hide(settings, $DOM.toast, 'button');
+				});
+				$DOM.toast.appendChild($DOM.buttonClose);
+			} else {
+				if(settings.rtl){
+					$DOM.toast.style.paddingLeft = '18px';
+				} else {
+					$DOM.toast.style.paddingRight = '18px';
+				}
+			}
+		})();
+
+		// Progress Bar & Timeout
+		(function(){
+
+			if(settings.progressBar){
+				$DOM.progressBar = document.createElement('div');
+				$DOM.progressBarDiv = document.createElement('div');
+				$DOM.progressBar.classList.add(PLUGIN_NAME + '-progressbar');
+				$DOM.progressBarDiv.style.background = settings.progressBarColor;
+				$DOM.progressBar.appendChild($DOM.progressBarDiv);
+				$DOM.toast.appendChild($DOM.progressBar);
+			}
+
+			if(settings.timeout) {
+
+				if(settings.pauseOnHover && !settings.resetOnHover){
+					
+					$DOM.toast.addEventListener('mouseenter', function (e) {
+						that.progress(settings, $DOM.toast).pause();
+					});
+					$DOM.toast.addEventListener('mouseleave', function (e) {
+						that.progress(settings, $DOM.toast).resume();
+					});
+				}
+
+				if(settings.resetOnHover){
+
+					$DOM.toast.addEventListener('mouseenter', function (e) {
+						that.progress(settings, $DOM.toast).reset();
+					});
+					$DOM.toast.addEventListener('mouseleave', function (e) {
+						that.progress(settings, $DOM.toast).start();
+					});
+				}
+			}
+		})();
+
+		// Icon
+		(function(){
+
+			if(settings.iconUrl) {
+
+				$DOM.icon.setAttribute('class', PLUGIN_NAME + '-icon');
+				$DOM.icon.setAttribute('src', settings.iconUrl);
+
+			} else if(settings.icon) {
+				$DOM.icon.setAttribute('class', PLUGIN_NAME + '-icon ' + settings.icon);
+				
+				if(settings.iconText){
+					$DOM.icon.appendChild(document.createTextNode(settings.iconText));
+				}
+				
+				if(settings.iconColor){
+					$DOM.icon.style.color = settings.iconColor;
+				}				
+			}
+
+			if(settings.icon || settings.iconUrl) {
+
+				if(settings.rtl){
+					$DOM.toastBody.style.paddingRight = '33px';
+				} else {
+					$DOM.toastBody.style.paddingLeft = '33px';				
+				}
+
+				$DOM.toastBody.appendChild($DOM.icon);
+			}
+
+		})();
+
+		// Title & Message
+		(function(){
+			if(settings.title.length > 0) {
+
+				$DOM.strong = document.createElement('strong');
+				$DOM.strong.classList.add(PLUGIN_NAME + '-title');
+				$DOM.strong.appendChild(createFragElem(settings.title));
+				$DOM.toastTexts.appendChild($DOM.strong);
+
+				if(settings.titleColor) {
+					$DOM.strong.style.color = settings.titleColor;
+				}
+				if(settings.titleSize) {
+					if( !isNaN(settings.titleSize) ){
+						$DOM.strong.style.fontSize = settings.titleSize+'px';
+					} else {
+						$DOM.strong.style.fontSize = settings.titleSize;
+					}
+				}
+				if(settings.titleLineHeight) {
+					if( !isNaN(settings.titleSize) ){
+						$DOM.strong.style.lineHeight = settings.titleLineHeight+'px';
+					} else {
+						$DOM.strong.style.lineHeight = settings.titleLineHeight;
+					}
+				}
+			}
+
+			if(settings.message.length > 0) {
+
+				$DOM.p = document.createElement('p');
+				$DOM.p.classList.add(PLUGIN_NAME + '-message');
+				$DOM.p.appendChild(createFragElem(settings.message));
+				$DOM.toastTexts.appendChild($DOM.p);
+
+				if(settings.messageColor) {
+					$DOM.p.style.color = settings.messageColor;
+				}
+				if(settings.messageSize) {
+					if( !isNaN(settings.titleSize) ){
+						$DOM.p.style.fontSize = settings.messageSize+'px';
+					} else {
+						$DOM.p.style.fontSize = settings.messageSize;
+					}
+				}
+				if(settings.messageLineHeight) {
+					
+					if( !isNaN(settings.titleSize) ){
+						$DOM.p.style.lineHeight = settings.messageLineHeight+'px';
+					} else {
+						$DOM.p.style.lineHeight = settings.messageLineHeight;
+					}
+				}
+			}
+
+			if(settings.title.length > 0 && settings.message.length > 0) {
+				if(settings.rtl){
+					$DOM.strong.style.marginLeft = '10px';
+				} else if(settings.layout !== 2 && !settings.rtl) {
+					$DOM.strong.style.marginRight = '10px';	
+				}
+			}
+		})();
+
+		$DOM.toastBody.appendChild($DOM.toastTexts);
+
+		// Inputs
+		var $inputs;
+		(function(){
+			if(settings.inputs.length > 0) {
+
+				$DOM.inputs.classList.add(PLUGIN_NAME + '-inputs');
+
+				forEach(settings.inputs, function (value, index) {
+					$DOM.inputs.appendChild(createFragElem(value[0]));
+
+					$inputs = $DOM.inputs.childNodes;
+
+					$inputs[index].classList.add(PLUGIN_NAME + '-inputs-child');
+
+					if(value[3]){
+						setTimeout(function() {
+							$inputs[index].focus();
+						}, 300);
+					}
+
+					$inputs[index].addEventListener(value[1], function (e) {
+						var ts = value[2];
+						return ts(that, $DOM.toast, this, e);
+					});
+				});
+				$DOM.toastBody.appendChild($DOM.inputs);
+			}
+		})();
+
+		// Buttons
+		(function(){
+			if(settings.buttons.length > 0) {
+
+				$DOM.buttons.classList.add(PLUGIN_NAME + '-buttons');
+
+				forEach(settings.buttons, function (value, index) {
+					$DOM.buttons.appendChild(createFragElem(value[0]));
+
+					var $btns = $DOM.buttons.childNodes;
+
+					$btns[index].classList.add(PLUGIN_NAME + '-buttons-child');
+
+					if(value[2]){
+						setTimeout(function() {
+							$btns[index].focus();
+						}, 300);
+					}
+
+					$btns[index].addEventListener('click', function (e) {
+						e.preventDefault();
+						var ts = value[1];
+						return ts(that, $DOM.toast, this, e, $inputs);
+					});
+				});
+			}
+			$DOM.toastBody.appendChild($DOM.buttons);
+		})();
+
+		if(settings.message.length > 0 && (settings.inputs.length > 0 || settings.buttons.length > 0)) {
+			$DOM.p.style.marginBottom = '0';
+		}
+
+		if(settings.inputs.length > 0 || settings.buttons.length > 0){
+			if(settings.rtl){
+				$DOM.toastTexts.style.marginLeft = '10px';
+			} else {
+				$DOM.toastTexts.style.marginRight = '10px';
+			}
+			if(settings.inputs.length > 0 && settings.buttons.length > 0){
+				if(settings.rtl){
+					$DOM.inputs.style.marginLeft = '8px';
+				} else {
+					$DOM.inputs.style.marginRight = '8px';
+				}
+			}
+		}
+
+		// Wrap
+		(function(){
+			$DOM.toastCapsule.style.visibility = 'hidden';
+			setTimeout(function() {
+				var H = $DOM.toast.offsetHeight;
+				var style = $DOM.toast.currentStyle || window.getComputedStyle($DOM.toast);
+				var marginTop = style.marginTop;
+					marginTop = marginTop.split('px');
+					marginTop = parseInt(marginTop[0]);
+				var marginBottom = style.marginBottom;
+					marginBottom = marginBottom.split('px');
+					marginBottom = parseInt(marginBottom[0]);
+
+				$DOM.toastCapsule.style.visibility = '';
+				$DOM.toastCapsule.style.height = (H+marginBottom+marginTop)+'px';
+
+				setTimeout(function() {
+					$DOM.toastCapsule.style.height = 'auto';
+					if(settings.target){
+						$DOM.toastCapsule.style.overflow = 'visible';
+					}
+				}, 500);
+
+				if(settings.timeout) {
+					that.progress(settings, $DOM.toast).start();
+				}
+			}, 100);
+		})();
+
+		// Target
+		(function(){
+			var position = settings.position;
+
+			if(settings.target){
+
+				$DOM.wrapper = document.querySelector(settings.target);
+				$DOM.wrapper.classList.add(PLUGIN_NAME + '-target');
+
+				if(settings.targetFirst) {
+					$DOM.wrapper.insertBefore($DOM.toastCapsule, $DOM.wrapper.firstChild);
+				} else {
+					$DOM.wrapper.appendChild($DOM.toastCapsule);
+				}
+
+			} else {
+
+				if( POSITIONS.indexOf(settings.position) == -1 ){
+					console.warn('['+PLUGIN_NAME+'] Incorrect position.\nIt can be › ' + POSITIONS);
+					return;
+				}
+
+				if(ISMOBILE || window.innerWidth <= MOBILEWIDTH){
+					if(settings.position == 'bottomLeft' || settings.position == 'bottomRight' || settings.position == 'bottomCenter'){
+						position = PLUGIN_NAME+'-wrapper-bottomCenter';
+					}
+					else if(settings.position == 'topLeft' || settings.position == 'topRight' || settings.position == 'topCenter'){
+						position = PLUGIN_NAME+'-wrapper-topCenter';
+					}
+					else {
+						position = PLUGIN_NAME+'-wrapper-center';
+					}
+				} else {
+					position = PLUGIN_NAME+'-wrapper-'+position;
+				}
+				$DOM.wrapper = document.querySelector('.' + PLUGIN_NAME + '-wrapper.'+position);
+
+				if(!$DOM.wrapper) {
+					$DOM.wrapper = document.createElement('div');
+					$DOM.wrapper.classList.add(PLUGIN_NAME + '-wrapper');
+					$DOM.wrapper.classList.add(position);
+					document.body.appendChild($DOM.wrapper);
+				}
+				if(settings.position == 'topLeft' || settings.position == 'topCenter' || settings.position == 'topRight'){
+					$DOM.wrapper.insertBefore($DOM.toastCapsule, $DOM.wrapper.firstChild);
+				} else {
+					$DOM.wrapper.appendChild($DOM.toastCapsule);
+				}
+			}
+
+			if(!isNaN(settings.zindex)) {
+				$DOM.wrapper.style.zIndex = settings.zindex;
+			} else {
+				console.warn('['+PLUGIN_NAME+'] Invalid zIndex.');
+			}
+		})();
+
+		// Overlay
+		(function(){
+
+			if(settings.overlay) {
+
+				if( document.querySelector('.'+PLUGIN_NAME+'-overlay.fadeIn') !== null ){
+
+					$DOM.overlay = document.querySelector('.'+PLUGIN_NAME+'-overlay');
+					$DOM.overlay.setAttribute('data-iziToast-ref', $DOM.overlay.getAttribute('data-iziToast-ref') + ',' + settings.ref);
+
+					if(!isNaN(settings.zindex) && settings.zindex !== null) {
+						$DOM.overlay.style.zIndex = settings.zindex-1;
+					}
+
+				} else {
+
+					$DOM.overlay.classList.add(PLUGIN_NAME+'-overlay');
+					$DOM.overlay.classList.add('fadeIn');
+					$DOM.overlay.style.background = settings.overlayColor;
+					$DOM.overlay.setAttribute('data-iziToast-ref', settings.ref);
+					if(!isNaN(settings.zindex) && settings.zindex !== null) {
+						$DOM.overlay.style.zIndex = settings.zindex-1;
+					}
+					document.querySelector('body').appendChild($DOM.overlay);
+				}
+
+				if(settings.overlayClose) {
+
+					$DOM.overlay.removeEventListener('click', {});
+					$DOM.overlay.addEventListener('click', function (e) {
+						that.hide(settings, $DOM.toast, 'overlay');
+					});
+				} else {
+					$DOM.overlay.removeEventListener('click', {});
+				}
+			}			
+		})();
+
+		// Inside animations
+		(function(){
+			if(settings.animateInside){
+				$DOM.toast.classList.add(PLUGIN_NAME+'-animateInside');
+			
+				var animationTimes = [200, 100, 300];
+				if(settings.transitionIn == 'bounceInLeft' || settings.transitionIn == 'bounceInRight'){
+					animationTimes = [400, 200, 400];
+				}
+
+				if(settings.title.length > 0) {
+					setTimeout(function(){
+						$DOM.strong.classList.add('slideIn');
+					}, animationTimes[0]);
+				}
+
+				if(settings.message.length > 0) {
+					setTimeout(function(){
+						$DOM.p.classList.add('slideIn');
+					}, animationTimes[1]);
+				}
+
+				if(settings.icon || settings.iconUrl) {
+					setTimeout(function(){
+						$DOM.icon.classList.add('revealIn');
+					}, animationTimes[2]);
+				}
+
+				var counter = 150;
+				if(settings.buttons.length > 0 && $DOM.buttons) {
+
+					setTimeout(function(){
+
+						forEach($DOM.buttons.childNodes, function(element, index) {
+
+							setTimeout(function(){
+								element.classList.add('revealIn');
+							}, counter);
+							counter = counter + 150;
+						});
+
+					}, settings.inputs.length > 0 ? 150 : 0);
+				}
+
+				if(settings.inputs.length > 0 && $DOM.inputs) {
+					counter = 150;
+					forEach($DOM.inputs.childNodes, function(element, index) {
+
+						setTimeout(function(){
+							element.classList.add('revealIn');
+						}, counter);
+						counter = counter + 150;
+					});
+				}
+			}
+		})();
+
+		settings.onOpening.apply(null, [settings, $DOM.toast]);
+
+		try {
+			var event = new CustomEvent(PLUGIN_NAME + '-opening', {detail: settings, bubbles: true, cancelable: true});
+			document.dispatchEvent(event);
+		} catch(ex){
+			console.warn(ex);
+		}
+
+		setTimeout(function() {
+
+			$DOM.toast.classList.remove(PLUGIN_NAME+'-opening');
+			$DOM.toast.classList.add(PLUGIN_NAME+'-opened');
+
+			try {
+				var event = new CustomEvent(PLUGIN_NAME + '-opened', {detail: settings, bubbles: true, cancelable: true});
+				document.dispatchEvent(event);
+			} catch(ex){
+				console.warn(ex);
+			}
+
+			settings.onOpened.apply(null, [settings, $DOM.toast]);
+		}, 1000);
+
+		if(settings.drag){
+
+			if(ACCEPTSTOUCH) {
+
+			    $DOM.toast.addEventListener('touchstart', function(e) {
+			        drag.startMoving(this, that, settings, e);
+			    }, false);
+
+			    $DOM.toast.addEventListener('touchend', function(e) {
+			        drag.stopMoving(this, e);
+			    }, false);
+			} else {
+
+			    $DOM.toast.addEventListener('mousedown', function(e) {
+			    	e.preventDefault();
+			        drag.startMoving(this, that, settings, e);
+			    }, false);
+
+			    $DOM.toast.addEventListener('mouseup', function(e) {
+			    	e.preventDefault();
+			        drag.stopMoving(this, e);
+			    }, false);
+			}
+		}
+
+		if(settings.closeOnEscape) {
+
+			document.addEventListener('keyup', function (evt) {
+				evt = evt || window.event;
+				if(evt.keyCode == 27) {
+				    that.hide(settings, $DOM.toast, 'esc');
+				}
+			});
+		}
+
+		if(settings.closeOnClick) {
+			$DOM.toast.addEventListener('click', function (evt) {
+				that.hide(settings, $DOM.toast, 'toast');
+			});
+		}
+
+		that.toast = $DOM.toast;		
+	};
+	
+
+	return $iziToast;
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ }),
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14968,21 +16556,21 @@ var _mithril = __webpack_require__(9);
 
 var _mithril2 = _interopRequireDefault(_mithril);
 
-__webpack_require__(79);
+__webpack_require__(81);
 
-__webpack_require__(82);
+__webpack_require__(84);
 
-__webpack_require__(102);
+__webpack_require__(85);
 
-var _landing = __webpack_require__(83);
+var _landing = __webpack_require__(86);
 
 var _landing2 = _interopRequireDefault(_landing);
 
-var _register = __webpack_require__(85);
+var _register = __webpack_require__(88);
 
 var _register2 = _interopRequireDefault(_register);
 
-var _login = __webpack_require__(95);
+var _login = __webpack_require__(96);
 
 var _login2 = _interopRequireDefault(_login);
 
@@ -15012,31 +16600,31 @@ _mithril2.default.route(root, "/", {
 });
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(42);
-__webpack_require__(43);
-__webpack_require__(58);
-__webpack_require__(62);
-__webpack_require__(74);
-__webpack_require__(75);
+__webpack_require__(44);
+__webpack_require__(45);
+__webpack_require__(60);
+__webpack_require__(64);
+__webpack_require__(76);
+__webpack_require__(77);
 module.exports = __webpack_require__(2).Promise;
 
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, exports) {
 
 
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var $at = __webpack_require__(44)(true);
+var $at = __webpack_require__(46)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
 __webpack_require__(25)(String, 'String', function (iterated) {
@@ -15055,7 +16643,7 @@ __webpack_require__(25)(String, 'String', function (iterated) {
 
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(17);
@@ -15078,7 +16666,7 @@ module.exports = function (TO_STRING) {
 
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = !__webpack_require__(7) && !__webpack_require__(26)(function () {
@@ -15087,7 +16675,7 @@ module.exports = !__webpack_require__(7) && !__webpack_require__(26)(function ()
 
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
@@ -15105,19 +16693,19 @@ module.exports = function (it, S) {
 
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(4);
 
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var create = __webpack_require__(49);
+var create = __webpack_require__(51);
 var descriptor = __webpack_require__(27);
 var setToStringTag = __webpack_require__(23);
 var IteratorPrototype = {};
@@ -15132,12 +16720,12 @@ module.exports = function (Constructor, NAME, next) {
 
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 var anObject = __webpack_require__(3);
-var dPs = __webpack_require__(50);
+var dPs = __webpack_require__(52);
 var enumBugKeys = __webpack_require__(31);
 var IE_PROTO = __webpack_require__(22)('IE_PROTO');
 var Empty = function () { /* empty */ };
@@ -15179,12 +16767,12 @@ module.exports = Object.create || function create(O, Properties) {
 
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(13);
 var anObject = __webpack_require__(3);
-var getKeys = __webpack_require__(51);
+var getKeys = __webpack_require__(53);
 
 module.exports = __webpack_require__(7) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
@@ -15198,11 +16786,11 @@ module.exports = __webpack_require__(7) ? Object.defineProperties : function def
 
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(52);
+var $keys = __webpack_require__(54);
 var enumBugKeys = __webpack_require__(31);
 
 module.exports = Object.keys || function keys(O) {
@@ -15211,12 +16799,12 @@ module.exports = Object.keys || function keys(O) {
 
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var has = __webpack_require__(14);
 var toIObject = __webpack_require__(21);
-var arrayIndexOf = __webpack_require__(54)(false);
+var arrayIndexOf = __webpack_require__(56)(false);
 var IE_PROTO = __webpack_require__(22)('IE_PROTO');
 
 module.exports = function (object, names) {
@@ -15234,7 +16822,7 @@ module.exports = function (object, names) {
 
 
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
@@ -15246,14 +16834,14 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // false -> Array#indexOf
 // true  -> Array#includes
 var toIObject = __webpack_require__(21);
 var toLength = __webpack_require__(28);
-var toAbsoluteIndex = __webpack_require__(55);
+var toAbsoluteIndex = __webpack_require__(57);
 module.exports = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
     var O = toIObject($this);
@@ -15275,7 +16863,7 @@ module.exports = function (IS_INCLUDES) {
 
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(17);
@@ -15288,12 +16876,12 @@ module.exports = function (index, length) {
 
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has = __webpack_require__(14);
-var toObject = __webpack_require__(57);
+var toObject = __webpack_require__(59);
 var IE_PROTO = __webpack_require__(22)('IE_PROTO');
 var ObjectProto = Object.prototype;
 
@@ -15307,7 +16895,7 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
@@ -15318,10 +16906,10 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 58 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(59);
+__webpack_require__(61);
 var global = __webpack_require__(0);
 var hide = __webpack_require__(4);
 var Iterators = __webpack_require__(8);
@@ -15343,13 +16931,13 @@ for (var i = 0; i < DOMIterables.length; i++) {
 
 
 /***/ }),
-/* 59 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var addToUnscopables = __webpack_require__(60);
-var step = __webpack_require__(61);
+var addToUnscopables = __webpack_require__(62);
+var step = __webpack_require__(63);
 var Iterators = __webpack_require__(8);
 var toIObject = __webpack_require__(21);
 
@@ -15384,14 +16972,14 @@ addToUnscopables('entries');
 
 
 /***/ }),
-/* 60 */
+/* 62 */
 /***/ (function(module, exports) {
 
 module.exports = function () { /* empty */ };
 
 
 /***/ }),
-/* 61 */
+/* 63 */
 /***/ (function(module, exports) {
 
 module.exports = function (done, value) {
@@ -15400,7 +16988,7 @@ module.exports = function (done, value) {
 
 
 /***/ }),
-/* 62 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15412,14 +17000,14 @@ var classof = __webpack_require__(33);
 var $export = __webpack_require__(10);
 var isObject = __webpack_require__(6);
 var aFunction = __webpack_require__(12);
-var anInstance = __webpack_require__(63);
-var forOf = __webpack_require__(64);
+var anInstance = __webpack_require__(65);
+var forOf = __webpack_require__(66);
 var speciesConstructor = __webpack_require__(34);
 var task = __webpack_require__(35).set;
-var microtask = __webpack_require__(69)();
+var microtask = __webpack_require__(71)();
 var newPromiseCapabilityModule = __webpack_require__(24);
 var perform = __webpack_require__(36);
-var userAgent = __webpack_require__(70);
+var userAgent = __webpack_require__(72);
 var promiseResolve = __webpack_require__(37);
 var PROMISE = 'Promise';
 var TypeError = global.TypeError;
@@ -15595,7 +17183,7 @@ if (!USE_NATIVE) {
     this._h = 0;              // <- rejection state, 0 - default, 1 - handled, 2 - unhandled
     this._n = false;          // <- notify
   };
-  Internal.prototype = __webpack_require__(71)($Promise.prototype, {
+  Internal.prototype = __webpack_require__(73)($Promise.prototype, {
     // 25.4.5.3 Promise.prototype.then(onFulfilled, onRejected)
     then: function then(onFulfilled, onRejected) {
       var reaction = newPromiseCapability(speciesConstructor(this, $Promise));
@@ -15627,7 +17215,7 @@ if (!USE_NATIVE) {
 
 $export($export.G + $export.W + $export.F * !USE_NATIVE, { Promise: $Promise });
 __webpack_require__(23)($Promise, PROMISE);
-__webpack_require__(72)(PROMISE);
+__webpack_require__(74)(PROMISE);
 Wrapper = __webpack_require__(2)[PROMISE];
 
 // statics
@@ -15646,7 +17234,7 @@ $export($export.S + $export.F * (LIBRARY || !USE_NATIVE), PROMISE, {
     return promiseResolve(LIBRARY && this === Wrapper ? $Promise : this, x);
   }
 });
-$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(73)(function (iter) {
+$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(75)(function (iter) {
   $Promise.all(iter)['catch'](empty);
 })), PROMISE, {
   // 25.4.4.1 Promise.all(iterable)
@@ -15693,7 +17281,7 @@ $export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(73)(function
 
 
 /***/ }),
-/* 63 */
+/* 65 */
 /***/ (function(module, exports) {
 
 module.exports = function (it, Constructor, name, forbiddenField) {
@@ -15704,15 +17292,15 @@ module.exports = function (it, Constructor, name, forbiddenField) {
 
 
 /***/ }),
-/* 64 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ctx = __webpack_require__(11);
-var call = __webpack_require__(65);
-var isArrayIter = __webpack_require__(66);
+var call = __webpack_require__(67);
+var isArrayIter = __webpack_require__(68);
 var anObject = __webpack_require__(3);
 var toLength = __webpack_require__(28);
-var getIterFn = __webpack_require__(67);
+var getIterFn = __webpack_require__(69);
 var BREAK = {};
 var RETURN = {};
 var exports = module.exports = function (iterable, entries, fn, that, ITERATOR) {
@@ -15735,7 +17323,7 @@ exports.RETURN = RETURN;
 
 
 /***/ }),
-/* 65 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // call something on iterator step with safe closing on error
@@ -15753,7 +17341,7 @@ module.exports = function (iterator, fn, value, entries) {
 
 
 /***/ }),
-/* 66 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // check on default Array iterator
@@ -15767,7 +17355,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 67 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var classof = __webpack_require__(33);
@@ -15781,7 +17369,7 @@ module.exports = __webpack_require__(2).getIteratorMethod = function (it) {
 
 
 /***/ }),
-/* 68 */
+/* 70 */
 /***/ (function(module, exports) {
 
 // fast apply, http://jsperf.lnkit.com/fast-apply/5
@@ -15803,7 +17391,7 @@ module.exports = function (fn, args, that) {
 
 
 /***/ }),
-/* 69 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(0);
@@ -15878,7 +17466,7 @@ module.exports = function () {
 
 
 /***/ }),
-/* 70 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(0);
@@ -15888,7 +17476,7 @@ module.exports = navigator && navigator.userAgent || '';
 
 
 /***/ }),
-/* 71 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var hide = __webpack_require__(4);
@@ -15901,7 +17489,7 @@ module.exports = function (target, src, safe) {
 
 
 /***/ }),
-/* 72 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15922,7 +17510,7 @@ module.exports = function (KEY) {
 
 
 /***/ }),
-/* 73 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ITERATOR = __webpack_require__(1)('iterator');
@@ -15950,7 +17538,7 @@ module.exports = function (exec, skipClosing) {
 
 
 /***/ }),
-/* 74 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15977,7 +17565,7 @@ $export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
 
 
 /***/ }),
-/* 75 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15996,7 +17584,7 @@ $export($export.S, 'Promise', { 'try': function (callbackfn) {
 
 
 /***/ }),
-/* 76 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -16052,7 +17640,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(77);
+__webpack_require__(79);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -16066,7 +17654,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 77 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -16256,10 +17844,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(78)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(80)))
 
 /***/ }),
-/* 78 */
+/* 80 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -16449,7 +18037,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 79 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -16458,7 +18046,7 @@ process.umask = function() { return 0; };
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
   */
 (function (global, factory) {
-   true ? factory(exports, __webpack_require__(80), __webpack_require__(81)) :
+   true ? factory(exports, __webpack_require__(82), __webpack_require__(83)) :
   typeof define === 'function' && define.amd ? define(['exports', 'jquery', 'popper.js'], factory) :
   (factory((global.bootstrap = {}),global.jQuery,global.Popper));
 }(this, (function (exports,$,Popper) { 'use strict';
@@ -20399,7 +21987,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 80 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -30770,7 +32358,7 @@ return jQuery;
 
 
 /***/ }),
-/* 81 */
+/* 83 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -33351,13 +34939,19 @@ Popper.Defaults = Defaults;
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(5)))
 
 /***/ }),
-/* 82 */
+/* 84 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 83 */
+/* 85 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33371,7 +34965,7 @@ var _mithril = __webpack_require__(9);
 
 var _mithril2 = _interopRequireDefault(_mithril);
 
-__webpack_require__(84);
+__webpack_require__(87);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33486,13 +35080,13 @@ var Landing = {
 exports.default = Landing;
 
 /***/ }),
-/* 84 */
+/* 87 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 85 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33508,7 +35102,7 @@ var _mithril2 = _interopRequireDefault(_mithril);
 
 __webpack_require__(38);
 
-var _auth = __webpack_require__(86);
+var _auth = __webpack_require__(39);
 
 var _auth2 = _interopRequireDefault(_auth);
 
@@ -33755,301 +35349,14 @@ var Register = {
 exports.default = Register;
 
 /***/ }),
-/* 86 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _regenerator = __webpack_require__(87);
-
-var _regenerator2 = _interopRequireDefault(_regenerator);
-
-var _promise = __webpack_require__(16);
-
-var _promise2 = _interopRequireDefault(_promise);
-
-var _asyncToGenerator2 = __webpack_require__(90);
-
-var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
-
-var _mithril = __webpack_require__(9);
-
-var _mithril2 = _interopRequireDefault(_mithril);
-
-var _joiBrowser = __webpack_require__(39);
-
-var Joi = _interopRequireWildcard(_joiBrowser);
-
-var _localforage = __webpack_require__(91);
-
-var _localforage2 = _interopRequireDefault(_localforage);
-
-var _izitoast = __webpack_require__(92);
-
-var _izitoast2 = _interopRequireDefault(_izitoast);
-
-var _utils = __webpack_require__(93);
-
-var _user = __webpack_require__(94);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function DisplayFormErrors(message) {
-  _izitoast2.default.error({
-    title: "Error",
-    message: message || "Fill all required fields"
-  });
-}
-
-var Auth = {
-  errors: {},
-  user: _user.User,
-  loading: false,
-  /**
-   * Sets the value of username.
-   * @param {string} username
-   */
-  setUsername: function setUsername(username) {
-    Auth.user.username = username;
-  },
-
-  /**
-   * Sets the value of password.
-   * @param {string} password
-   */
-  setPassword: function setPassword(password) {
-    Auth.user.password = password;
-  },
-
-  /**
-   * Fetches the user from storage if the user exists
-   * @return {Promise<any>}
-   */
-  getUserFromStorage: function () {
-    var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
-      var user;
-      return _regenerator2.default.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.prev = 0;
-              _context.next = 3;
-              return _localforage2.default.getItem("user");
-
-            case 3:
-              user = _context.sent;
-
-              Auth.user = user;
-              return _context.abrupt("return", _promise2.default.resolve(true));
-
-            case 8:
-              _context.prev = 8;
-              _context.t0 = _context["catch"](0);
-
-              Auth.logout();
-
-            case 11:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee, undefined, [[0, 8]]);
-    }));
-
-    function getUserFromStorage() {
-      return _ref.apply(this, arguments);
-    }
-
-    return getUserFromStorage;
-  }(),
-
-  /**
-   * Creates a user account.
-   */
-  register: function register(user) {
-    Auth.errors = {};
-    // destructure value as data
-
-    var _Joi$validate = Joi.validate(user, _user.UserSchema, {
-      allowUnknown: true
-    }),
-        error = _Joi$validate.error,
-        data = _Joi$validate.value;
-
-    if (error) {
-      (0, _utils.handleValidationError)(error, Auth.errors);
-      DisplayFormErrors();
-      return _promise2.default.reject(new Error("Fill all required fields"));
-    }
-    Auth.loading = true;
-    // API call
-    return _mithril2.default.request({
-      method: "POST",
-      url: "/v1/api/auth/register",
-      data: data
-    }).then(function (res) {
-      (0, _utils.handleResponse)(res);
-      if (res.status === 201) {
-        _mithril2.default.route.set("/login");
-      }
-    }).catch(function (err) {
-      DisplayFormErrors(err.message);
-      Auth.errors = err.data;
-    }).finally(function () {
-      Auth.loading = false;
-      _mithril2.default.redraw();
-    });
-  },
-
-  /**
-   * Login a user and starts a session.
-   */
-  login: function login(user) {
-    Auth.errors = {};
-    // destructure value as data
-
-    var _Joi$validate2 = Joi.validate(user, _user.LoginSchema, {
-      allowUnknown: true
-    }),
-        error = _Joi$validate2.error,
-        data = _Joi$validate2.value;
-
-    if (error) {
-      (0, _utils.handleValidationError)(error, Auth.errors);
-      DisplayFormErrors();
-      return _promise2.default.reject(new Error("Fill all required fields"));
-    }
-    Auth.loading = true;
-    // API call
-    return _mithril2.default.request({
-      method: "POST",
-      url: "/v1/api/auth/login",
-      data: data
-    }).then(function (res) {
-      (0, _utils.handleResponse)(res);
-      if (res.status === 200) {
-        _localforage2.default.setItem("user", res.data).then(function (user) {
-          Auth.user = user;
-          _mithril2.default.route.set("/");
-        });
-      }
-    }).catch(function (err) {
-      DisplayFormErrors("Username or password is incorrect");
-    }).finally(function () {
-      Auth.loading = false;
-      _mithril2.default.redraw();
-    });
-  },
-
-  /**
-   * Checks if a user exists in session
-   * @return {Promise<string | boolean>}
-   */
-  isLoggedIn: function () {
-    var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
-      var user;
-      return _regenerator2.default.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.prev = 0;
-              _context2.next = 3;
-              return _localforage2.default.getItem("user");
-
-            case 3:
-              user = _context2.sent;
-
-              if (!(user && user.token)) {
-                _context2.next = 7;
-                break;
-              }
-
-              Auth.user = user;
-              return _context2.abrupt("return", _promise2.default.resolve(user.token));
-
-            case 7:
-              return _context2.abrupt("return", _promise2.default.reject(new Error("Invalid access token")));
-
-            case 10:
-              _context2.prev = 10;
-              _context2.t0 = _context2["catch"](0);
-              return _context2.abrupt("return", _promise2.default.reject(new Error("Invalid access token")));
-
-            case 13:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2, undefined, [[0, 10]]);
-    }));
-
-    function isLoggedIn() {
-      return _ref2.apply(this, arguments);
-    }
-
-    return isLoggedIn;
-  }(),
-
-  /**
-   * Clears the session and redirects to login page
-   */
-  logout: function () {
-    var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3() {
-      return _regenerator2.default.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.prev = 0;
-              _context3.next = 3;
-              return _localforage2.default.removeItem("user");
-
-            case 3:
-              Auth.user = {};
-              _mithril2.default.route.set("/login");
-              _context3.next = 11;
-              break;
-
-            case 7:
-              _context3.prev = 7;
-              _context3.t0 = _context3["catch"](0);
-
-              Auth.user = {};
-              _mithril2.default.route.set("/login");
-
-            case 11:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3, undefined, [[0, 7]]);
-    }));
-
-    function logout() {
-      return _ref3.apply(this, arguments);
-    }
-
-    return logout;
-  }()
-};
-
-exports.default = Auth;
-
-/***/ }),
-/* 87 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(88);
+module.exports = __webpack_require__(90);
 
 
 /***/ }),
-/* 88 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -34074,7 +35381,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(89);
+module.exports = __webpack_require__(91);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -34090,7 +35397,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 89 */
+/* 91 */
 /***/ (function(module, exports) {
 
 /**
@@ -34823,7 +36130,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 90 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34867,7 +36174,7 @@ exports.default = function (fn) {
 };
 
 /***/ }),
-/* 91 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var require;var require;/*!
@@ -37671,1308 +38978,7 @@ module.exports = localforage_js;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 92 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
-* iziToast | v1.4.0
-* http://izitoast.marcelodolce.com
-* by Marcelo Dolce.
-*/
-(function (root, factory) {
-	if(true) {
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory(root)),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	} else if(typeof exports === 'object') {
-		module.exports = factory(root);
-	} else {
-		root.iziToast = factory(root);
-	}
-})(typeof global !== 'undefined' ? global : window || this.window || this.global, function (root) {
-
-	'use strict';
-
-	//
-	// Variables
-	//
-	var $iziToast = {},
-		PLUGIN_NAME = 'iziToast',
-		BODY = document.querySelector('body'),
-		ISMOBILE = (/Mobi/.test(navigator.userAgent)) ? true : false,
-		ISCHROME = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor),
-		ISFIREFOX = typeof InstallTrigger !== 'undefined',
-		ACCEPTSTOUCH = 'ontouchstart' in document.documentElement,
-		POSITIONS = ['bottomRight','bottomLeft','bottomCenter','topRight','topLeft','topCenter','center'],
-		THEMES = {
-			info: {
-				color: 'blue',
-				icon: 'ico-info'
-			},
-			success: {
-				color: 'green',
-				icon: 'ico-success'
-			},
-			warning: {
-				color: 'orange',
-				icon: 'ico-warning'
-			},
-			error: {
-				color: 'red',
-				icon: 'ico-error'
-			},
-			question: {
-				color: 'yellow',
-				icon: 'ico-question'
-			}
-		},
-		MOBILEWIDTH = 568,
-		CONFIG = {};
-
-	$iziToast.children = {};
-
-	// Default settings
-	var defaults = {
-		id: null, 
-		class: '',
-		title: '',
-		titleColor: '',
-		titleSize: '',
-		titleLineHeight: '',
-		message: '',
-		messageColor: '',
-		messageSize: '',
-		messageLineHeight: '',
-		backgroundColor: '',
-		theme: 'light', // dark
-		color: '', // blue, red, green, yellow
-		icon: '',
-		iconText: '',
-		iconColor: '',
-		iconUrl: null,
-		image: '',
-		imageWidth: 50,
-		maxWidth: null,
-		zindex: null,
-		layout: 1,
-		balloon: false,
-		close: true,
-		closeOnEscape: false,
-		closeOnClick: false,
-		displayMode: 0,
-		position: 'bottomRight', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter, center
-		target: '',
-		targetFirst: true,
-		timeout: 5000,
-		rtl: false,
-		animateInside: true,
-		drag: true,
-		pauseOnHover: true,
-		resetOnHover: false,
-		progressBar: true,
-		progressBarColor: '',
-		progressBarEasing: 'linear',
-		overlay: false,
-		overlayClose: false,
-		overlayColor: 'rgba(0, 0, 0, 0.6)',
-		transitionIn: 'fadeInUp', // bounceInLeft, bounceInRight, bounceInUp, bounceInDown, fadeIn, fadeInDown, fadeInUp, fadeInLeft, fadeInRight, flipInX
-		transitionOut: 'fadeOut', // fadeOut, fadeOutUp, fadeOutDown, fadeOutLeft, fadeOutRight, flipOutX
-		transitionInMobile: 'fadeInUp',
-		transitionOutMobile: 'fadeOutDown',
-		buttons: {},
-		inputs: {},
-		onOpening: function () {},
-		onOpened: function () {},
-		onClosing: function () {},
-		onClosed: function () {}
-	};
-
-	//
-	// Methods
-	//
-
-
-	/**
-	 * Polyfill for remove() method
-	 */
-	if(!('remove' in Element.prototype)) {
-	    Element.prototype.remove = function() {
-	        if(this.parentNode) {
-	            this.parentNode.removeChild(this);
-	        }
-	    };
-	}
-
-	/*
-     * Polyfill for CustomEvent for IE >= 9
-     * https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill
-     */
-    if(typeof window.CustomEvent !== 'function') {
-        var CustomEventPolyfill = function (event, params) {
-            params = params || { bubbles: false, cancelable: false, detail: undefined };
-            var evt = document.createEvent('CustomEvent');
-            evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
-            return evt;
-        };
-
-        CustomEventPolyfill.prototype = window.Event.prototype;
-
-        window.CustomEvent = CustomEventPolyfill;
-    }
-
-	/**
-	 * A simple forEach() implementation for Arrays, Objects and NodeLists
-	 * @private
-	 * @param {Array|Object|NodeList} collection Collection of items to iterate
-	 * @param {Function} callback Callback function for each iteration
-	 * @param {Array|Object|NodeList} scope Object/NodeList/Array that forEach is iterating over (aka `this`)
-	 */
-	var forEach = function (collection, callback, scope) {
-		if(Object.prototype.toString.call(collection) === '[object Object]') {
-			for (var prop in collection) {
-				if(Object.prototype.hasOwnProperty.call(collection, prop)) {
-					callback.call(scope, collection[prop], prop, collection);
-				}
-			}
-		} else {
-			if(collection){
-				for (var i = 0, len = collection.length; i < len; i++) {
-					callback.call(scope, collection[i], i, collection);
-				}
-			}
-		}
-	};
-
-	/**
-	 * Merge defaults with user options
-	 * @private
-	 * @param {Object} defaults Default settings
-	 * @param {Object} options User options
-	 * @returns {Object} Merged values of defaults and options
-	 */
-	var extend = function (defaults, options) {
-		var extended = {};
-		forEach(defaults, function (value, prop) {
-			extended[prop] = defaults[prop];
-		});
-		forEach(options, function (value, prop) {
-			extended[prop] = options[prop];
-		});
-		return extended;
-	};
-
-
-	/**
-	 * Create a fragment DOM elements
-	 * @private
-	 */
-	var createFragElem = function(htmlStr) {
-		var frag = document.createDocumentFragment(),
-			temp = document.createElement('div');
-		temp.innerHTML = htmlStr;
-		while (temp.firstChild) {
-			frag.appendChild(temp.firstChild);
-		}
-		return frag;
-	};
-
-
-	/**
-	 * Generate new ID
-	 * @private
-	 */
-	var generateId = function(params) {
-		var newId = btoa(encodeURIComponent(params));
-		return newId.replace(/=/g, "");
-	};
-
-
-	/**
-	 * Check if is a color
-	 * @private
-	 */
-	var isColor = function(color){
-		if( color.substring(0,1) == '#' || color.substring(0,3) == 'rgb' || color.substring(0,3) == 'hsl' ){
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-
-	/**
-	 * Check if is a Base64 string
-	 * @private
-	 */
-	var isBase64 = function(str) {
-	    try {
-	        return btoa(atob(str)) == str;
-	    } catch (err) {
-	        return false;
-	    }
-	};
-
-
-	/**
-	 * Drag method of toasts
-	 * @private
-	 */
-	var drag = function() {
-	    
-	    return {
-	        move: function(toast, instance, settings, xpos) {
-
-	        	var opacity,
-	        		opacityRange = 0.3,
-	        		distance = 180;
-	            
-	            if(xpos !== 0){
-	            	
-	            	toast.classList.add(PLUGIN_NAME+'-dragged');
-
-	            	toast.style.transform = 'translateX('+xpos + 'px)';
-
-		            if(xpos > 0){
-		            	opacity = (distance-xpos) / distance;
-		            	if(opacity < opacityRange){
-							instance.hide(extend(settings, { transitionOut: 'fadeOutRight', transitionOutMobile: 'fadeOutRight' }), toast, 'drag');
-						}
-		            } else {
-		            	opacity = (distance+xpos) / distance;
-		            	if(opacity < opacityRange){
-							instance.hide(extend(settings, { transitionOut: 'fadeOutLeft', transitionOutMobile: 'fadeOutLeft' }), toast, 'drag');
-						}
-		            }
-					toast.style.opacity = opacity;
-			
-					if(opacity < opacityRange){
-
-						if(ISCHROME || ISFIREFOX)
-							toast.style.left = xpos+'px';
-
-						toast.parentNode.style.opacity = opacityRange;
-
-		                this.stopMoving(toast, null);
-					}
-	            }
-
-				
-	        },
-	        startMoving: function(toast, instance, settings, e) {
-
-	            e = e || window.event;
-	            var posX = ((ACCEPTSTOUCH) ? e.touches[0].clientX : e.clientX),
-	                toastLeft = toast.style.transform.replace('px)', '');
-	                toastLeft = toastLeft.replace('translateX(', '');
-	            var offsetX = posX - toastLeft;
-
-				if(settings.transitionIn){
-					toast.classList.remove(settings.transitionIn);
-				}
-				if(settings.transitionInMobile){
-					toast.classList.remove(settings.transitionInMobile);
-				}
-				toast.style.transition = '';
-
-	            if(ACCEPTSTOUCH) {
-	                document.ontouchmove = function(e) {
-	                    e.preventDefault();
-	                    e = e || window.event;
-	                    var posX = e.touches[0].clientX,
-	                        finalX = posX - offsetX;
-                        drag.move(toast, instance, settings, finalX);
-	                };
-	            } else {
-	                document.onmousemove = function(e) {
-	                    e.preventDefault();
-	                    e = e || window.event;
-	                    var posX = e.clientX,
-	                        finalX = posX - offsetX;
-                        drag.move(toast, instance, settings, finalX);
-	                };
-	            }
-
-	        },
-	        stopMoving: function(toast, e) {
-
-	            if(ACCEPTSTOUCH) {
-	                document.ontouchmove = function() {};
-	            } else {
-	            	document.onmousemove = function() {};
-	            }
-
-				toast.style.opacity = '';
-				toast.style.transform = '';
-
-	            if(toast.classList.contains(PLUGIN_NAME+'-dragged')){
-	            	
-	            	toast.classList.remove(PLUGIN_NAME+'-dragged');
-
-					toast.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
-					setTimeout(function() {
-						toast.style.transition = '';
-					}, 400);
-	            }
-
-	        }
-	    };
-
-	}();
-
-
-
-
-
-	$iziToast.setSetting = function (ref, option, value) {
-
-		$iziToast.children[ref][option] = value;
-
-	};
-
-
-	$iziToast.getSetting = function (ref, option) {
-
-		return $iziToast.children[ref][option];
-
-	};
-
-
-	/**
-	 * Destroy the current initialization.
-	 * @public
-	 */
-	$iziToast.destroy = function () {
-
-		forEach(document.querySelectorAll('.'+PLUGIN_NAME+'-overlay'), function(element, index) {
-			element.remove();
-		});
-
-		forEach(document.querySelectorAll('.'+PLUGIN_NAME+'-wrapper'), function(element, index) {
-			element.remove();
-		});
-
-		forEach(document.querySelectorAll('.'+PLUGIN_NAME), function(element, index) {
-			element.remove();
-		});
-
-		this.children = {};
-
-		// Remove event listeners
-		document.removeEventListener(PLUGIN_NAME+'-opened', {}, false);
-		document.removeEventListener(PLUGIN_NAME+'-opening', {}, false);
-		document.removeEventListener(PLUGIN_NAME+'-closing', {}, false);
-		document.removeEventListener(PLUGIN_NAME+'-closed', {}, false);
-		document.removeEventListener('keyup', {}, false);
-
-		// Reset variables
-		CONFIG = {};
-	};
-
-	/**
-	 * Initialize Plugin
-	 * @public
-	 * @param {Object} options User settings
-	 */
-	$iziToast.settings = function (options) {
-
-		// Destroy any existing initializations
-		$iziToast.destroy();
-
-		CONFIG = options;
-		defaults = extend(defaults, options || {});
-	};
-
-
-	/**
-	 * Building themes functions.
-	 * @public
-	 * @param {Object} options User settings
-	 */
-	forEach(THEMES, function (theme, name) {
-
-		$iziToast[name] = function (options) {
-
-			var settings = extend(CONFIG, options || {});
-			settings = extend(theme, settings || {});
-
-			this.show(settings);
-		};
-
-	});
-
-
-	/**
-	 * Do the calculation to move the progress bar
-	 * @private
-	 */
-	$iziToast.progress = function (options, $toast, callback) {
-
-
-		var that = this,
-			ref = $toast.getAttribute('data-iziToast-ref'),
-			settings = extend(this.children[ref], options || {}),
-			$elem = $toast.querySelector('.'+PLUGIN_NAME+'-progressbar div');
-
-	    return {
-	        start: function() {
-
-	        	if(typeof settings.time.REMAINING == 'undefined'){
-
-	        		$toast.classList.remove(PLUGIN_NAME+'-reseted');
-
-		        	if($elem !== null){
-						$elem.style.transition = 'width '+ settings.timeout +'ms '+settings.progressBarEasing;
-						$elem.style.width = '0%';
-					}
-
-		        	settings.time.START = new Date().getTime();
-		        	settings.time.END = settings.time.START + settings.timeout;
-					settings.time.TIMER = setTimeout(function() {
-
-						clearTimeout(settings.time.TIMER);
-
-						if(!$toast.classList.contains(PLUGIN_NAME+'-closing')){
-
-							that.hide(settings, $toast, 'timeout');
-
-							if(typeof callback === 'function'){
-								callback.apply(that);
-							}
-						}
-
-					}, settings.timeout);			
-		        	that.setSetting(ref, 'time', settings.time);
-	        	}
-	        },
-	        pause: function() {
-
-	        	if(typeof settings.time.START !== 'undefined' && !$toast.classList.contains(PLUGIN_NAME+'-paused') && !$toast.classList.contains(PLUGIN_NAME+'-reseted')){
-
-        			$toast.classList.add(PLUGIN_NAME+'-paused');
-
-					settings.time.REMAINING = settings.time.END - new Date().getTime();
-
-					clearTimeout(settings.time.TIMER);
-
-					that.setSetting(ref, 'time', settings.time);
-
-					if($elem !== null){
-						var computedStyle = window.getComputedStyle($elem),
-							propertyWidth = computedStyle.getPropertyValue('width');
-
-						$elem.style.transition = 'none';
-						$elem.style.width = propertyWidth;					
-					}
-
-					if(typeof callback === 'function'){
-						setTimeout(function() {
-							callback.apply(that);						
-						}, 10);
-					}
-        		}
-	        },
-	        resume: function() {
-
-				if(typeof settings.time.REMAINING !== 'undefined'){
-
-					$toast.classList.remove(PLUGIN_NAME+'-paused');
-
-		        	if($elem !== null){
-						$elem.style.transition = 'width '+ settings.time.REMAINING +'ms '+settings.progressBarEasing;
-						$elem.style.width = '0%';
-					}
-
-		        	settings.time.END = new Date().getTime() + settings.time.REMAINING;
-					settings.time.TIMER = setTimeout(function() {
-
-						clearTimeout(settings.time.TIMER);
-
-						if(!$toast.classList.contains(PLUGIN_NAME+'-closing')){
-
-							that.hide(settings, $toast, 'timeout');
-
-							if(typeof callback === 'function'){
-								callback.apply(that);
-							}
-						}
-
-
-					}, settings.time.REMAINING);
-
-					that.setSetting(ref, 'time', settings.time);
-				} else {
-					this.start();
-				}
-	        },
-	        reset: function(){
-
-				clearTimeout(settings.time.TIMER);
-
-				delete settings.time.REMAINING;
-
-				that.setSetting(ref, 'time', settings.time);
-
-				$toast.classList.add(PLUGIN_NAME+'-reseted');
-
-				$toast.classList.remove(PLUGIN_NAME+'-paused');
-
-				if($elem !== null){
-					$elem.style.transition = 'none';
-					$elem.style.width = '100%';
-				}
-
-				if(typeof callback === 'function'){
-					setTimeout(function() {
-						callback.apply(that);						
-					}, 10);
-				}
-	        }
-	    };
-
-	};
-
-
-	/**
-	 * Close the specific Toast
-	 * @public
-	 * @param {Object} options User settings
-	 */
-	$iziToast.hide = function (options, $toast, closedBy) {
-
-		if(typeof $toast != 'object'){
-			$toast = document.querySelector($toast);
-		}		
-
-		var that = this,
-			settings = extend(this.children[$toast.getAttribute('data-iziToast-ref')], options || {});
-			settings.closedBy = closedBy || null;
-
-		delete settings.time.REMAINING;
-
-		$toast.classList.add(PLUGIN_NAME+'-closing');
-
-		// Overlay
-		(function(){
-
-			var $overlay = document.querySelector('.'+PLUGIN_NAME+'-overlay');
-			if($overlay !== null){
-				var refs = $overlay.getAttribute('data-iziToast-ref');		
-					refs = refs.split(',');
-				var index = refs.indexOf(String(settings.ref));
-
-				if(index !== -1){
-					refs.splice(index, 1);			
-				}
-				$overlay.setAttribute('data-iziToast-ref', refs.join());
-
-				if(refs.length === 0){
-					$overlay.classList.remove('fadeIn');
-					$overlay.classList.add('fadeOut');
-					setTimeout(function() {
-						$overlay.remove();
-					}, 700);
-				}
-			}
-
-		})();
-
-		if(settings.transitionIn){
-			$toast.classList.remove(settings.transitionIn);
-		} 
-
-		if(settings.transitionInMobile){
-			$toast.classList.remove(settings.transitionInMobile);
-		}
-
-		if(ISMOBILE || window.innerWidth <= MOBILEWIDTH){
-			if(settings.transitionOutMobile)
-				$toast.classList.add(settings.transitionOutMobile);
-		} else {
-			if(settings.transitionOut)
-				$toast.classList.add(settings.transitionOut);
-		}
-		var H = $toast.parentNode.offsetHeight;
-				$toast.parentNode.style.height = H+'px';
-				$toast.style.pointerEvents = 'none';
-		
-		if(!ISMOBILE || window.innerWidth > MOBILEWIDTH){
-			$toast.parentNode.style.transitionDelay = '0.2s';
-		}
-
-		try {
-			var event = new CustomEvent(PLUGIN_NAME+'-closing', {detail: settings, bubbles: true, cancelable: true});
-			document.dispatchEvent(event);
-		} catch(ex){
-			console.warn(ex);
-		}
-
-		setTimeout(function() {
-			
-			$toast.parentNode.style.height = '0px';
-			$toast.parentNode.style.overflow = '';
-
-			setTimeout(function(){
-				
-				delete that.children[settings.ref];
-
-				$toast.parentNode.remove();
-
-				try {
-					var event = new CustomEvent(PLUGIN_NAME+'-closed', {detail: settings, bubbles: true, cancelable: true});
-					document.dispatchEvent(event);
-				} catch(ex){
-					console.warn(ex);
-				}
-
-				if(typeof settings.onClosed !== 'undefined'){
-					settings.onClosed.apply(null, [settings, $toast, closedBy]);
-				}
-
-			}, 1000);
-		}, 200);
-
-
-		if(typeof settings.onClosing !== 'undefined'){
-			settings.onClosing.apply(null, [settings, $toast, closedBy]);
-		}
-	};
-
-	/**
-	 * Create and show the Toast
-	 * @public
-	 * @param {Object} options User settings
-	 */
-	$iziToast.show = function (options) {
-
-		var that = this;
-
-		// Merge user options with defaults
-		var settings = extend(CONFIG, options || {});
-			settings = extend(defaults, settings);
-			settings.time = {};
-
-		if(settings.id === null){
-			settings.id = generateId(settings.title+settings.message+settings.color);
-		}
-
-		if(settings.displayMode === 1 || settings.displayMode == 'once'){
-			try {
-				if(document.querySelectorAll('.'+PLUGIN_NAME+'#'+settings.id).length > 0){
-					return false;
-				}
-			} catch (exc) {
-				console.warn('['+PLUGIN_NAME+'] Could not find an element with this selector: '+'#'+settings.id+'. Try to set an valid id.');
-			}
-		}
-
-		if(settings.displayMode === 2 || settings.displayMode == 'replace'){
-			try {
-				forEach(document.querySelectorAll('.'+PLUGIN_NAME+'#'+settings.id), function(element, index) {
-					that.hide(settings, element, 'replaced');
-				});
-			} catch (exc) {
-				console.warn('['+PLUGIN_NAME+'] Could not find an element with this selector: '+'#'+settings.id+'. Try to set an valid id.');
-			}
-		}
-
-		settings.ref = new Date().getTime() + Math.floor((Math.random() * 10000000) + 1);
-
-		$iziToast.children[settings.ref] = settings;
-
-		var $DOM = {
-			body: document.querySelector('body'),
-			overlay: document.createElement('div'),
-			toast: document.createElement('div'),
-			toastBody: document.createElement('div'),
-			toastTexts: document.createElement('div'),
-			toastCapsule: document.createElement('div'),
-			cover: document.createElement('div'),
-			buttons: document.createElement('div'),
-			inputs: document.createElement('div'),
-			icon: !settings.iconUrl ? document.createElement('i') : document.createElement('img'),
-			wrapper: null
-		};
-
-		$DOM.toast.setAttribute('data-iziToast-ref', settings.ref);
-		$DOM.toast.appendChild($DOM.toastBody);
-		$DOM.toastCapsule.appendChild($DOM.toast);
-
-		// CSS Settings
-		(function(){
-
-			$DOM.toast.classList.add(PLUGIN_NAME);
-			$DOM.toast.classList.add(PLUGIN_NAME+'-opening');
-			$DOM.toastCapsule.classList.add(PLUGIN_NAME+'-capsule');
-			$DOM.toastBody.classList.add(PLUGIN_NAME + '-body');
-			$DOM.toastTexts.classList.add(PLUGIN_NAME + '-texts');
-
-			if(ISMOBILE || window.innerWidth <= MOBILEWIDTH){
-				if(settings.transitionInMobile)
-					$DOM.toast.classList.add(settings.transitionInMobile);
-			} else {
-				if(settings.transitionIn)
-					$DOM.toast.classList.add(settings.transitionIn);
-			}
-
-			if(settings.class){
-				var classes = settings.class.split(' ');
-				forEach(classes, function (value, index) {
-					$DOM.toast.classList.add(value);
-				});
-			}
-
-			if(settings.id){ $DOM.toast.id = settings.id; }
-
-			if(settings.rtl){
-				$DOM.toast.classList.add(PLUGIN_NAME + '-rtl');
-				$DOM.toast.setAttribute('dir', 'rtl');
-			}
-
-			if(settings.layout > 1){ $DOM.toast.classList.add(PLUGIN_NAME+'-layout'+settings.layout); }
-
-			if(settings.balloon){ $DOM.toast.classList.add(PLUGIN_NAME+'-balloon'); }
-
-			if(settings.maxWidth){
-				if( !isNaN(settings.maxWidth) ){
-					$DOM.toast.style.maxWidth = settings.maxWidth+'px';
-				} else {
-					$DOM.toast.style.maxWidth = settings.maxWidth;
-				}
-			}
-
-			if(settings.theme !== '' || settings.theme !== 'light') {
-
-				$DOM.toast.classList.add(PLUGIN_NAME+'-theme-'+settings.theme);
-			}
-
-			if(settings.color) { //#, rgb, rgba, hsl
-				
-				if( isColor(settings.color) ){
-					$DOM.toast.style.background = settings.color;
-				} else {
-					$DOM.toast.classList.add(PLUGIN_NAME+'-color-'+settings.color);
-				}
-			}
-
-			if(settings.backgroundColor) {
-				$DOM.toast.style.background = settings.backgroundColor;
-				if(settings.balloon){
-					$DOM.toast.style.borderColor = settings.backgroundColor;				
-				}
-			}
-		})();
-
-		// Cover image
-		(function(){
-			if(settings.image) {
-				$DOM.cover.classList.add(PLUGIN_NAME + '-cover');
-				$DOM.cover.style.width = settings.imageWidth + 'px';
-
-				if(isBase64(settings.image.replace(/ /g,''))){
-					$DOM.cover.style.backgroundImage = 'url(data:image/png;base64,' + settings.image.replace(/ /g,'') + ')';
-				} else {
-					$DOM.cover.style.backgroundImage = 'url(' + settings.image + ')';
-				}
-
-				if(settings.rtl){
-					$DOM.toastBody.style.marginRight = (settings.imageWidth + 10) + 'px';
-				} else {
-					$DOM.toastBody.style.marginLeft = (settings.imageWidth + 10) + 'px';				
-				}
-				$DOM.toast.appendChild($DOM.cover);
-			}
-		})();
-
-		// Button close
-		(function(){
-			if(settings.close){
-				
-				$DOM.buttonClose = document.createElement('button');
-				$DOM.buttonClose.type = 'button';
-				$DOM.buttonClose.classList.add(PLUGIN_NAME + '-close');
-				$DOM.buttonClose.addEventListener('click', function (e) {
-					var button = e.target;
-					that.hide(settings, $DOM.toast, 'button');
-				});
-				$DOM.toast.appendChild($DOM.buttonClose);
-			} else {
-				if(settings.rtl){
-					$DOM.toast.style.paddingLeft = '18px';
-				} else {
-					$DOM.toast.style.paddingRight = '18px';
-				}
-			}
-		})();
-
-		// Progress Bar & Timeout
-		(function(){
-
-			if(settings.progressBar){
-				$DOM.progressBar = document.createElement('div');
-				$DOM.progressBarDiv = document.createElement('div');
-				$DOM.progressBar.classList.add(PLUGIN_NAME + '-progressbar');
-				$DOM.progressBarDiv.style.background = settings.progressBarColor;
-				$DOM.progressBar.appendChild($DOM.progressBarDiv);
-				$DOM.toast.appendChild($DOM.progressBar);
-			}
-
-			if(settings.timeout) {
-
-				if(settings.pauseOnHover && !settings.resetOnHover){
-					
-					$DOM.toast.addEventListener('mouseenter', function (e) {
-						that.progress(settings, $DOM.toast).pause();
-					});
-					$DOM.toast.addEventListener('mouseleave', function (e) {
-						that.progress(settings, $DOM.toast).resume();
-					});
-				}
-
-				if(settings.resetOnHover){
-
-					$DOM.toast.addEventListener('mouseenter', function (e) {
-						that.progress(settings, $DOM.toast).reset();
-					});
-					$DOM.toast.addEventListener('mouseleave', function (e) {
-						that.progress(settings, $DOM.toast).start();
-					});
-				}
-			}
-		})();
-
-		// Icon
-		(function(){
-
-			if(settings.iconUrl) {
-
-				$DOM.icon.setAttribute('class', PLUGIN_NAME + '-icon');
-				$DOM.icon.setAttribute('src', settings.iconUrl);
-
-			} else if(settings.icon) {
-				$DOM.icon.setAttribute('class', PLUGIN_NAME + '-icon ' + settings.icon);
-				
-				if(settings.iconText){
-					$DOM.icon.appendChild(document.createTextNode(settings.iconText));
-				}
-				
-				if(settings.iconColor){
-					$DOM.icon.style.color = settings.iconColor;
-				}				
-			}
-
-			if(settings.icon || settings.iconUrl) {
-
-				if(settings.rtl){
-					$DOM.toastBody.style.paddingRight = '33px';
-				} else {
-					$DOM.toastBody.style.paddingLeft = '33px';				
-				}
-
-				$DOM.toastBody.appendChild($DOM.icon);
-			}
-
-		})();
-
-		// Title & Message
-		(function(){
-			if(settings.title.length > 0) {
-
-				$DOM.strong = document.createElement('strong');
-				$DOM.strong.classList.add(PLUGIN_NAME + '-title');
-				$DOM.strong.appendChild(createFragElem(settings.title));
-				$DOM.toastTexts.appendChild($DOM.strong);
-
-				if(settings.titleColor) {
-					$DOM.strong.style.color = settings.titleColor;
-				}
-				if(settings.titleSize) {
-					if( !isNaN(settings.titleSize) ){
-						$DOM.strong.style.fontSize = settings.titleSize+'px';
-					} else {
-						$DOM.strong.style.fontSize = settings.titleSize;
-					}
-				}
-				if(settings.titleLineHeight) {
-					if( !isNaN(settings.titleSize) ){
-						$DOM.strong.style.lineHeight = settings.titleLineHeight+'px';
-					} else {
-						$DOM.strong.style.lineHeight = settings.titleLineHeight;
-					}
-				}
-			}
-
-			if(settings.message.length > 0) {
-
-				$DOM.p = document.createElement('p');
-				$DOM.p.classList.add(PLUGIN_NAME + '-message');
-				$DOM.p.appendChild(createFragElem(settings.message));
-				$DOM.toastTexts.appendChild($DOM.p);
-
-				if(settings.messageColor) {
-					$DOM.p.style.color = settings.messageColor;
-				}
-				if(settings.messageSize) {
-					if( !isNaN(settings.titleSize) ){
-						$DOM.p.style.fontSize = settings.messageSize+'px';
-					} else {
-						$DOM.p.style.fontSize = settings.messageSize;
-					}
-				}
-				if(settings.messageLineHeight) {
-					
-					if( !isNaN(settings.titleSize) ){
-						$DOM.p.style.lineHeight = settings.messageLineHeight+'px';
-					} else {
-						$DOM.p.style.lineHeight = settings.messageLineHeight;
-					}
-				}
-			}
-
-			if(settings.title.length > 0 && settings.message.length > 0) {
-				if(settings.rtl){
-					$DOM.strong.style.marginLeft = '10px';
-				} else if(settings.layout !== 2 && !settings.rtl) {
-					$DOM.strong.style.marginRight = '10px';	
-				}
-			}
-		})();
-
-		$DOM.toastBody.appendChild($DOM.toastTexts);
-
-		// Inputs
-		var $inputs;
-		(function(){
-			if(settings.inputs.length > 0) {
-
-				$DOM.inputs.classList.add(PLUGIN_NAME + '-inputs');
-
-				forEach(settings.inputs, function (value, index) {
-					$DOM.inputs.appendChild(createFragElem(value[0]));
-
-					$inputs = $DOM.inputs.childNodes;
-
-					$inputs[index].classList.add(PLUGIN_NAME + '-inputs-child');
-
-					if(value[3]){
-						setTimeout(function() {
-							$inputs[index].focus();
-						}, 300);
-					}
-
-					$inputs[index].addEventListener(value[1], function (e) {
-						var ts = value[2];
-						return ts(that, $DOM.toast, this, e);
-					});
-				});
-				$DOM.toastBody.appendChild($DOM.inputs);
-			}
-		})();
-
-		// Buttons
-		(function(){
-			if(settings.buttons.length > 0) {
-
-				$DOM.buttons.classList.add(PLUGIN_NAME + '-buttons');
-
-				forEach(settings.buttons, function (value, index) {
-					$DOM.buttons.appendChild(createFragElem(value[0]));
-
-					var $btns = $DOM.buttons.childNodes;
-
-					$btns[index].classList.add(PLUGIN_NAME + '-buttons-child');
-
-					if(value[2]){
-						setTimeout(function() {
-							$btns[index].focus();
-						}, 300);
-					}
-
-					$btns[index].addEventListener('click', function (e) {
-						e.preventDefault();
-						var ts = value[1];
-						return ts(that, $DOM.toast, this, e, $inputs);
-					});
-				});
-			}
-			$DOM.toastBody.appendChild($DOM.buttons);
-		})();
-
-		if(settings.message.length > 0 && (settings.inputs.length > 0 || settings.buttons.length > 0)) {
-			$DOM.p.style.marginBottom = '0';
-		}
-
-		if(settings.inputs.length > 0 || settings.buttons.length > 0){
-			if(settings.rtl){
-				$DOM.toastTexts.style.marginLeft = '10px';
-			} else {
-				$DOM.toastTexts.style.marginRight = '10px';
-			}
-			if(settings.inputs.length > 0 && settings.buttons.length > 0){
-				if(settings.rtl){
-					$DOM.inputs.style.marginLeft = '8px';
-				} else {
-					$DOM.inputs.style.marginRight = '8px';
-				}
-			}
-		}
-
-		// Wrap
-		(function(){
-			$DOM.toastCapsule.style.visibility = 'hidden';
-			setTimeout(function() {
-				var H = $DOM.toast.offsetHeight;
-				var style = $DOM.toast.currentStyle || window.getComputedStyle($DOM.toast);
-				var marginTop = style.marginTop;
-					marginTop = marginTop.split('px');
-					marginTop = parseInt(marginTop[0]);
-				var marginBottom = style.marginBottom;
-					marginBottom = marginBottom.split('px');
-					marginBottom = parseInt(marginBottom[0]);
-
-				$DOM.toastCapsule.style.visibility = '';
-				$DOM.toastCapsule.style.height = (H+marginBottom+marginTop)+'px';
-
-				setTimeout(function() {
-					$DOM.toastCapsule.style.height = 'auto';
-					if(settings.target){
-						$DOM.toastCapsule.style.overflow = 'visible';
-					}
-				}, 500);
-
-				if(settings.timeout) {
-					that.progress(settings, $DOM.toast).start();
-				}
-			}, 100);
-		})();
-
-		// Target
-		(function(){
-			var position = settings.position;
-
-			if(settings.target){
-
-				$DOM.wrapper = document.querySelector(settings.target);
-				$DOM.wrapper.classList.add(PLUGIN_NAME + '-target');
-
-				if(settings.targetFirst) {
-					$DOM.wrapper.insertBefore($DOM.toastCapsule, $DOM.wrapper.firstChild);
-				} else {
-					$DOM.wrapper.appendChild($DOM.toastCapsule);
-				}
-
-			} else {
-
-				if( POSITIONS.indexOf(settings.position) == -1 ){
-					console.warn('['+PLUGIN_NAME+'] Incorrect position.\nIt can be › ' + POSITIONS);
-					return;
-				}
-
-				if(ISMOBILE || window.innerWidth <= MOBILEWIDTH){
-					if(settings.position == 'bottomLeft' || settings.position == 'bottomRight' || settings.position == 'bottomCenter'){
-						position = PLUGIN_NAME+'-wrapper-bottomCenter';
-					}
-					else if(settings.position == 'topLeft' || settings.position == 'topRight' || settings.position == 'topCenter'){
-						position = PLUGIN_NAME+'-wrapper-topCenter';
-					}
-					else {
-						position = PLUGIN_NAME+'-wrapper-center';
-					}
-				} else {
-					position = PLUGIN_NAME+'-wrapper-'+position;
-				}
-				$DOM.wrapper = document.querySelector('.' + PLUGIN_NAME + '-wrapper.'+position);
-
-				if(!$DOM.wrapper) {
-					$DOM.wrapper = document.createElement('div');
-					$DOM.wrapper.classList.add(PLUGIN_NAME + '-wrapper');
-					$DOM.wrapper.classList.add(position);
-					document.body.appendChild($DOM.wrapper);
-				}
-				if(settings.position == 'topLeft' || settings.position == 'topCenter' || settings.position == 'topRight'){
-					$DOM.wrapper.insertBefore($DOM.toastCapsule, $DOM.wrapper.firstChild);
-				} else {
-					$DOM.wrapper.appendChild($DOM.toastCapsule);
-				}
-			}
-
-			if(!isNaN(settings.zindex)) {
-				$DOM.wrapper.style.zIndex = settings.zindex;
-			} else {
-				console.warn('['+PLUGIN_NAME+'] Invalid zIndex.');
-			}
-		})();
-
-		// Overlay
-		(function(){
-
-			if(settings.overlay) {
-
-				if( document.querySelector('.'+PLUGIN_NAME+'-overlay.fadeIn') !== null ){
-
-					$DOM.overlay = document.querySelector('.'+PLUGIN_NAME+'-overlay');
-					$DOM.overlay.setAttribute('data-iziToast-ref', $DOM.overlay.getAttribute('data-iziToast-ref') + ',' + settings.ref);
-
-					if(!isNaN(settings.zindex) && settings.zindex !== null) {
-						$DOM.overlay.style.zIndex = settings.zindex-1;
-					}
-
-				} else {
-
-					$DOM.overlay.classList.add(PLUGIN_NAME+'-overlay');
-					$DOM.overlay.classList.add('fadeIn');
-					$DOM.overlay.style.background = settings.overlayColor;
-					$DOM.overlay.setAttribute('data-iziToast-ref', settings.ref);
-					if(!isNaN(settings.zindex) && settings.zindex !== null) {
-						$DOM.overlay.style.zIndex = settings.zindex-1;
-					}
-					document.querySelector('body').appendChild($DOM.overlay);
-				}
-
-				if(settings.overlayClose) {
-
-					$DOM.overlay.removeEventListener('click', {});
-					$DOM.overlay.addEventListener('click', function (e) {
-						that.hide(settings, $DOM.toast, 'overlay');
-					});
-				} else {
-					$DOM.overlay.removeEventListener('click', {});
-				}
-			}			
-		})();
-
-		// Inside animations
-		(function(){
-			if(settings.animateInside){
-				$DOM.toast.classList.add(PLUGIN_NAME+'-animateInside');
-			
-				var animationTimes = [200, 100, 300];
-				if(settings.transitionIn == 'bounceInLeft' || settings.transitionIn == 'bounceInRight'){
-					animationTimes = [400, 200, 400];
-				}
-
-				if(settings.title.length > 0) {
-					setTimeout(function(){
-						$DOM.strong.classList.add('slideIn');
-					}, animationTimes[0]);
-				}
-
-				if(settings.message.length > 0) {
-					setTimeout(function(){
-						$DOM.p.classList.add('slideIn');
-					}, animationTimes[1]);
-				}
-
-				if(settings.icon || settings.iconUrl) {
-					setTimeout(function(){
-						$DOM.icon.classList.add('revealIn');
-					}, animationTimes[2]);
-				}
-
-				var counter = 150;
-				if(settings.buttons.length > 0 && $DOM.buttons) {
-
-					setTimeout(function(){
-
-						forEach($DOM.buttons.childNodes, function(element, index) {
-
-							setTimeout(function(){
-								element.classList.add('revealIn');
-							}, counter);
-							counter = counter + 150;
-						});
-
-					}, settings.inputs.length > 0 ? 150 : 0);
-				}
-
-				if(settings.inputs.length > 0 && $DOM.inputs) {
-					counter = 150;
-					forEach($DOM.inputs.childNodes, function(element, index) {
-
-						setTimeout(function(){
-							element.classList.add('revealIn');
-						}, counter);
-						counter = counter + 150;
-					});
-				}
-			}
-		})();
-
-		settings.onOpening.apply(null, [settings, $DOM.toast]);
-
-		try {
-			var event = new CustomEvent(PLUGIN_NAME + '-opening', {detail: settings, bubbles: true, cancelable: true});
-			document.dispatchEvent(event);
-		} catch(ex){
-			console.warn(ex);
-		}
-
-		setTimeout(function() {
-
-			$DOM.toast.classList.remove(PLUGIN_NAME+'-opening');
-			$DOM.toast.classList.add(PLUGIN_NAME+'-opened');
-
-			try {
-				var event = new CustomEvent(PLUGIN_NAME + '-opened', {detail: settings, bubbles: true, cancelable: true});
-				document.dispatchEvent(event);
-			} catch(ex){
-				console.warn(ex);
-			}
-
-			settings.onOpened.apply(null, [settings, $DOM.toast]);
-		}, 1000);
-
-		if(settings.drag){
-
-			if(ACCEPTSTOUCH) {
-
-			    $DOM.toast.addEventListener('touchstart', function(e) {
-			        drag.startMoving(this, that, settings, e);
-			    }, false);
-
-			    $DOM.toast.addEventListener('touchend', function(e) {
-			        drag.stopMoving(this, e);
-			    }, false);
-			} else {
-
-			    $DOM.toast.addEventListener('mousedown', function(e) {
-			    	e.preventDefault();
-			        drag.startMoving(this, that, settings, e);
-			    }, false);
-
-			    $DOM.toast.addEventListener('mouseup', function(e) {
-			    	e.preventDefault();
-			        drag.stopMoving(this, e);
-			    }, false);
-			}
-		}
-
-		if(settings.closeOnEscape) {
-
-			document.addEventListener('keyup', function (evt) {
-				evt = evt || window.event;
-				if(evt.keyCode == 27) {
-				    that.hide(settings, $DOM.toast, 'esc');
-				}
-			});
-		}
-
-		if(settings.closeOnClick) {
-			$DOM.toast.addEventListener('click', function (evt) {
-				that.hide(settings, $DOM.toast, 'toast');
-			});
-		}
-
-		that.toast = $DOM.toast;		
-	};
-	
-
-	return $iziToast;
-});
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38983,7 +38989,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.handleValidationError = exports.handleResponse = exports.formatDollar = exports.formatMoney = undefined;
 
-var _izitoast = __webpack_require__(92);
+var _izitoast = __webpack_require__(41);
 
 var _izitoast2 = _interopRequireDefault(_izitoast);
 
@@ -39040,7 +39046,7 @@ var handleValidationError = exports.handleValidationError = function handleValid
 };
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39051,7 +39057,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.User = exports.UserSchema = exports.LoginSchema = undefined;
 
-var _joiBrowser = __webpack_require__(39);
+var _joiBrowser = __webpack_require__(40);
 
 var Joi = _interopRequireWildcard(_joiBrowser);
 
@@ -39091,7 +39097,7 @@ var UserSchema = exports.UserSchema = Joi.object().keys({
       key: "{{!label}} "
     }
   }),
-  username: Joi.string().trim().alphanum().min(3).max(30).required().label("Username").options({
+  username: Joi.string().trim().token().min(3).max(30).required().label("Username").options({
     language: {
       key: "{{!label}} "
     }
@@ -39121,7 +39127,7 @@ var User = exports.User = {
 };
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39137,7 +39143,7 @@ var _mithril2 = _interopRequireDefault(_mithril);
 
 __webpack_require__(38);
 
-var _auth = __webpack_require__(86);
+var _auth = __webpack_require__(39);
 
 var _auth2 = _interopRequireDefault(_auth);
 
@@ -39267,18 +39273,6 @@ var Login = {
 };
 
 exports.default = Login;
-
-/***/ }),
-/* 96 */,
-/* 97 */,
-/* 98 */,
-/* 99 */,
-/* 100 */,
-/* 101 */,
-/* 102 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
