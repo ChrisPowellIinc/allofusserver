@@ -4,8 +4,8 @@ test:
 start:
 	go run main.go --debug
 
+deploy: push
+	git push heroku master
+
 push:
 	git push origin master
-
-deploy:
-	git push heroku master
