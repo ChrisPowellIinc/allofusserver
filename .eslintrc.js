@@ -49,6 +49,7 @@ module.exports = {
         "jsx-a11y/anchor-has-content": 0,
         "flowtype/no-types-missing-file-annotation": 0, //remove after research
         "no-undef": 0, //important remove
+        "no-underscore-dangle": 0,
         "react/no-string-refs": 0,
         "one-var": 0,
         "react/no-this-in-sfc": 0,
