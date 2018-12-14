@@ -111,7 +111,7 @@ const Auth = {
         if (res.status === 200) {
           localForage.setItem("user", res.data).then(user => {
             Auth.user = user;
-            m.route.set("/");
+            m.route.set("/profile");
           });
         }
       })
