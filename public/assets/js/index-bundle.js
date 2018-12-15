@@ -104,7 +104,7 @@ if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(6);
+var isObject = __webpack_require__(7);
 module.exports = function (it) {
   if (!isObject(it)) throw TypeError(it + ' is not an object!');
   return it;
@@ -113,73 +113,6 @@ module.exports = function (it) {
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dP = __webpack_require__(13);
-var createDesc = __webpack_require__(27);
-module.exports = __webpack_require__(7) ? function (object, key, value) {
-  return dP.f(object, key, createDesc(1, value));
-} : function (object, key, value) {
-  object[key] = value;
-  return object;
-};
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports) {
-
-module.exports = function (it) {
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(26)(function () {
-  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
-});
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-module.exports = {};
-
-
-/***/ }),
-/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(setImmediate, global) {;(function() {
@@ -1439,7 +1372,74 @@ m.vnode = Vnode
 if (true) module["exports"] = m
 else window.m = m
 }());
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(78).setImmediate, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(78).setImmediate, __webpack_require__(6)))
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var dP = __webpack_require__(13);
+var createDesc = __webpack_require__(27);
+module.exports = __webpack_require__(8) ? function (object, key, value) {
+  return dP.f(object, key, createDesc(1, value));
+} : function (object, key, value) {
+  object[key] = value;
+  return object;
+};
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+module.exports = function (it) {
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Thank's IE8 for his funny defineProperty
+module.exports = !__webpack_require__(26)(function () {
+  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
+});
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+module.exports = {};
+
 
 /***/ }),
 /* 10 */
@@ -1448,7 +1448,7 @@ else window.m = m
 var global = __webpack_require__(0);
 var core = __webpack_require__(2);
 var ctx = __webpack_require__(11);
-var hide = __webpack_require__(4);
+var hide = __webpack_require__(5);
 var has = __webpack_require__(14);
 var PROTOTYPE = 'prototype';
 
@@ -1554,7 +1554,7 @@ var IE8_DOM_DEFINE = __webpack_require__(47);
 var toPrimitive = __webpack_require__(48);
 var dP = Object.defineProperty;
 
-exports.f = __webpack_require__(7) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+exports.f = __webpack_require__(8) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
   anObject(O);
   P = toPrimitive(P, true);
   anObject(Attributes);
@@ -1628,7 +1628,7 @@ module.exports = true;
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(6);
+var isObject = __webpack_require__(7);
 var document = __webpack_require__(0).document;
 // typeof document.createElement is 'object' in old IE
 var is = isObject(document) && isObject(document.createElement);
@@ -1707,8 +1707,8 @@ module.exports.f = function (C) {
 var LIBRARY = __webpack_require__(19);
 var $export = __webpack_require__(10);
 var redefine = __webpack_require__(49);
-var hide = __webpack_require__(4);
-var Iterators = __webpack_require__(8);
+var hide = __webpack_require__(5);
+var Iterators = __webpack_require__(9);
 var $iterCreate = __webpack_require__(50);
 var setToStringTag = __webpack_require__(23);
 var getPrototypeOf = __webpack_require__(58);
@@ -2012,7 +2012,7 @@ module.exports = function (exec) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(3);
-var isObject = __webpack_require__(6);
+var isObject = __webpack_require__(7);
 var newPromiseCapability = __webpack_require__(24);
 
 module.exports = function (C, x) {
@@ -2042,7 +2042,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _regenerator = __webpack_require__(89);
+var _regenerator = __webpack_require__(91);
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
@@ -2050,11 +2050,11 @@ var _promise = __webpack_require__(16);
 
 var _promise2 = _interopRequireDefault(_promise);
 
-var _asyncToGenerator2 = __webpack_require__(92);
+var _asyncToGenerator2 = __webpack_require__(94);
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _mithril = __webpack_require__(9);
+var _mithril = __webpack_require__(4);
 
 var _mithril2 = _interopRequireDefault(_mithril);
 
@@ -2062,7 +2062,7 @@ var _joiBrowser = __webpack_require__(40);
 
 var Joi = _interopRequireWildcard(_joiBrowser);
 
-var _localforage = __webpack_require__(93);
+var _localforage = __webpack_require__(95);
 
 var _localforage2 = _interopRequireDefault(_localforage);
 
@@ -2070,9 +2070,9 @@ var _izitoast = __webpack_require__(41);
 
 var _izitoast2 = _interopRequireDefault(_izitoast);
 
-var _utils = __webpack_require__(94);
+var _utils = __webpack_require__(96);
 
-var _user = __webpack_require__(95);
+var _user = __webpack_require__(97);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -2214,7 +2214,7 @@ var Auth = {
       if (res.status === 200) {
         _localforage2.default.setItem("user", res.data).then(function (user) {
           Auth.user = user;
-          _mithril2.default.route.set("/");
+          _mithril2.default.route.set("/profile");
         });
       }
     }).catch(function (err) {
@@ -16539,7 +16539,7 @@ module.exports = function(module) {
 
 	return $iziToast;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ }),
 /* 42 */
@@ -16552,7 +16552,7 @@ var _promise = __webpack_require__(16);
 
 var _promise2 = _interopRequireDefault(_promise);
 
-var _mithril = __webpack_require__(9);
+var _mithril = __webpack_require__(4);
 
 var _mithril2 = _interopRequireDefault(_mithril);
 
@@ -16562,17 +16562,25 @@ __webpack_require__(84);
 
 __webpack_require__(85);
 
-var _landing = __webpack_require__(86);
+var _ = __webpack_require__(86);
+
+var _2 = _interopRequireDefault(_);
+
+var _landing = __webpack_require__(88);
 
 var _landing2 = _interopRequireDefault(_landing);
 
-var _register = __webpack_require__(88);
+var _register = __webpack_require__(90);
 
 var _register2 = _interopRequireDefault(_register);
 
-var _login = __webpack_require__(96);
+var _login = __webpack_require__(98);
 
 var _login2 = _interopRequireDefault(_login);
+
+var _profile = __webpack_require__(99);
+
+var _profile2 = _interopRequireDefault(_profile);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -16588,12 +16596,19 @@ _mithril2.default.route(root, "/", {
   "/": _landing2.default,
   "/register": _register2.default,
   "/login": _login2.default,
+  "/profile": {
+    onmatch: function onmatch(args, requestedPath) {
+      console.log("I am going to check out login auth here..");
+      return new _promise2.default(function (resolve) {
+        return resolve(_profile2.default);
+      });
+    }
+  },
   // Lazy load 404 page, use this method to lazy load other pages
   "/:404": {
-    onmatch: function onmatch() {
+    onmatch: function onmatch(args, requestedPath) {
       return new _promise2.default(function (resolve) {
-        console.log("what was you thinking...");
-        return resolve;
+        return resolve(_2.default);
       });
     }
   }
@@ -16669,7 +16684,7 @@ module.exports = function (TO_STRING) {
 /* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = !__webpack_require__(7) && !__webpack_require__(26)(function () {
+module.exports = !__webpack_require__(8) && !__webpack_require__(26)(function () {
   return Object.defineProperty(__webpack_require__(20)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
@@ -16679,7 +16694,7 @@ module.exports = !__webpack_require__(7) && !__webpack_require__(26)(function ()
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(6);
+var isObject = __webpack_require__(7);
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
 // and the second argument - flag - preferred type is a string
 module.exports = function (it, S) {
@@ -16696,7 +16711,7 @@ module.exports = function (it, S) {
 /* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(4);
+module.exports = __webpack_require__(5);
 
 
 /***/ }),
@@ -16711,7 +16726,7 @@ var setToStringTag = __webpack_require__(23);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(4)(IteratorPrototype, __webpack_require__(1)('iterator'), function () { return this; });
+__webpack_require__(5)(IteratorPrototype, __webpack_require__(1)('iterator'), function () { return this; });
 
 module.exports = function (Constructor, NAME, next) {
   Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
@@ -16774,7 +16789,7 @@ var dP = __webpack_require__(13);
 var anObject = __webpack_require__(3);
 var getKeys = __webpack_require__(53);
 
-module.exports = __webpack_require__(7) ? Object.defineProperties : function defineProperties(O, Properties) {
+module.exports = __webpack_require__(8) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
   var keys = getKeys(Properties);
   var length = keys.length;
@@ -16911,8 +16926,8 @@ module.exports = function (it) {
 
 __webpack_require__(61);
 var global = __webpack_require__(0);
-var hide = __webpack_require__(4);
-var Iterators = __webpack_require__(8);
+var hide = __webpack_require__(5);
+var Iterators = __webpack_require__(9);
 var TO_STRING_TAG = __webpack_require__(1)('toStringTag');
 
 var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
@@ -16938,7 +16953,7 @@ for (var i = 0; i < DOMIterables.length; i++) {
 
 var addToUnscopables = __webpack_require__(62);
 var step = __webpack_require__(63);
-var Iterators = __webpack_require__(8);
+var Iterators = __webpack_require__(9);
 var toIObject = __webpack_require__(21);
 
 // 22.1.3.4 Array.prototype.entries()
@@ -16998,7 +17013,7 @@ var global = __webpack_require__(0);
 var ctx = __webpack_require__(11);
 var classof = __webpack_require__(33);
 var $export = __webpack_require__(10);
-var isObject = __webpack_require__(6);
+var isObject = __webpack_require__(7);
 var aFunction = __webpack_require__(12);
 var anInstance = __webpack_require__(65);
 var forOf = __webpack_require__(66);
@@ -17345,7 +17360,7 @@ module.exports = function (iterator, fn, value, entries) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // check on default Array iterator
-var Iterators = __webpack_require__(8);
+var Iterators = __webpack_require__(9);
 var ITERATOR = __webpack_require__(1)('iterator');
 var ArrayProto = Array.prototype;
 
@@ -17360,7 +17375,7 @@ module.exports = function (it) {
 
 var classof = __webpack_require__(33);
 var ITERATOR = __webpack_require__(1)('iterator');
-var Iterators = __webpack_require__(8);
+var Iterators = __webpack_require__(9);
 module.exports = __webpack_require__(2).getIteratorMethod = function (it) {
   if (it != undefined) return it[ITERATOR]
     || it['@@iterator']
@@ -17479,7 +17494,7 @@ module.exports = navigator && navigator.userAgent || '';
 /* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var hide = __webpack_require__(4);
+var hide = __webpack_require__(5);
 module.exports = function (target, src, safe) {
   for (var key in src) {
     if (safe && target[key]) target[key] = src[key];
@@ -17497,7 +17512,7 @@ module.exports = function (target, src, safe) {
 var global = __webpack_require__(0);
 var core = __webpack_require__(2);
 var dP = __webpack_require__(13);
-var DESCRIPTORS = __webpack_require__(7);
+var DESCRIPTORS = __webpack_require__(8);
 var SPECIES = __webpack_require__(1)('species');
 
 module.exports = function (KEY) {
@@ -17651,7 +17666,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ }),
 /* 79 */
@@ -17844,7 +17859,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(80)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(80)))
 
 /***/ }),
 /* 80 */
@@ -34936,7 +34951,7 @@ Popper.Defaults = Defaults;
 /* harmony default export */ __webpack_exports__["default"] = (Popper);
 //# sourceMappingURL=popper.js.map
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(6)))
 
 /***/ }),
 /* 84 */
@@ -34961,11 +34976,67 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _mithril = __webpack_require__(9);
+var _mithril = __webpack_require__(4);
 
 var _mithril2 = _interopRequireDefault(_mithril);
 
 __webpack_require__(87);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _404 = {
+  view: function view() {
+    return (0, _mithril2.default)(
+      "section",
+      { "class": "error_section" },
+      (0, _mithril2.default)(
+        "p",
+        { "class": "error_section_subtitle" },
+        "Opps Page is not available !"
+      ),
+      (0, _mithril2.default)(
+        "h1",
+        { "class": "error_title" },
+        (0, _mithril2.default)(
+          "p",
+          null,
+          "404"
+        ),
+        "404"
+      ),
+      (0, _mithril2.default)(
+        "a",
+        { href: "/", "class": "btn btn-primary", oncreate: _mithril2.default.route.link },
+        "Back to home"
+      )
+    );
+  }
+};
+
+exports.default = _404;
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _mithril = __webpack_require__(4);
+
+var _mithril2 = _interopRequireDefault(_mithril);
+
+__webpack_require__(89);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35080,13 +35151,13 @@ var Landing = {
 exports.default = Landing;
 
 /***/ }),
-/* 87 */
+/* 89 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 88 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35096,7 +35167,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _mithril = __webpack_require__(9);
+var _mithril = __webpack_require__(4);
 
 var _mithril2 = _interopRequireDefault(_mithril);
 
@@ -35349,14 +35420,14 @@ var Register = {
 exports.default = Register;
 
 /***/ }),
-/* 89 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(90);
+module.exports = __webpack_require__(92);
 
 
 /***/ }),
-/* 90 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -35381,7 +35452,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(91);
+module.exports = __webpack_require__(93);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -35397,7 +35468,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 91 */
+/* 93 */
 /***/ (function(module, exports) {
 
 /**
@@ -36130,7 +36201,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 92 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36174,7 +36245,7 @@ exports.default = function (fn) {
 };
 
 /***/ }),
-/* 93 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var require;var require;/*!
@@ -38975,10 +39046,10 @@ module.exports = localforage_js;
 },{"3":3}]},{},[4])(4)
 });
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ }),
-/* 94 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39046,7 +39117,7 @@ var handleValidationError = exports.handleValidationError = function handleValid
 };
 
 /***/ }),
-/* 95 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39127,7 +39198,7 @@ var User = exports.User = {
 };
 
 /***/ }),
-/* 96 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39137,7 +39208,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _mithril = __webpack_require__(9);
+var _mithril = __webpack_require__(4);
 
 var _mithril2 = _interopRequireDefault(_mithril);
 
@@ -39273,6 +39344,767 @@ var Login = {
 };
 
 exports.default = Login;
+
+/***/ }),
+/* 99 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _mithril = __webpack_require__(4);
+
+var _mithril2 = _interopRequireDefault(_mithril);
+
+__webpack_require__(108);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Profile = {
+  view: function view(vnode) {
+    return (0, _mithril2.default)(
+      "section",
+      null,
+      (0, _mithril2.default)(
+        "nav",
+        { "class": "navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow" },
+        (0, _mithril2.default)(
+          "a",
+          { "class": "navbar-brand col-sm-3 col-md-2 mr-0", href: "#" },
+          "Company name"
+        ),
+        (0, _mithril2.default)("input", { "class": "form-control form-control-dark w-100", type: "text", placeholder: "Search", "aria-label": "Search" }),
+        (0, _mithril2.default)(
+          "ul",
+          { "class": "navbar-nav px-3" },
+          (0, _mithril2.default)(
+            "li",
+            { "class": "nav-item text-nowrap" },
+            (0, _mithril2.default)(
+              "a",
+              { "class": "nav-link", href: "#" },
+              "Sign out"
+            )
+          )
+        )
+      ),
+      (0, _mithril2.default)(
+        "div",
+        { "class": "container-fluid" },
+        (0, _mithril2.default)(
+          "div",
+          { "class": "row" },
+          (0, _mithril2.default)(
+            "nav",
+            { "class": "col-md-2 d-none d-md-block bg-light sidebar" },
+            (0, _mithril2.default)(
+              "div",
+              { "class": "sidebar-sticky" },
+              (0, _mithril2.default)(
+                "ul",
+                { "class": "nav flex-column" },
+                (0, _mithril2.default)(
+                  "li",
+                  { "class": "nav-item" },
+                  (0, _mithril2.default)(
+                    "a",
+                    { "class": "nav-link active", href: "#" },
+                    (0, _mithril2.default)("span", { "data-feather": "home" }),
+                    "Dashboard ",
+                    (0, _mithril2.default)(
+                      "span",
+                      { "class": "sr-only" },
+                      "(current)"
+                    )
+                  )
+                ),
+                (0, _mithril2.default)(
+                  "li",
+                  { "class": "nav-item" },
+                  (0, _mithril2.default)(
+                    "a",
+                    { "class": "nav-link", href: "#" },
+                    (0, _mithril2.default)("span", { "data-feather": "file" }),
+                    "Orders"
+                  )
+                ),
+                (0, _mithril2.default)(
+                  "li",
+                  { "class": "nav-item" },
+                  (0, _mithril2.default)(
+                    "a",
+                    { "class": "nav-link", href: "#" },
+                    (0, _mithril2.default)("span", { "data-feather": "shopping-cart" }),
+                    "Products"
+                  )
+                ),
+                (0, _mithril2.default)(
+                  "li",
+                  { "class": "nav-item" },
+                  (0, _mithril2.default)(
+                    "a",
+                    { "class": "nav-link", href: "#" },
+                    (0, _mithril2.default)("span", { "data-feather": "users" }),
+                    "Customers"
+                  )
+                ),
+                (0, _mithril2.default)(
+                  "li",
+                  { "class": "nav-item" },
+                  (0, _mithril2.default)(
+                    "a",
+                    { "class": "nav-link", href: "#" },
+                    (0, _mithril2.default)("span", { "data-feather": "bar-chart-2" }),
+                    "Reports"
+                  )
+                ),
+                (0, _mithril2.default)(
+                  "li",
+                  { "class": "nav-item" },
+                  (0, _mithril2.default)(
+                    "a",
+                    { "class": "nav-link", href: "#" },
+                    (0, _mithril2.default)("span", { "data-feather": "layers" }),
+                    "Integrations"
+                  )
+                )
+              ),
+              (0, _mithril2.default)(
+                "h6",
+                { "class": "sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted" },
+                (0, _mithril2.default)(
+                  "span",
+                  null,
+                  "Saved reports"
+                ),
+                (0, _mithril2.default)(
+                  "a",
+                  { "class": "d-flex align-items-center text-muted", href: "#" },
+                  (0, _mithril2.default)("span", { "data-feather": "plus-circle" })
+                )
+              ),
+              (0, _mithril2.default)(
+                "ul",
+                { "class": "nav flex-column mb-2" },
+                (0, _mithril2.default)(
+                  "li",
+                  { "class": "nav-item" },
+                  (0, _mithril2.default)(
+                    "a",
+                    { "class": "nav-link", href: "#" },
+                    (0, _mithril2.default)("span", { "data-feather": "file-text" }),
+                    "Current month"
+                  )
+                ),
+                (0, _mithril2.default)(
+                  "li",
+                  { "class": "nav-item" },
+                  (0, _mithril2.default)(
+                    "a",
+                    { "class": "nav-link", href: "#" },
+                    (0, _mithril2.default)("span", { "data-feather": "file-text" }),
+                    "Last quarter"
+                  )
+                ),
+                (0, _mithril2.default)(
+                  "li",
+                  { "class": "nav-item" },
+                  (0, _mithril2.default)(
+                    "a",
+                    { "class": "nav-link", href: "#" },
+                    (0, _mithril2.default)("span", { "data-feather": "file-text" }),
+                    "Social engagement"
+                  )
+                ),
+                (0, _mithril2.default)(
+                  "li",
+                  { "class": "nav-item" },
+                  (0, _mithril2.default)(
+                    "a",
+                    { "class": "nav-link", href: "#" },
+                    (0, _mithril2.default)("span", { "data-feather": "file-text" }),
+                    "Year-end sale"
+                  )
+                )
+              )
+            )
+          ),
+          (0, _mithril2.default)(
+            "main",
+            { role: "main", "class": "col-md-9 ml-sm-auto col-lg-10 px-4" },
+            (0, _mithril2.default)(
+              "div",
+              { "class": "d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" },
+              (0, _mithril2.default)(
+                "h1",
+                { "class": "h2" },
+                "Dashboard"
+              ),
+              (0, _mithril2.default)(
+                "div",
+                { "class": "btn-toolbar mb-2 mb-md-0" },
+                (0, _mithril2.default)(
+                  "div",
+                  { "class": "btn-group mr-2" },
+                  (0, _mithril2.default)(
+                    "button",
+                    { "class": "btn btn-sm btn-outline-secondary" },
+                    "Share"
+                  ),
+                  (0, _mithril2.default)(
+                    "button",
+                    { "class": "btn btn-sm btn-outline-secondary" },
+                    "Export"
+                  )
+                ),
+                (0, _mithril2.default)(
+                  "button",
+                  { "class": "btn btn-sm btn-outline-secondary dropdown-toggle" },
+                  (0, _mithril2.default)("span", { "data-feather": "calendar" }),
+                  "This week"
+                )
+              )
+            ),
+            (0, _mithril2.default)(
+              "h2",
+              null,
+              "Section title"
+            ),
+            (0, _mithril2.default)(
+              "div",
+              { "class": "table-responsive" },
+              (0, _mithril2.default)(
+                "table",
+                { "class": "table table-striped table-sm" },
+                (0, _mithril2.default)(
+                  "thead",
+                  null,
+                  (0, _mithril2.default)(
+                    "tr",
+                    null,
+                    (0, _mithril2.default)(
+                      "th",
+                      null,
+                      "#"
+                    ),
+                    (0, _mithril2.default)(
+                      "th",
+                      null,
+                      "Header"
+                    ),
+                    (0, _mithril2.default)(
+                      "th",
+                      null,
+                      "Header"
+                    ),
+                    (0, _mithril2.default)(
+                      "th",
+                      null,
+                      "Header"
+                    ),
+                    (0, _mithril2.default)(
+                      "th",
+                      null,
+                      "Header"
+                    )
+                  )
+                ),
+                (0, _mithril2.default)(
+                  "tbody",
+                  null,
+                  (0, _mithril2.default)(
+                    "tr",
+                    null,
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "1,001"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "Lorem"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "ipsum"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "dolor"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "sit"
+                    )
+                  ),
+                  (0, _mithril2.default)(
+                    "tr",
+                    null,
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "1,002"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "amet"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "consectetur"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "adipiscing"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "elit"
+                    )
+                  ),
+                  (0, _mithril2.default)(
+                    "tr",
+                    null,
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "1,003"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "Integer"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "nec"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "odio"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "Praesent"
+                    )
+                  ),
+                  (0, _mithril2.default)(
+                    "tr",
+                    null,
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "1,003"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "libero"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "Sed"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "cursus"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "ante"
+                    )
+                  ),
+                  (0, _mithril2.default)(
+                    "tr",
+                    null,
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "1,004"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "dapibus"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "diam"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "Sed"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "nisi"
+                    )
+                  ),
+                  (0, _mithril2.default)(
+                    "tr",
+                    null,
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "1,005"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "Nulla"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "quis"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "sem"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "at"
+                    )
+                  ),
+                  (0, _mithril2.default)(
+                    "tr",
+                    null,
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "1,006"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "nibh"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "elementum"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "imperdiet"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "Duis"
+                    )
+                  ),
+                  (0, _mithril2.default)(
+                    "tr",
+                    null,
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "1,007"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "sagittis"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "ipsum"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "Praesent"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "mauris"
+                    )
+                  ),
+                  (0, _mithril2.default)(
+                    "tr",
+                    null,
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "1,008"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "Fusce"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "nec"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "tellus"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "sed"
+                    )
+                  ),
+                  (0, _mithril2.default)(
+                    "tr",
+                    null,
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "1,009"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "augue"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "semper"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "porta"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "Mauris"
+                    )
+                  ),
+                  (0, _mithril2.default)(
+                    "tr",
+                    null,
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "1,010"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "massa"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "Vestibulum"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "lacinia"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "arcu"
+                    )
+                  ),
+                  (0, _mithril2.default)(
+                    "tr",
+                    null,
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "1,011"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "eget"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "nulla"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "Class"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "aptent"
+                    )
+                  ),
+                  (0, _mithril2.default)(
+                    "tr",
+                    null,
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "1,012"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "taciti"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "sociosqu"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "ad"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "litora"
+                    )
+                  ),
+                  (0, _mithril2.default)(
+                    "tr",
+                    null,
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "1,013"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "torquent"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "per"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "conubia"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "nostra"
+                    )
+                  ),
+                  (0, _mithril2.default)(
+                    "tr",
+                    null,
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "1,014"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "per"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "inceptos"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "himenaeos"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "Curabitur"
+                    )
+                  ),
+                  (0, _mithril2.default)(
+                    "tr",
+                    null,
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "1,015"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "sodales"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "ligula"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "in"
+                    ),
+                    (0, _mithril2.default)(
+                      "td",
+                      null,
+                      "libero"
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    );
+  }
+};
+
+exports.default = Profile;
+
+/***/ }),
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
