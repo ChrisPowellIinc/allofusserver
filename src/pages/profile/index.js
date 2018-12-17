@@ -1,7 +1,16 @@
 import m from "mithril";
 import "css/profile.css";
+import localForage from "localforage";
 
 const Profile = {
+  user: {},
+  oncreate: vnode => {
+    localForage.getItem("user").then(function(user){
+      console.log("got user: ", user);
+      Profile.user = user;
+      m.redraw();
+    });
+  },
   view: vnode => (
     <section>
         <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
@@ -22,7 +31,7 @@ const Profile = {
               <li class="nav-item">
                 <a class="nav-link active" href="#">
                   <span data-feather="home"></span>
-                  Dashboard <span class="sr-only">(current)</span>
+                  Dashboard {Profile.user.email? Profile.user.email : "Not logged in"}<span class="sr-only">(current)</span>
                 </a>
               </li>
               <li class="nav-item">
