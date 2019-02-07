@@ -29,6 +29,8 @@ func Routes(config *config.Config) *chi.Mux {
 	router.Put("/", handler.Get)
 	// Delete a user
 	router.Delete("/", handler.Get)
+	// Upload image
+	router.Post("/upload", handler.UploadProfilePic)
 
 	return router
 }
