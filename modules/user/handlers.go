@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 
 	"github.com/ChrisPowellIinc/allofusserver/internal/config"
+	"github.com/ChrisPowellIinc/allofusserver/internal/jwt"
 	"github.com/ChrisPowellIinc/allofusserver/models"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -41,7 +42,7 @@ func uploadFileToS3(s *session.Session, file multipart.File, fileName string, si
 	// config settings: this is where you choose the bucket,
 	// filename, content-type and storage class of the file
 	// you're uploading
-	e, s3err := s3.New(s).PutObject(&s3.PutObjectInput{
+	_, err := s3.New(s).PutObject(&s3.PutObjectInput{
 		Bucket:               aws.String(con.Constants.S3Bucket),
 		Key:                  aws.String(fileName),
 		ACL:                  aws.String("public-read"),
@@ -52,9 +53,7 @@ func uploadFileToS3(s *session.Session, file multipart.File, fileName string, si
 		ServerSideEncryption: aws.String("AES256"),
 		StorageClass:         aws.String("INTELLIGENT_TIERING"),
 	})
-	log.Println(e)
-	log.Println(s3err)
-	return s3err
+	return err
 }
 
 // UploadProfilePic uploads a user's profile picture
@@ -85,5 +84,19 @@ func (handler *Handler) UploadProfilePic(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
+	imageURL := "https://s3.console.aws.amazon.com/s3/object/www.all-of.us/profile_pics/" + tempFileName
+
+	userEmail, err := jwt.GetLoggedInUserID(r.Context())
+	if err != nil {
+		log.Println(err)
+		models.HandleResponse(w, r, "Unable to retrieve authenticate.", http.StatusUnauthorized)
+		return
+	}
+	err = handler.config.DB.C("user").Update(bson.M{"email": userEmail}, bson.M{"$set": bson.M{"image": imageURL}})
+	if err != nil {
+		log.Println(err)
+		models.HandleResponse(w, r, "Unable to update user's email.", http.StatusInternalServerError)
+		return
+	}
 	models.HandleResponse(w, r, "Successfully Created File", http.StatusOK)
 }
