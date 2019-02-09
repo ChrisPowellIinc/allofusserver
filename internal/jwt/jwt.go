@@ -1,6 +1,8 @@
 package jwt
 
 import (
+	"context"
+	"errors"
 	"net/http"
 
 	"github.com/go-chi/jwtauth"
@@ -30,4 +32,17 @@ func AuthHandler(next http.Handler) http.Handler {
 
 		next.ServeHTTP(w, r)
 	})
+}
+
+// GetLoggedInUserID get the logged in user ID which is a string
+func GetLoggedInUserID(context context.Context) (userID string, err error) {
+	_, claims, err := jwtauth.FromContext(context)
+	if err != nil {
+		return "", err
+	}
+	id, ok := claims["user_email"].(string)
+	if !ok {
+		return "", errors.New("Invalid User ID gotten from claims")
+	}
+	return id, nil
 }
