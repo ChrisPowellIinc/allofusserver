@@ -1,6 +1,8 @@
 package user
 
 import (
+	"github.com/ChrisPowellIinc/allofusserver/internal/jwt"
+	"github.com/go-chi/jwtauth"
 	"github.com/ChrisPowellIinc/allofusserver/internal/config"
 	"github.com/go-chi/chi"
 )
@@ -21,6 +23,8 @@ func New(config *config.Config) *Handler {
 func Routes(config *config.Config) *chi.Mux {
 	handler = New(config)
 	router := chi.NewRouter()
+	router.Use(jwtauth.Verifier(jwt.TokenAuth))
+	router.Use(jwt.AuthHandler)
 	// lists all users
 	router.Get("/", handler.Get)
 	// Create a new user
