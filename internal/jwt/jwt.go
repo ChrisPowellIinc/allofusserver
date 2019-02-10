@@ -34,15 +34,15 @@ func AuthHandler(next http.Handler) http.Handler {
 	})
 }
 
-// GetLoggedInUserID get the logged in user ID which is a string
-func GetLoggedInUserID(context context.Context) (userID string, err error) {
+// GetLoggedInUserEmail get the logged in user email which is a string
+func GetLoggedInUserEmail(context context.Context) (string, error) {
 	_, claims, err := jwtauth.FromContext(context)
 	if err != nil {
 		return "", err
 	}
-	id, ok := claims["user_email"].(string)
+	email, ok := claims["user_email"].(string)
 	if !ok {
 		return "", errors.New("Invalid User ID gotten from claims")
 	}
-	return id, nil
+	return email, nil
 }
