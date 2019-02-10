@@ -43,8 +43,8 @@ func Routes(config *config.Config) *chi.Mux {
 	})
 	v.Use(chiCors.Handler)
 
-	v.Route("/v1", func(r chi.Router) {
-		r.Route("/api", func(apiRouter chi.Router) {
+	v.Route("/api", func(r chi.Router) {
+		r.Route("/v1", func(apiRouter chi.Router) {
 			apiRouter.Mount("/auth", auth.Routes(config))
 			apiRouter.Mount("/user", user.Routes(config))
 		})
@@ -93,7 +93,7 @@ func main() {
 	walkFunc := func(method string, route string,
 		handler http.Handler,
 		middlewares ...func(http.Handler) http.Handler) error {
-		log.Printf("👉 %s %s\n", method, route)
+		log.Printf("👉  %s %s\n", method, route)
 		return nil
 	}
 
