@@ -58,9 +58,16 @@ func uploadFileToS3(s *session.Session, file multipart.File, fileName string, si
 
 // UploadProfilePic uploads a user's profile picture
 func (handler *Handler) UploadProfilePic(w http.ResponseWriter, r *http.Request) {
+	userEmail, err := jwt.GetLoggedInUserEmail(r.Context())
+	if err != nil {
+		log.Println(err)
+		models.HandleResponse(w, r, "Unable to retrieve authenticated user.", http.StatusUnauthorized)
+		return
+	}
+
 	maxSize := int64(2048000) // allow only 2MB of file size
 
-	err := r.ParseMultipartForm(maxSize)
+	err = r.ParseMultipartForm(maxSize)
 	if err != nil {
 		log.Println(err)
 		models.HandleResponse(w, r, "Image too large", http.StatusBadRequest)
@@ -84,19 +91,21 @@ func (handler *Handler) UploadProfilePic(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	imageURL := "https://s3.console.aws.amazon.com/s3/object/www.all-of.us/profile_pics/" + tempFileName
+	imageURL := "https://s3.us-east-2.amazonaws.com/www.all-of.us/" + tempFileName
 
-	userEmail, err := jwt.GetLoggedInUserID(r.Context())
-	if err != nil {
-		log.Println(err)
-		models.HandleResponse(w, r, "Unable to retrieve authenticate.", http.StatusUnauthorized)
-		return
-	}
 	err = handler.config.DB.C("user").Update(bson.M{"email": userEmail}, bson.M{"$set": bson.M{"image": imageURL}})
 	if err != nil {
 		log.Println(err)
 		models.HandleResponse(w, r, "Unable to update user's email.", http.StatusInternalServerError)
 		return
 	}
-	models.HandleResponse(w, r, "Successfully Created File", http.StatusOK)
+
+	res := models.Response{}
+	res.Message = "Successfully Created File"
+	res.Status = http.StatusOK
+	res.Data = map[string]interface{}{
+		"imageurl": imageURL,
+	}
+	render.Status(r, http.StatusOK)
+	render.JSON(w, r, res)
 }
