@@ -11,7 +11,6 @@ import (
 	"github.com/ChrisPowellIinc/allofusserver/internal/jwt"
 	"github.com/ChrisPowellIinc/allofusserver/models"
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/globalsign/mgo/bson"
 	"github.com/go-chi/render"
@@ -33,7 +32,7 @@ func (handler *Handler) Get(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func uploadFileToS3(s *session.Session, file multipart.File, fileName string, size int64, con *config.Config) error {
+func uploadFileToS3(file multipart.File, fileName string, size int64, con *config.Config) error {
 	// get the file size and read
 	// the file content into a buffer
 	buffer := make([]byte, size)
@@ -42,7 +41,7 @@ func uploadFileToS3(s *session.Session, file multipart.File, fileName string, si
 	// config settings: this is where you choose the bucket,
 	// filename, content-type and storage class of the file
 	// you're uploading
-	_, err := s3.New(s).PutObject(&s3.PutObjectInput{
+	_, err := s3.New(con.AwsSession).PutObject(&s3.PutObjectInput{
 		Bucket:               aws.String(con.Constants.S3Bucket),
 		Key:                  aws.String(fileName),
 		ACL:                  aws.String("public-read"),
@@ -83,8 +82,19 @@ func (handler *Handler) UploadProfilePic(w http.ResponseWriter, r *http.Request)
 	defer file.Close()
 
 	// TODO:: Check for file type...
-	tempFileName := "profile_pics/" + bson.NewObjectId().Hex() + filepath.Ext(fileHeader.Filename)
-	err = uploadFileToS3(handler.config.AwsSession, file, tempFileName, fileHeader.Size, handler.config)
+	supportedFileTypes := map[string]bool{
+		".png": true,
+		".jpeg": true,
+		".jpg": true,
+	}
+	filetype := filepath.Ext(fileHeader.Filename)
+	if !supportedFileTypes[filetype] {
+		log.Println(filetype)
+		models.HandleResponse(w, r, "This image file type is not supported", http.StatusBadRequest)
+		return
+	}
+	tempFileName := "profile_pics/" + bson.NewObjectId().Hex() + filetype
+	err = uploadFileToS3(file, tempFileName, fileHeader.Size, handler.config)
 	if err != nil {
 		log.Println(err)
 		models.HandleResponse(w, r, "An Error occured while uploading the image", http.StatusInternalServerError)
