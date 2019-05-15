@@ -26,7 +26,7 @@ func Routes(config *config.Config) *chi.Mux {
 	authGroup := router.Group(nil)
 	authGroup.Use(jwtauth.Verifier(jwt.TokenAuth))
 	authGroup.Use(jwt.AuthHandler)
-	authGroup.Get("/", handler.GetLoggedInUser)
+	// authGroup.Get("/", handler.GetLoggedInUser)
 	// new user registrations route
 	router.Post("/register", handler.Register)
 	// login user route
