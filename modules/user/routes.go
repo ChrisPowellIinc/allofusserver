@@ -1,10 +1,10 @@
 package user
 
 import (
-	"github.com/ChrisPowellIinc/allofusserver/internal/jwt"
-	"github.com/go-chi/jwtauth"
 	"github.com/ChrisPowellIinc/allofusserver/internal/config"
+	"github.com/ChrisPowellIinc/allofusserver/internal/jwt"
 	"github.com/go-chi/chi"
+	"github.com/go-chi/jwtauth"
 )
 
 // Handler : Routes handler
