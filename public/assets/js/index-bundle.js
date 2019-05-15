@@ -35002,7 +35002,7 @@ var _404 = {
           null,
           "404"
         ),
-        "404"
+        "404 (Page not found)"
       ),
       (0, _mithril2.default)(
         "a",
@@ -35086,7 +35086,7 @@ var Landing = {
           (0, _mithril2.default)(
             "h1",
             { "class": "cover-heading" },
-            "All of Us."
+            "ALL OF US."
           ),
           (0, _mithril2.default)(
             "p",
@@ -39360,11 +39360,23 @@ var _mithril = __webpack_require__(4);
 
 var _mithril2 = _interopRequireDefault(_mithril);
 
-__webpack_require__(108);
+__webpack_require__(100);
+
+var _localforage = __webpack_require__(95);
+
+var _localforage2 = _interopRequireDefault(_localforage);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Profile = {
+  user: {},
+  oncreate: function oncreate(vnode) {
+    _localforage2.default.getItem("user").then(function (user) {
+      console.log("got user: ", user);
+      Profile.user = user;
+      _mithril2.default.redraw();
+    });
+  },
   view: function view(vnode) {
     return (0, _mithril2.default)(
       "section",
@@ -39415,6 +39427,7 @@ var Profile = {
                     { "class": "nav-link active", href: "#" },
                     (0, _mithril2.default)("span", { "data-feather": "home" }),
                     "Dashboard ",
+                    Profile.user.email ? Profile.user.email : "Not logged in",
                     (0, _mithril2.default)(
                       "span",
                       { "class": "sr-only" },
@@ -40093,15 +40106,7 @@ var Profile = {
 exports.default = Profile;
 
 /***/ }),
-/* 100 */,
-/* 101 */,
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
-/* 106 */,
-/* 107 */,
-/* 108 */
+/* 100 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
