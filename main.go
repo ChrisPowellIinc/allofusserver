@@ -15,11 +15,12 @@ import (
 	logger "github.com/ChrisPowellIinc/allofusserver/internal/log"
 	"github.com/ChrisPowellIinc/allofusserver/migrations"
 	"github.com/ChrisPowellIinc/allofusserver/modules/auth"
+	"github.com/ChrisPowellIinc/allofusserver/modules/chat"
 	"github.com/ChrisPowellIinc/allofusserver/modules/user"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"github.com/go-chi/cors"
 	"github.com/go-chi/render"
+	"github.com/rs/cors"
 )
 
 // Routes : Registers all available routes from modules
@@ -27,21 +28,24 @@ func Routes(config *config.Config) *chi.Mux {
 	v := chi.NewRouter()
 	v.Use(
 		render.SetContentType(render.ContentTypeJSON), // Set content-Type headers as application/json
-		middleware.Logger,                  // Log API request calls
-		middleware.DefaultCompress,         // Compress results, mostly gzipping assets and json
-		middleware.RedirectSlashes,         // Redirect slashes to no slash URL versions
+		middleware.Logger,          // Log API request calls
+		middleware.DefaultCompress, // Compress results, mostly gzipping assets and json
+		// middleware.RedirectSlashes,         // Redirect slashes to no slash URL versions
 		middleware.Recoverer,               // Recover from panics without crashing server
 		middleware.Timeout(60*time.Second), // Timeout requests after 60 seconds
 	)
 
 	chiCors := cors.New(cors.Options{
-		AllowedOrigins:   []string{"*"},
-		AllowedMethods:   []string{"GET", "POST", "DELETE"},
+		AllowedOrigins:   []string{"http://127.0.0.1:8080", "http://127.0.0.1:3500", "*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS", "CONNECT"},
 		AllowCredentials: true,
 		AllowedHeaders:   []string{"Accept", "Content-Type", "*"},
 		Debug:            false,
 	})
 	v.Use(chiCors.Handler)
+
+	// set up handler for Websocket.
+	v.Mount("/socket.io/", chat.Routes(config))
 
 	v.Route("/api", func(r chi.Router) {
 		r.Route("/v1", func(apiRouter chi.Router) {
@@ -61,6 +65,7 @@ func Routes(config *config.Config) *chi.Mux {
 	})
 
 	v.Get("/*", func(w http.ResponseWriter, r *http.Request) {
+		log.Println("Hello there, i am still testing the default route")
 		http.ServeFile(w, r, "./public/index.html")
 	})
 
