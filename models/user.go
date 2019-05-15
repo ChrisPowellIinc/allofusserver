@@ -1,11 +1,14 @@
 package models
 
 import (
+	"context"
+	"errors"
 	"strings"
 	"time"
 
 	"github.com/ChrisPowellIinc/allofusserver/internal/config"
 	"github.com/globalsign/mgo/bson"
+	"github.com/go-chi/jwtauth"
 )
 
 // User : User model
@@ -88,4 +91,17 @@ func (u User) Validate(c *config.Config) map[string]interface{} {
 		}
 	}
 	return data
+}
+
+// GetLoggedInUserID Retrieves the logged in user ID
+func GetLoggedInUserID(context context.Context) (string, error) {
+	_, claims, err := jwtauth.FromContext(context)
+	if err != nil {
+		return "", err
+	}
+	email, ok := claims["user_email"].(string)
+	if !ok {
+		return "", errors.New("Invalid User ID gotten from claims")
+	}
+	return email, nil
 }
