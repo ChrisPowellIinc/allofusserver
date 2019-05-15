@@ -12,10 +12,11 @@ type Response struct {
 	Data    map[string]interface{} `json:"data"`
 }
 
-func HandleResponse(w http.ResponseWriter, r *http.Request, message string, status int) {
+func HandleResponse(w http.ResponseWriter, r *http.Request, message string, status int, data map[string]interface{}) {
 	res := Response{}
 	res.Message = message
 	res.Status = status
+	res.Data = data
 	render.Status(r, status)
 	render.JSON(w, r, res)
 }
