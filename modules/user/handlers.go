@@ -18,18 +18,26 @@ import (
 
 // Get : Shows that the app is working
 func (handler *Handler) Get(w http.ResponseWriter, r *http.Request) {
-
-	type resStruct struct {
-		Message string `json:"msg"`
+	var res models.Response
+	users := []models.User{}
+	db := handler.config.DB
+	email, err := models.GetLoggedInUserID(r.Context())
+	if err != nil {
+		log.Println("Getting logged in user email: ", err)
+		return
 	}
-
-	res := resStruct{
-		Message: "It works!",
+	err = db.C("user").Find(bson.M{"email": bson.M{"$ne": email}}).All(&users)
+	if err != nil {
+		res.Message = "Sorry a problem occured, please try again"
+		res.Status = http.StatusInternalServerError
+		render.Status(r, http.StatusInternalServerError)
+		render.JSON(w, r, res)
+		return
 	}
-
+	res.Message = "Retreived users correctly"
+	res.Status = http.StatusOK
+	res.Data = map[string]interface{}{"users": users}
 	render.JSON(w, r, res)
-
-	return
 }
 
 func uploadFileToS3(file multipart.File, fileName string, size int64, con *config.Config) error {
@@ -60,7 +68,7 @@ func (handler *Handler) UploadProfilePic(w http.ResponseWriter, r *http.Request)
 	userEmail, err := jwt.GetLoggedInUserEmail(r.Context())
 	if err != nil {
 		log.Println(err)
-		models.HandleResponse(w, r, "Unable to retrieve authenticated user.", http.StatusUnauthorized)
+		models.HandleResponse(w, r, "Unable to retrieve authenticated user.", http.StatusUnauthorized, nil)
 		return
 	}
 
@@ -69,35 +77,35 @@ func (handler *Handler) UploadProfilePic(w http.ResponseWriter, r *http.Request)
 	err = r.ParseMultipartForm(maxSize)
 	if err != nil {
 		log.Println(err)
-		models.HandleResponse(w, r, "Image too large", http.StatusBadRequest)
+		models.HandleResponse(w, r, "Image too large", http.StatusBadRequest, nil)
 		return
 	}
 
 	file, fileHeader, err := r.FormFile("profile_picture")
 	if err != nil {
 		log.Println(err)
-		models.HandleResponse(w, r, "Image not supplied", http.StatusBadRequest)
+		models.HandleResponse(w, r, "Image not supplied", http.StatusBadRequest, nil)
 		return
 	}
 	defer file.Close()
 
 	// TODO:: Check for file type...
 	supportedFileTypes := map[string]bool{
-		".png": true,
+		".png":  true,
 		".jpeg": true,
-		".jpg": true,
+		".jpg":  true,
 	}
 	filetype := filepath.Ext(fileHeader.Filename)
 	if !supportedFileTypes[filetype] {
 		log.Println(filetype)
-		models.HandleResponse(w, r, "This image file type is not supported", http.StatusBadRequest)
+		models.HandleResponse(w, r, "This image file type is not supported", http.StatusBadRequest, nil)
 		return
 	}
 	tempFileName := "profile_pics/" + bson.NewObjectId().Hex() + filetype
 	err = uploadFileToS3(file, tempFileName, fileHeader.Size, handler.config)
 	if err != nil {
 		log.Println(err)
-		models.HandleResponse(w, r, "An Error occured while uploading the image", http.StatusInternalServerError)
+		models.HandleResponse(w, r, "An Error occured while uploading the image", http.StatusInternalServerError, nil)
 		return
 	}
 
@@ -106,7 +114,7 @@ func (handler *Handler) UploadProfilePic(w http.ResponseWriter, r *http.Request)
 	err = handler.config.DB.C("user").Update(bson.M{"email": userEmail}, bson.M{"$set": bson.M{"image": imageURL}})
 	if err != nil {
 		log.Println(err)
-		models.HandleResponse(w, r, "Unable to update user's email.", http.StatusInternalServerError)
+		models.HandleResponse(w, r, "Unable to update user's email.", http.StatusInternalServerError, nil)
 		return
 	}
 
