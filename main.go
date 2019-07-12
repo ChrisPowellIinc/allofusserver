@@ -36,7 +36,7 @@ func Routes(config *config.Config) *chi.Mux {
 	)
 
 	chiCors := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://127.0.0.1:8080", "http://127.0.0.1:3500", "*"},
+		AllowedOrigins:   []string{"*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS", "CONNECT"},
 		AllowCredentials: true,
 		AllowedHeaders:   []string{"Accept", "Content-Type", "*"},
@@ -50,7 +50,7 @@ func Routes(config *config.Config) *chi.Mux {
 	v.Route("/api", func(r chi.Router) {
 		r.Route("/v1", func(apiRouter chi.Router) {
 			apiRouter.Mount("/auth", auth.Routes(config))
-			apiRouter.Mount("/user", user.Routes(config))
+			apiRouter.Mount("/users", user.Routes(config))
 		})
 
 	})
