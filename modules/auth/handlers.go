@@ -7,11 +7,10 @@ import (
 
 	"github.com/globalsign/mgo/bson"
 
-	jwt "github.com/ChrisPowellIinc/allofusserver/internal/jwt"
 	"github.com/ChrisPowellIinc/allofusserver/models"
+	jwt "github.com/dgrijalva/jwt-go"
 	"golang.org/x/crypto/bcrypt"
 
-	"github.com/go-chi/jwtauth"
 	"github.com/go-chi/render"
 )
 
@@ -52,7 +51,14 @@ func (handler *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, token, err := jwt.TokenAuth.Encode(jwtauth.Claims{"user_email": user.Email})
+	// Create a new token object, specifying signing method and the claims
+	// you would like it to contain.
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{"user_email": user.Email})
+
+	// Sign and get the complete encoded token as a string using the secret
+	tokenString, err := token.SignedString([]byte(handler.config.Constants.JWTSecret))
+
+	// _, token, err := jwt.TokenAuth.Encode(jwtauth.Claims{"user_email": user.Email})
 
 	if err != nil {
 		log.Println(err)
@@ -66,7 +72,7 @@ func (handler *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		Message: "Login Successful",
 		Status:  http.StatusOK,
 		Data: map[string]interface{}{
-			"token":      token,
+			"token":      tokenString,
 			"first_name": user.FirstName,
 			"last_name":  user.LastName,
 			"phone":      user.Phone,
