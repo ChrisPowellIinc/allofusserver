@@ -43,45 +43,54 @@ func (h *Hub) run() {
 				close(client.send)
 			}
 		case message := <-h.broadcast:
-			rec, ok_recipient := h.clients[message.Email]
-			own, ok_owner := h.clients[message.Owner]
-			if ok_recipient && message.Channel == "message" {
-				log.Printf("Message sent to: %v, From: %v, message: %v\n", message.Email, message.Owner, message)
+			var (
+				okRecipient, okOwner bool
+				rec, own             *Client
+			)
+			recipient, reOk := message["recipient"].(string)
+			owner, owOk := message["owner"].(string)
+			if !owOk || !reOk {
+				log.Println("owner or recipient are not available")
+				continue
+			}
+			rec, okRecipient = h.clients[recipient]
+			own, okOwner = h.clients[owner]
+			if okRecipient && message["channel"] == "message" {
+				log.Printf("Message sent to: %v, From: %v, message: %v\n", recipient, owner, message)
 				rec.send <- message
 				continue
 			} else {
-				log.Println("channel: ", message.Channel)
-				log.Println("recipient: ", message.Email)
-				log.Println("type: ", message.Type)
-				// log.Println("message: ", message)
+				// log.Println("channel: ", message["channel"])
+				// log.Println("recipient: ", message["email"])
+				log.Println("there is no recipient to send message to: ", recipient)
 			}
-			if message.Channel == "create or join" {
-				if !ok_recipient {
+			if message["channel"] == "create or join" {
+				if !okRecipient {
 					// contact the client to accept a call.
-					message.Channel = "error"
-					message.Error = "User is not available"
+					message["channel"] = "error"
+					message["error"] = "User is not available"
 					own.send <- message
 					continue
 				} else {
 					// contact the client to accept a call.
-					message.Channel = "request"
+					message["channel"] = "request"
 					rec.send <- message
 					continue
 				}
 			}
 
-			if message.Channel == "accept" && ok_recipient && ok_owner {
+			if message["channel"] == "accept" && okRecipient && okOwner {
 				// the owner here is the person being contacted.
 				// while the recipient is one that contacted this owner.
-				message.Channel = "joined"
+				message["channel"] = "joined"
 				rec.send <- message
 				rec.peer = own.email
 				own.peer = rec.email
 				continue
 			}
-			if message.Channel == "decline" && ok_recipient {
-				message.Channel = "error"
-				message.Error = "The client declined the call"
+			if message["channel"] == "decline" && okRecipient {
+				message["channel"] = "error"
+				message["error"] = "The client declined the call"
 				rec.send <- message
 				continue
 			}
