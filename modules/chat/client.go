@@ -56,18 +56,19 @@ type Client struct {
 }
 
 // Message defines the way messages are exchanged
-type Message struct {
-	Type    string `json:"type"`
-	Email   string `json:"email"`
-	Message string `json:"message"`
-	Channel string `json:"channel"`
-	Error   string `json:"error"`
-	Owner   string `json:"owner"`
-	// the call candidate details...
-	Label     int    `json:"label"`
-	ID        string `json:"id"`
-	Candidate string `json:"candidate"`
-}
+// type Message struct {
+// 	Type    string `json:"type"`
+// 	Email   string `json:"email"`
+// 	Message string `json:"message"`
+// 	Channel string `json:"channel"`
+// 	Error   string `json:"error"`
+// 	Owner   string `json:"owner"`
+// 	// the call candidate details...
+// 	Label     int    `json:"label"`
+// 	ID        string `json:"id"`
+// 	Candidate string `json:"candidate"`
+// }
+type Message map[string]interface{}
 
 // readPump pumps messages from the websocket connection to the hub.
 //
