@@ -31,6 +31,10 @@ func Routes(config *config.Config) *chi.Mux {
 	router.Post("/register", handler.Register)
 	// login user route
 	router.Post("/login", handler.Login)
+	authGroup.Get("/sessionid", handler.GetStripeSessionID)
+	authGroup.Get("/cards", handler.MyCards)
+	authGroup.Delete("/cards/{pmID}", handler.DeleteCard)
+	router.Post("/stripe/webhook/endpoint", handler.StripeWebhookHandler)
 
 	return router
 }
