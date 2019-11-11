@@ -24,6 +24,11 @@ type User struct {
 	Image          string    `json:"image,omitempty" bson:"image,omitempty"`
 	DateCreated    time.Time `json:"date_created,omitempty" bson:"date_created,omitempty"`
 	AccessToken    string    `json:"token,omitempty" bson:"token,omitempty"`
+	// stripe payment details
+	SessionID       string `json:"session_id,omitempty" bson:"session_id,omitempty"`
+	SetupIntentID   string `json:"setup_intent_id,omitempty" bson:"setup_intent_id,omitempty"`
+	PaymentMethodID string `json:"payment_method_id,omitempty" bson:"payment_method_id,omitempty"`
+	CustomerID      string `json:"customer_id,omitempty" bson:"customer_id,omitempty"`
 }
 
 // FindByPhone queries the DB for a user with the specified phone number
