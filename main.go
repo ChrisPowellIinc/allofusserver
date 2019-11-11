@@ -10,6 +10,8 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/joho/godotenv"
+
 	"github.com/ChrisPowellIinc/allofusserver/internal/config"
 	"github.com/ChrisPowellIinc/allofusserver/internal/jwt"
 	logger "github.com/ChrisPowellIinc/allofusserver/internal/log"
@@ -76,6 +78,10 @@ func Routes(config *config.Config) *chi.Mux {
 }
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 	var isTest = flag.Bool("test", false, "Set test mode to use mock io resources")
 	var isDebug = flag.Bool("debug", false, "Set Debug mode to print config data")
 	var isMigrations = flag.Bool("migrations", false, "Run migrations against the database")
@@ -110,7 +116,7 @@ func main() {
 	// using the server Shurdown method which is a part lf the standard library
 	PORT := ":"
 	if !*isDebug && !*isTest {
-		PORT += os.Getenv("PORT")
+		PORT += os.Getenv("API_PORT")
 	} else {
 		PORT += config.Constants.PORT
 	}
@@ -133,7 +139,7 @@ func main() {
 		close(idleConnsClosed)
 	}()
 
-	log.Printf("Serving at 🔥 %s \n", PORT)
+	log.Printf("Serving at 🔥 %s \n", server.Addr)
 
 	if err := server.ListenAndServe(); err != http.ErrServerClosed {
 		log.Fatalf("⚠️  HTTP server ListenAndServe error: %v", err)
